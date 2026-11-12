@@ -37,6 +37,7 @@ Trả về (kịch bản hoặc video) + lý do → Claude viết lại → ch�
 - Nhóm Telegram "Nhà máy nội dung Thầy Tư" có 5 chủ đề (id trong `data/telegram_topics.json`): Đặt video, Duyệt kịch bản, Duyệt video, Báo cáo, Cảnh báo.
 - Lệnh: `/tao <chủ đề>`, `/cho`, `/ping` (bot + Claude đăng nhập chưa), `/lai <mã>` (viết lại kịch bản), `/dung <mã>` (dựng lại video).
 - Viết kịch bản dùng Claude Code chạy dòng lệnh trên máy (bản đi kèm Claude desktop) — **phải đăng nhập**: `claude.exe auth login`.
+- **Page Facebook để TEST đăng bài: "Allisagi là chân ái"** (META_PAGE_ID trong .env). Không đăng thử lên page thật. Đổi page: `python tools/meta_post.py setup "Tên page"`.
 - Theo dõi trên máy: `python tools/theo_doi.py`. Video sinh theo đơn nằm ở `video/jobs/<mã>/` (không đưa lên Git).
 
 | Thành phần | Ở đâu | Ghi chú |

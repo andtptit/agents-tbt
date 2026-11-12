@@ -1,7 +1,7 @@
 """Đăng Reels lên Facebook Page qua Meta Graph API.
 
 Lệnh:
-  python tools/meta_post.py setup
+  python tools/meta_post.py setup ["Tên page" | page_id]
       Đổi META_USER_TOKEN (ngắn hạn, lấy ở Graph API Explorer) sang token dài hạn, lấy token của
       Page và ghi vào .env (META_PAGE_ID, META_PAGE_NAME, META_PAGE_TOKEN). Không in token ra.
   python tools/meta_post.py check
@@ -73,7 +73,8 @@ def setup():
         sys.exit("Không thấy Page nào. Khi tạo token, nhớ tick chọn page test trong cửa sổ xin quyền.")
     for i, p in enumerate(items):
         print(f"[{i}] {p['name']} (id {p['id']}) — quyền: {', '.join(p.get('tasks', []))}")
-    p = items[0]
+    want = (sys.argv[2] if len(sys.argv) > 2 else load_env().get("META_PAGE_ID", "")).strip().lower()
+    p = next((x for x in items if want and (x["id"] == want or x["name"].lower() == want)), items[0])
     set_env("META_USER_TOKEN_LONG", long)
     set_env("META_PAGE_ID", p["id"])
     set_env("META_PAGE_NAME", p["name"].replace("\n", " "))
