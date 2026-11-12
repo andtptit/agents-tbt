@@ -31,6 +31,7 @@ from datetime import datetime
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import script_writer  # noqa: E402
 import video_maker  # noqa: E402
+import meta_post  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, "data")
@@ -263,6 +264,40 @@ def make_video_job(code):
         RUNNING.discard(code)
 
 
+def next_slot(hour=20):
+    """Lần tới của HH:00 (Meta yêu cầu lịch đăng cách hiện tại ít nhất 10 phút)."""
+    from datetime import timedelta
+    t = datetime.now().replace(hour=hour, minute=0, second=0, microsecond=0)
+    if t <= datetime.now() + timedelta(minutes=15):
+        t += timedelta(days=1)
+    return t
+
+
+def publish_job(code, action, who, chat, thread):
+    o = load_orders()[code]
+    s = o.get("script", {})
+    desc = (s.get("caption_facebook", "") + "\n\n" + " ".join(s.get("hashtags", []))).strip()
+    state, when = {"pb_now": ("PUBLISHED", None), "pb_20": ("SCHEDULED", next_slot(20)),
+                   "pb_draft": ("DRAFT", None)}[action]
+    update_order(code, status="Đang đăng")
+    say(chat, f"⏳ Đang tải {code} lên Facebook…", thread)
+    try:
+        r = meta_post.post_reel(os.path.join(ROOT, o["video"]), desc, state,
+                                when.timestamp() if when else None)
+        status = {"PUBLISHED": "Đã đăng", "SCHEDULED": "Đã lên lịch", "DRAFT": "Đã lưu nháp"}[state]
+        update_order(code, status=status, fb_video_id=r["video_id"], fb_link=r.get("link"), published_by=who,
+                     published_at=now(), scheduled_for=when.strftime("%Y-%m-%d %H:%M") if when else None)
+        extra = f" lúc {when:%H:%M %d/%m}" if when else ""
+        say(chat, f"✅ {code}: {status}{extra} trên «{ENV.get('META_PAGE_NAME', '')}».\n{r.get('link') or ''}", thread)
+        progress(code, f"📣 {status}{extra} trên Facebook. {r.get('link') or ''}")
+    except Exception as e:  # noqa: BLE001
+        update_order(code, status="Lỗi đăng bài", error=str(e)[:300])
+        say(chat, f"⚠️ {code}: đăng lỗi — {str(e)[:250]}", thread)
+        say(CHAT_ID, f"🚨 {code}: lỗi khi đăng Facebook — {str(e)[:300]}", TOPICS.get("canh_bao"))
+    finally:
+        RUNNING.discard(code)
+
+
 def dispatch_jobs():
     for code, o in load_orders().items():
         if code in RUNNING:
@@ -293,6 +328,22 @@ def handle_callback(cb, q):
         api("editMessageReplyMarkup", {"chat_id": msg["chat"]["id"], "message_id": msg["message_id"],
                                        "reply_markup": {"inline_keyboard": [[{"text": label, "callback_data": "noop|x"}]]}})
 
+    if action in ("pb_now", "pb_20", "pb_draft"):
+        o = load_orders().get(code)
+        if not o or not o.get("video"):
+            api("answerCallbackQuery", {"callback_query_id": cb["id"], "text": "Không tìm thấy video của đơn này."})
+            return
+        if code in RUNNING or o.get("status") in ("Đang đăng", "Đã đăng", "Đã lên lịch"):
+            api("answerCallbackQuery", {"callback_query_id": cb["id"], "text": f"Đơn đang ở trạng thái: {o.get('status')}"})
+            return
+        labels = {"pb_now": "📤 đăng ngay", "pb_20": "⏰ lên lịch 20:00", "pb_draft": "💾 lưu nháp"}
+        mark(f"{name} chọn {labels[action]}")
+        api("answerCallbackQuery", {"callback_query_id": cb["id"], "text": "Đang xử lý…"})
+        RUNNING.add(code)
+        threading.Thread(target=publish_job, args=(code, action, name, msg["chat"]["id"], thread_of(msg)),
+                         daemon=True).start()
+        return
+
     if action in ("vd_ok", "vd_back"):
         if code not in load_orders():
             api("answerCallbackQuery", {"callback_query_id": cb["id"], "text": "Không tìm thấy đơn này."})
@@ -305,6 +356,11 @@ def handle_callback(cb, q):
                                    "Video sẵn sàng đăng (đăng tự động lên Facebook/TikTok sẽ nối khi có Meta App).",
                 thread_of(msg), msg["message_id"])
             progress(code, f"🎉 Video đã được {name} duyệt lúc {datetime.now():%H:%M}. Sẵn sàng đăng.")
+            page = ENV.get("META_PAGE_NAME", "(chưa cấu hình page)")
+            say(msg["chat"]["id"], f"📤 Đăng {code} lên Facebook page «{page}»?", thread_of(msg),
+                markup={"inline_keyboard": [[{"text": "📤 Đăng ngay", "callback_data": f"pb_now|{code}"},
+                                             {"text": "⏰ Lên lịch 20:00", "callback_data": f"pb_20|{code}"}],
+                                            [{"text": "💾 Lưu nháp trên page", "callback_data": f"pb_draft|{code}"}]]})
         else:
             ask = say(msg["chat"]["id"], f"↩️ {code}: {name} ơi, trả lời tin nhắn này kèm lý do cần sửa video nhé.",
                       thread_of(msg), msg["message_id"], {"force_reply": True, "selective": True})
