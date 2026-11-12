@@ -386,6 +386,10 @@ def handle_message(m, q):
         ok, status = script_writer.claude_status()
         busy = ", ".join(sorted(RUNNING)) or "không có"
         say(chat, f"🟢 Bot đang chạy ({now()}).\n{'🟢' if ok else '🔴'} {status}.\nĐang xử lý: {busy}.", thread_of(m))
+    elif cmd == "/baocao":
+        send_report()
+        if thread_of(m) != TOPICS.get("bao_cao"):
+            say(chat, "Đã gửi báo cáo vào chủ đề 📊 Báo cáo.", thread_of(m), m["message_id"])
     elif cmd == "/cho":
         pending = [f"• {c}: {v['status']}" for c, v in q.items() if v["status"] != "Đã duyệt"]
         pending += [f"• {c}: {o['status']} — {o['topic']}" for c, o in load_orders().items()
@@ -421,6 +425,67 @@ def handle_message(m, q):
                      ack_id=r.get("result", {}).get("message_id"))
 
 
+# ---------- Báo cáo ----------
+REPORT_STATE = os.path.join(DATA, "report_state.json")
+REPORT_HOUR = 8  # 8h sáng hằng ngày
+
+
+def build_report():
+    orders = load_orders()
+    videos = load_queue()
+    today = datetime.now().strftime("%Y-%m-%d")
+    since = datetime.now().timestamp() - 24 * 3600
+
+    def recent(ts):
+        try:
+            return datetime.strptime(ts, "%Y-%m-%d %H:%M").timestamp() >= since
+        except (TypeError, ValueError):
+            return False
+
+    new = [c for c, o in orders.items() if recent(o.get("at"))]
+    scripts_ok = [c for c, o in orders.items() if recent(o.get("script_approved_at"))]
+    videos_ok = [c for c, o in orders.items() if recent(o.get("video_approved_at"))]
+    waiting_script = [c for c, o in orders.items() if o.get("status") == "Chờ duyệt kịch bản"]
+    waiting_video = [c for c, o in orders.items() if o.get("status") == "Chờ duyệt video"]
+    errors = [f"{c} ({o.get('status')})" for c, o in orders.items() if str(o.get("status", "")).startswith("Lỗi")]
+    working = [c for c, o in orders.items() if str(o.get("status", "")).startswith(("Đang", "Chờ viết", "Viết lại",
+                                                                                   "Kịch bản đã duyệt"))]
+    ready = [c for c, o in orders.items() if o.get("status") == "Đã duyệt video"]
+    lines = [f"📊 BÁO CÁO NGÀY {datetime.now():%d/%m/%Y} (24 giờ qua)",
+             f"• Đơn mới: {len(new)}",
+             f"• Kịch bản đã duyệt: {len(scripts_ok)}",
+             f"• Video đã duyệt: {len(videos_ok)}",
+             "",
+             f"⏳ Chờ An duyệt kịch bản: {len(waiting_script)}" + (f" — {', '.join(waiting_script)}" if waiting_script else ""),
+             f"⏳ Chờ An duyệt video: {len(waiting_video)}" + (f" — {', '.join(waiting_video)}" if waiting_video else ""),
+             f"⚙️ Đang xử lý: {len(working)}" + (f" — {', '.join(working)}" if working else ""),
+             f"✅ Video sẵn sàng đăng: {len(ready)}" + (f" — {', '.join(ready)}" if ready else ""),
+             f"🚨 Lỗi cần xử lý: {len(errors)}" + (f" — {', '.join(errors)}" if errors else "")]
+    ok, status = script_writer.claude_status()
+    lines.append("")
+    lines.append(f"{'🟢' if ok else '🔴'} {status}. Bot đang chạy.")
+    if not ok:
+        lines.append("→ Cần đăng nhập lại Claude Code trên máy Cowork thì mới viết được kịch bản.")
+    return "\n".join(lines), today
+
+
+def send_report():
+    text, today = build_report()
+    r = say(CHAT_ID, text, TOPICS.get("bao_cao"))
+    if r.get("ok"):
+        json.dump({"last_report": today}, open(REPORT_STATE, "w", encoding="utf-8"))
+    return r
+
+
+def maybe_report():
+    if datetime.now().hour < REPORT_HOUR:
+        return
+    today = datetime.now().strftime("%Y-%m-%d")
+    last = json.load(open(REPORT_STATE, encoding="utf-8")).get("last_report") if os.path.exists(REPORT_STATE) else None
+    if last != today:
+        send_report()
+
+
 def cmd_run():
     offset = int(open(OFFSET).read()) if os.path.exists(OFFSET) else 0
     me = api("getMe").get("result", {})
@@ -428,6 +493,10 @@ def cmd_run():
     print(f"Bot @{me.get('username')} đang chạy. {status}. Ctrl+C để dừng.")
     while True:
         dispatch_jobs()
+        try:
+            maybe_report()
+        except Exception as e:  # noqa: BLE001
+            print("Lỗi báo cáo:", e)
         res = api("getUpdates", {"timeout": 20, "offset": offset,
                                  "allowed_updates": ["message", "callback_query"]})
         if not res.get("ok"):
