@@ -57,4 +57,4 @@ Lệnh HyperFrames trong mỗi thư mục khuôn: `npx hyperframes check`, `npx 
 - Mỗi bộ phận dạy trong **một cuộc chat riêng**, mở **cùng thư mục** này.
 - **Mỗi buổi phải kết thúc bằng file**: cập nhật file quy chuẩn/khuôn tương ứng + ghi một mục vào `nhat-ky-quyet-dinh.md` (ngày, người dạy, thay đổi gì, việc còn dở).
 - Không để hai người cùng lúc cho Claude sửa cùng một file.
-- Lưu thay đổi bằng Git (kho `github.com/andtptit/agents-tbt`). **Không commit**: `.env`, video/ảnh gốc, bản render, tài liệu nội bộ có chữ ký (đã chặn trong `.gitignore`).
+- Lưu thay đổi bằng Git (kho `github.com/andtptit/agents-tbt`). **Không commit**: `.env`, `noi-bo/`, `data/`, video gốc, bản render, file PDF/Word nội bộ (đã chặn trong `.gitignore`). Ảnh (banner, ảnh thật) **được phép** đưa lên (chốt 12/11/2026).
