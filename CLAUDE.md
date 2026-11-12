@@ -24,11 +24,19 @@ Dự án của TBT Group: hệ thống AI Agent sản xuất và vận hành vid
 6. Ảnh/tên học viên chỉ dùng khi An xác nhận học viên đồng ý.
 7. **Không in, không chép giá trị trong `.env`** (token Vbee, Telegram) vào chat, file, log hay commit.
 
-## Hệ thống đang có (sơ bộ)
+## Hệ thống đang có (sơ bộ — đã chạy trọn vòng 12/11/2026)
 
 ```
-Kịch bản (Claude, theo hướng dẫn) → Giọng (Vbee) → Dựng (HyperFrames) → Duyệt (Telegram) → Ghi trạng thái → [Đăng: chưa có]
+Telegram /tao <chủ đề> → Claude viết kịch bản (tools/script_writer.py) → An duyệt kịch bản
+  → Vbee tạo giọng → HyperFrames dựng video khuôn K4 (tools/video_maker.py) → An duyệt video → [Đăng: chưa có]
+Trả về (kịch bản hoặc video) + lý do → Claude viết lại → chạy lại từ đầu.
 ```
+
+- Bot chạy bằng `python tools/telegram_bot.py run` (phải đang chạy thì dây chuyền mới hoạt động). Trạng thái đơn: `data/orders.json`.
+- Nhóm Telegram "Nhà máy nội dung Thầy Tư" có 5 chủ đề (id trong `data/telegram_topics.json`): Đặt video, Duyệt kịch bản, Duyệt video, Báo cáo, Cảnh báo.
+- Lệnh: `/tao <chủ đề>`, `/cho`, `/ping` (bot + Claude đăng nhập chưa), `/lai <mã>` (viết lại kịch bản), `/dung <mã>` (dựng lại video).
+- Viết kịch bản dùng Claude Code chạy dòng lệnh trên máy (bản đi kèm Claude desktop) — **phải đăng nhập**: `claude.exe auth login`.
+- Theo dõi trên máy: `python tools/theo_doi.py`. Video sinh theo đơn nằm ở `video/jobs/<mã>/` (không đưa lên Git).
 
 | Thành phần | Ở đâu | Ghi chú |
 |---|---|---|

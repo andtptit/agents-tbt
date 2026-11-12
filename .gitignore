@@ -29,3 +29,6 @@ __pycache__/
 *.pyc
 .DS_Store
 Thumbs.db
+
+# --- Video sinh tự động theo từng đơn (tạo lại được từ kịch bản) ---
+video/jobs/

@@ -20,12 +20,17 @@ import json
 import mimetypes
 import os
 import sys
+import threading
 import time
 import urllib.error
 import urllib.parse
 import urllib.request
 import uuid
 from datetime import datetime
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import script_writer  # noqa: E402
+import video_maker  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, "data")
@@ -53,6 +58,28 @@ if not TOKEN:
 API = f"https://api.telegram.org/bot{TOKEN}/"
 CHAT_ID = ENV.get("TELEGRAM_CHAT_ID")
 ALLOWED = {int(x) for x in ENV.get("TELEGRAM_ALLOWED_USERS", "").replace(" ", "").split(",") if x}
+# Chủ đề trong nhóm (tạo bằng API, lưu ở data/telegram_topics.json): dat_video, duyet_kich_ban,
+# duyet_video, bao_cao, canh_bao -> message_thread_id.
+TOPICS_FILE = os.path.join(DATA, "telegram_topics.json")
+TOPICS = ({k: v["thread_id"] for k, v in json.load(open(TOPICS_FILE, encoding="utf-8"))["topics"].items()}
+          if os.path.exists(TOPICS_FILE) else {})
+ORDERS = os.path.join(DATA, "orders.json")
+
+
+def thread_of(m):
+    """Chủ đề (topic) của một tin nhắn, để trả lời đúng chỗ."""
+    return m.get("message_thread_id") if m.get("is_topic_message") else None
+
+
+def say(chat, text, thread=None, reply_to=None, markup=None):
+    p = {"chat_id": chat, "text": text}
+    if thread:
+        p["message_thread_id"] = thread
+    if reply_to:
+        p["reply_to_message_id"] = reply_to
+    if markup:
+        p["reply_markup"] = markup
+    return api("sendMessage", p)
 
 
 def api(method, params=None, timeout=70):
@@ -129,8 +156,10 @@ def cmd_send(path, code, caption):
     if not CHAT_ID:
         sys.exit("Thiếu TELEGRAM_CHAT_ID trong .env (chạy `whoami` để lấy).")
     text = f"🎬 {code}\n{caption}\n\nAI đã chấm: chưa áp dụng (bản sơ bộ)\nBấm Duyệt hoặc Trả về."
-    res = api_upload("sendVideo", {"chat_id": CHAT_ID, "caption": text, "supports_streaming": "true",
-                                   "reply_markup": buttons(code)}, "video", path)
+    fields = {"chat_id": CHAT_ID, "caption": text, "supports_streaming": "true", "reply_markup": buttons(code)}
+    if TOPICS.get("duyet_video"):
+        fields["message_thread_id"] = TOPICS["duyet_video"]
+    res = api_upload("sendVideo", fields, "video", path)
     if not res.get("ok"):
         sys.exit(f"Gửi thất bại: {res.get('description')}")
     q = load_queue()
@@ -140,6 +169,116 @@ def cmd_send(path, code, caption):
     print(f"Đã gửi {code} vào nhóm duyệt.")
 
 
+# ---------- Đơn đặt video (orders) ----------
+ORDERS_LOCK = threading.Lock()
+RUNNING = set()
+
+
+def load_orders():
+    with ORDERS_LOCK:
+        return json.load(open(ORDERS, encoding="utf-8")) if os.path.exists(ORDERS) else {}
+
+
+def update_order(code, **fields):
+    with ORDERS_LOCK:
+        orders = json.load(open(ORDERS, encoding="utf-8")) if os.path.exists(ORDERS) else {}
+        orders.setdefault(code, {}).update(fields)
+        json.dump(orders, open(ORDERS, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+        return orders[code]
+
+
+def progress(code, text):
+    """Cập nhật dòng tiến độ ngay trên tin nhắn xác nhận đơn (chủ đề Đặt video)."""
+    o = load_orders().get(code, {})
+    full = f"📥 Đơn {code}: «{o.get('topic', '')}»\n{text}"
+    if o.get("ack_id"):
+        api("editMessageText", {"chat_id": CHAT_ID, "message_id": o["ack_id"], "text": full})
+    else:
+        r = say(CHAT_ID, full, TOPICS.get("dat_video"))
+        if r.get("ok"):
+            update_order(code, ack_id=r["result"]["message_id"])
+
+
+def script_buttons(code):
+    return {"inline_keyboard": [[{"text": "✅ Duyệt kịch bản", "callback_data": f"ks_ok|{code}"},
+                                 {"text": "↩️ Trả về", "callback_data": f"ks_back|{code}"}]]}
+
+
+def write_script_job(code):
+    o = load_orders()[code]
+    rewrite = o.get("status") == "Viết lại kịch bản"
+    start = datetime.now().strftime("%H:%M")
+    update_order(code, status="Đang viết kịch bản")
+    progress(code, f"⏳ Claude đang {'viết lại' if rewrite else 'viết'} kịch bản… (bắt đầu {start}, thường 1–3 phút)")
+    try:
+        s = script_writer.write_script(o["topic"], o.get("channel", "Tiếng Hàn Thầy Tư"),
+                                       feedback=o.get("feedback") if rewrite else None,
+                                       previous=o.get("script") if rewrite else None)
+        r = say(CHAT_ID, script_writer.format_script(code, s), TOPICS.get("duyet_kich_ban"),
+                markup=script_buttons(code))
+        if not r.get("ok"):
+            raise RuntimeError(f"Gửi Telegram lỗi: {r.get('description')}")
+        version = o.get("script_version", 0) + 1
+        update_order(code, status="Chờ duyệt kịch bản", script=s, script_version=version,
+                     script_msg_id=r["result"]["message_id"], script_at=now())
+        progress(code, f"✅ Kịch bản bản {version} đã gửi sang ✍️ Duyệt kịch bản lúc {datetime.now():%H:%M}.")
+    except Exception as e:  # noqa: BLE001
+        update_order(code, status="Lỗi viết kịch bản", error=str(e)[:300])
+        progress(code, f"⚠️ Chưa viết được kịch bản: {str(e)[:200]}\nSửa xong gõ /lai {code} để chạy lại.")
+        say(CHAT_ID, f"🚨 {code}: lỗi khi viết kịch bản — {str(e)[:300]}", TOPICS.get("canh_bao"))
+    finally:
+        RUNNING.discard(code)
+
+
+def video_buttons(code):
+    return {"inline_keyboard": [[{"text": "✅ Duyệt video", "callback_data": f"vd_ok|{code}"},
+                                 {"text": "↩️ Trả về", "callback_data": f"vd_back|{code}"}]]}
+
+
+def make_video_job(code):
+    o = load_orders()[code]
+    start = datetime.now().strftime("%H:%M")
+    update_order(code, status="Đang dựng video")
+    try:
+        path, total = video_maker.make_video(
+            code, o["script"], log=lambda msg: progress(code, f"{msg} (bắt đầu {start}, thường 2–4 phút)"))
+        s = o["script"]
+        caption = (f"🎬 {code} — {s.get('title', '')}\n{total:.0f} giây · khuôn {s.get('template', 'K4')} · giọng Vbee\n"
+                   f"Kịch bản đã duyệt bởi {o.get('script_approved_by', '?')}.\nBấm Duyệt hoặc Trả về.")
+        fields = {"chat_id": CHAT_ID, "caption": caption[:1000], "supports_streaming": "true",
+                  "reply_markup": video_buttons(code)}
+        if TOPICS.get("duyet_video"):
+            fields["message_thread_id"] = TOPICS["duyet_video"]
+        r = api_upload("sendVideo", fields, "video", path)
+        if not r.get("ok"):
+            raise RuntimeError(f"Gửi video lỗi: {r.get('description')}")
+        update_order(code, status="Chờ duyệt video", video=os.path.relpath(path, ROOT), video_s=round(total, 1),
+                     video_msg_id=r["result"]["message_id"], video_at=now())
+        progress(code, f"✅ Video {total:.0f}s đã gửi sang 🎬 Duyệt video lúc {datetime.now():%H:%M}.")
+    except Exception as e:  # noqa: BLE001
+        update_order(code, status="Lỗi dựng video", error=str(e)[:300])
+        progress(code, f"⚠️ Chưa dựng được video: {str(e)[:200]}\nGõ /dung {code} để thử lại.")
+        say(CHAT_ID, f"🚨 {code}: lỗi khi dựng video — {str(e)[:300]}", TOPICS.get("canh_bao"))
+    finally:
+        RUNNING.discard(code)
+
+
+def dispatch_jobs():
+    for code, o in load_orders().items():
+        if code in RUNNING:
+            continue
+        if o.get("status") in ("Chờ viết kịch bản", "Viết lại kịch bản"):
+            RUNNING.add(code)
+            threading.Thread(target=write_script_job, args=(code,), daemon=True).start()
+        elif o.get("status") == "Kịch bản đã duyệt":
+            RUNNING.add(code)
+            threading.Thread(target=make_video_job, args=(code,), daemon=True).start()
+
+
+def person(u):
+    return (u.get("first_name", "") + " " + u.get("last_name", "")).strip()
+
+
 def handle_callback(cb, q):
     user = cb["from"]
     if ALLOWED and user["id"] not in ALLOWED:
@@ -147,31 +286,72 @@ def handle_callback(cb, q):
                                     "show_alert": True})
         return
     action, code = cb["data"].split("|", 1)
-    name = (user.get("first_name", "") + " " + user.get("last_name", "")).strip()
+    name = person(user)
+    msg = cb["message"]
+
+    def mark(label):
+        api("editMessageReplyMarkup", {"chat_id": msg["chat"]["id"], "message_id": msg["message_id"],
+                                       "reply_markup": {"inline_keyboard": [[{"text": label, "callback_data": "noop|x"}]]}})
+
+    if action in ("vd_ok", "vd_back"):
+        if code not in load_orders():
+            api("answerCallbackQuery", {"callback_query_id": cb["id"], "text": "Không tìm thấy đơn này."})
+            return
+        if action == "vd_ok":
+            update_order(code, status="Đã duyệt video", video_approved_by=name, video_approved_at=now())
+            mark(f"✅ {name} đã duyệt video")
+            api("answerCallbackQuery", {"callback_query_id": cb["id"], "text": "Đã duyệt video"})
+            say(msg["chat"]["id"], f"✅ Video {code} đã được {name} duyệt lúc {now()}.\n"
+                                   "Video sẵn sàng đăng (đăng tự động lên Facebook/TikTok sẽ nối khi có Meta App).",
+                thread_of(msg), msg["message_id"])
+            progress(code, f"🎉 Video đã được {name} duyệt lúc {datetime.now():%H:%M}. Sẵn sàng đăng.")
+        else:
+            ask = say(msg["chat"]["id"], f"↩️ {code}: {name} ơi, trả lời tin nhắn này kèm lý do cần sửa video nhé.",
+                      thread_of(msg), msg["message_id"], {"force_reply": True, "selective": True})
+            update_order(code, status="Trả về video (chờ lý do)", reason_kind="video",
+                         reason_prompt_id=ask.get("result", {}).get("message_id"))
+            mark(f"↩️ {name} đã trả về")
+            api("answerCallbackQuery", {"callback_query_id": cb["id"], "text": "Gửi lý do giúp mình nhé"})
+        return
+
+    if action in ("ks_ok", "ks_back"):
+        if code not in load_orders():
+            api("answerCallbackQuery", {"callback_query_id": cb["id"], "text": "Không tìm thấy đơn này."})
+            return
+        if action == "ks_ok":
+            update_order(code, status="Kịch bản đã duyệt", script_approved_by=name, script_approved_at=now())
+            mark(f"✅ {name} đã duyệt kịch bản")
+            api("answerCallbackQuery", {"callback_query_id": cb["id"], "text": "Đã duyệt kịch bản"})
+            say(msg["chat"]["id"], f"✅ Kịch bản {code} đã được {name} duyệt lúc {now()}.\n"
+                                   "Hệ thống đang tạo giọng và dựng video, xong sẽ gửi sang 🎬 Duyệt video.",
+                thread_of(msg), msg["message_id"])
+            progress(code, f"✅ Kịch bản đã được {name} duyệt lúc {datetime.now():%H:%M}. Đang xếp hàng dựng video…")
+        else:
+            ask = say(msg["chat"]["id"], f"↩️ {code}: {name} ơi, trả lời tin nhắn này kèm lý do cần sửa kịch bản nhé.",
+                      thread_of(msg), msg["message_id"], {"force_reply": True, "selective": True})
+            update_order(code, status="Trả về kịch bản (chờ lý do)",
+                         reason_prompt_id=ask.get("result", {}).get("message_id"))
+            mark(f"↩️ {name} đã trả về")
+            api("answerCallbackQuery", {"callback_query_id": cb["id"], "text": "Gửi lý do giúp mình nhé"})
+        return
+
     item = q.get(code)
     if not item:
-        api("answerCallbackQuery", {"callback_query_id": cb["id"], "text": "Không tìm thấy video này."})
+        api("answerCallbackQuery", {"callback_query_id": cb["id"]})
         return
-    msg = cb["message"]
     if action == "ok":
         item["status"] = "Đã duyệt"
         item["history"].append({"at": now(), "by": name, "action": "Duyệt"})
-        api("editMessageReplyMarkup", {"chat_id": msg["chat"]["id"], "message_id": msg["message_id"],
-                                       "reply_markup": {"inline_keyboard": [[{"text": f"✅ {name} đã duyệt",
-                                                                              "callback_data": "noop|x"}]]}})
+        mark(f"✅ {name} đã duyệt")
         api("answerCallbackQuery", {"callback_query_id": cb["id"], "text": "Đã duyệt"})
-        api("sendMessage", {"chat_id": msg["chat"]["id"], "reply_to_message_id": msg["message_id"],
-                            "text": f"✅ {code} đã được {name} duyệt lúc {now()}."})
+        say(msg["chat"]["id"], f"✅ {code} đã được {name} duyệt lúc {now()}.", thread_of(msg), msg["message_id"])
     elif action == "back":
         item["status"] = "Trả về (chờ lý do)"
         item["history"].append({"at": now(), "by": name, "action": "Trả về"})
-        ask = api("sendMessage", {"chat_id": msg["chat"]["id"], "reply_to_message_id": msg["message_id"],
-                                  "text": f"↩️ {code}: {name} ơi, trả lời tin nhắn này kèm lý do cần sửa nhé.",
-                                  "reply_markup": {"force_reply": True, "selective": True}})
+        ask = say(msg["chat"]["id"], f"↩️ {code}: {name} ơi, trả lời tin nhắn này kèm lý do cần sửa nhé.",
+                  thread_of(msg), msg["message_id"], {"force_reply": True, "selective": True})
         item["reason_prompt_id"] = ask.get("result", {}).get("message_id")
-        api("editMessageReplyMarkup", {"chat_id": msg["chat"]["id"], "message_id": msg["message_id"],
-                                       "reply_markup": {"inline_keyboard": [[{"text": f"↩️ {name} đã trả về",
-                                                                              "callback_data": "noop|x"}]]}})
+        mark(f"↩️ {name} đã trả về")
         api("answerCallbackQuery", {"callback_query_id": cb["id"], "text": "Gửi lý do giúp mình nhé"})
     else:
         api("answerCallbackQuery", {"callback_query_id": cb["id"]})
@@ -182,31 +362,73 @@ def handle_message(m, q):
     text = (m.get("text") or "").strip()
     chat = m["chat"]["id"]
     reply_to = (m.get("reply_to_message") or {}).get("message_id")
+    allowed = not ALLOWED or m["from"]["id"] in ALLOWED
     if reply_to:
+        for code, o in load_orders().items():
+            if o.get("reason_prompt_id") == reply_to and allowed:
+                fb = f"(Góp ý sau khi xem video) {text}" if o.get("reason_kind") == "video" else text
+                update_order(code, status="Viết lại kịch bản", feedback=fb, reason_prompt_id=None, reason_kind=None)
+                say(chat, f"Đã ghi lý do cho {code}. Claude sẽ viết lại kịch bản theo góp ý, "
+                          "gửi sang ✍️ Duyệt kịch bản rồi dựng lại video.", thread_of(m), m["message_id"])
+                return
         for code, item in q.items():
-            if item.get("reason_prompt_id") == reply_to:
-                if ALLOWED and m["from"]["id"] not in ALLOWED:
-                    return
+            if item.get("reason_prompt_id") == reply_to and allowed:
                 item["status"] = "Trả về"
                 item["return_reason"] = text
-                item["history"].append({"at": now(), "by": (m["from"].get("first_name", "") + " " + m["from"].get("last_name", "")).strip(), "reason": text})
+                item["history"].append({"at": now(), "by": person(m["from"]), "reason": text})
                 save_queue(q)
-                api("sendMessage", {"chat_id": chat, "reply_to_message_id": m["message_id"],
-                                    "text": f"Đã ghi lý do cho {code}. Hệ thống sẽ sửa và gửi lại bản mới."})
+                say(chat, f"Đã ghi lý do cho {code}. Hệ thống sẽ sửa và gửi lại bản mới.",
+                    thread_of(m), m["message_id"])
                 return
-    if text.startswith("/ping"):
-        api("sendMessage", {"chat_id": chat, "text": f"🟢 Bot đang chạy ({now()})."})
-    elif text.startswith("/cho"):
+    cmd = text.split("@", 1)[0].split(" ", 1)[0].lower() if text.startswith("/") else ""
+    arg = text.split(" ", 1)[1].strip() if " " in text else ""
+    if cmd == "/ping":
+        ok, status = script_writer.claude_status()
+        busy = ", ".join(sorted(RUNNING)) or "không có"
+        say(chat, f"🟢 Bot đang chạy ({now()}).\n{'🟢' if ok else '🔴'} {status}.\nĐang xử lý: {busy}.", thread_of(m))
+    elif cmd == "/cho":
         pending = [f"• {c}: {v['status']}" for c, v in q.items() if v["status"] != "Đã duyệt"]
-        api("sendMessage", {"chat_id": chat, "text": "\n".join(pending) or "Không có video nào đang chờ."})
+        pending += [f"• {c}: {o['status']} — {o['topic']}" for c, o in load_orders().items()
+                    if o["status"] not in ("Đã duyệt video", "Hủy")]
+        say(chat, "\n".join(pending) or "Không có việc nào đang chờ.", thread_of(m))
+    elif cmd == "/dung":
+        if allowed and arg in load_orders() and load_orders()[arg].get("script"):
+            update_order(arg, status="Kịch bản đã duyệt", error=None)
+            say(chat, f"🔁 Đã xếp lại {arg} để dựng video.", thread_of(m), m["message_id"])
+        else:
+            say(chat, "Gõ /dung <mã đơn> (đơn đã có kịch bản duyệt).", thread_of(m), m["message_id"])
+    elif cmd == "/lai":
+        if allowed and arg in load_orders():
+            update_order(arg, status="Chờ viết kịch bản", error=None)
+            say(chat, f"🔁 Đã xếp lại {arg} để Claude viết kịch bản.", thread_of(m), m["message_id"])
+        else:
+            say(chat, "Gõ /lai <mã đơn>, ví dụ /lai TH-261112-01", thread_of(m), m["message_id"])
+    elif cmd == "/tao":
+        if not allowed:
+            say(chat, "Bạn chưa có quyền đặt video.", thread_of(m), m["message_id"])
+            return
+        if not arg:
+            say(chat, "Gõ kèm chủ đề, ví dụ:\n/tao Học 1 từ biết thêm 5 từ (gốc Hán Hàn)", thread_of(m),
+                m["message_id"])
+            return
+        day = datetime.now().strftime("%y%m%d")
+        n = 1 + sum(1 for c in load_orders() if c.startswith(f"TH-{day}-"))
+        code = f"TH-{day}-{n:02d}"
+        r = say(chat, f"📥 Đơn {code}: «{arg}»\n🕒 Đã nhận, đang xếp hàng cho Claude viết kịch bản…",
+                thread_of(m), m["message_id"])
+        update_order(code, topic=arg, channel="Tiếng Hàn Thầy Tư", status="Chờ viết kịch bản",
+                     by=person(m["from"]), at=now(), order_message_id=m["message_id"],
+                     ack_id=r.get("result", {}).get("message_id"))
 
 
 def cmd_run():
     offset = int(open(OFFSET).read()) if os.path.exists(OFFSET) else 0
     me = api("getMe").get("result", {})
-    print(f"Bot @{me.get('username')} đang chạy. Ctrl+C để dừng.")
+    ok, status = script_writer.claude_status()
+    print(f"Bot @{me.get('username')} đang chạy. {status}. Ctrl+C để dừng.")
     while True:
-        res = api("getUpdates", {"timeout": 50, "offset": offset,
+        dispatch_jobs()
+        res = api("getUpdates", {"timeout": 20, "offset": offset,
                                  "allowed_updates": ["message", "callback_query"]})
         if not res.get("ok"):
             print("Lỗi:", res.get("description"))
