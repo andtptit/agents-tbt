@@ -12,6 +12,7 @@ Dự án của TBT Group: hệ thống AI Agent sản xuất và vận hành vid
 | `brand.md` | **Nguồn sự thật**: định vị 2 kênh, bảng giá (07/BG-TBT), màu, font, logo, giọng Vbee + từ điển phát âm, quy tắc bắt buộc, quyết định vận hành |
 | `phong-cach-tieng-han.md` | Ngôn ngữ hình ảnh kênh Tiếng Hàn (phân tích từ 11 video, 9 banner) |
 | `huong-dan-kich-ban-tieng-han.md` | Công thức kịch bản kênh Tiếng Hàn + mẫu + điều cấm |
+| `PLAYBOOK.md` | Cách làm tổng quát (nguyên tắc, mẫu brand book, chia agent, vận hành) — dùng lại cho dự án khác |
 | `nhat-ky-quyet-dinh.md` | Ai chốt gì, khi nào — **ghi thêm vào đây sau mỗi buổi làm việc** |
 | `huong-dan-dao-tao/` | Đề bài cho các buổi bộ phận chuyên môn "dạy" hệ thống |
 
