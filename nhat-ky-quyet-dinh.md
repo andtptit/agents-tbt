@@ -4,6 +4,18 @@
 
 ---
 
+## 12/11/2026 (chiều) — Hệ thống sơ bộ chạy trọn vòng
+
+- Telegram: nhóm "Nhà máy nội dung Thầy Tư" chia 5 chủ đề; bot tự chạy cùng Windows (trình giám sát), báo cáo 8h sáng.
+- Dây chuyền: `/tao` → Claude viết kịch bản → An duyệt → Vbee giọng → HyperFrames dựng (K4) → An duyệt → **đăng Facebook** (đăng ngay / lên lịch 20:00 / nháp).
+- Đơn đầu tiên TH-261112-03 «chào hỏi tiếng Hàn» đã **đăng thật lên page thử nghiệm "Calio test"** lúc 16:57.
+- Vbee: không giữ được nghỉ đoạn → chuyển sang mỗi câu một yêu cầu, cắt trước câu đệm.
+- Meta: đang dùng token người dùng (app n8n-api) cho page test. **Chưa có App Secret** → token hết hạn trong ngày.
+
+**Còn dở:** thêm META_APP_SECRET để token không hết hạn; chuyển sang System User + 2 fanpage thật (cần quyền Admin Business Portfolio); thu hẹp quyền token (đang cấp 16 page); Notion; kênh Du học; buổi dạy thiết kế.
+
+---
+
 ## 12/11/2026 — Buổi làm việc đầu tiên (Quản lý dự án + Claude)
 
 **Phạm vi:** chỉ tập trung 2 kênh Tiếng Hàn Thầy Tư (PC02) và Du học Thầy Tư (PC01).
