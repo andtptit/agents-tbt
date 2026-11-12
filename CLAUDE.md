@@ -32,7 +32,8 @@ Telegram /tao <chủ đề> → Claude viết kịch bản (tools/script_writer.
 Trả về (kịch bản hoặc video) + lý do → Claude viết lại → chạy lại từ đầu.
 ```
 
-- Bot chạy bằng `python tools/telegram_bot.py run` (phải đang chạy thì dây chuyền mới hoạt động). Trạng thái đơn: `data/orders.json`.
+- Bot **tự chạy cùng Windows**: file `ThayTu-Bot.vbs` trong thư mục Startup gọi `tools/giam_sat_bot.py` (ẩn cửa sổ, tự khởi động lại bot, một bản duy nhất). Nhật ký: `data/bot.log`. Sau khi sửa code bot phải khởi động lại: tắt tiến trình `python.exe … telegram_bot.py run` (trình giám sát tự bật lại sau 10 giây). **Không** chạy thêm `telegram_bot.py run` bằng tay khi giám sát đang chạy. Trạng thái đơn: `data/orders.json`.
+- Báo cáo ngày gửi lúc 8h vào chủ đề 📊 Báo cáo (`/baocao` để gửi ngay).
 - Nhóm Telegram "Nhà máy nội dung Thầy Tư" có 5 chủ đề (id trong `data/telegram_topics.json`): Đặt video, Duyệt kịch bản, Duyệt video, Báo cáo, Cảnh báo.
 - Lệnh: `/tao <chủ đề>`, `/cho`, `/ping` (bot + Claude đăng nhập chưa), `/lai <mã>` (viết lại kịch bản), `/dung <mã>` (dựng lại video).
 - Viết kịch bản dùng Claude Code chạy dòng lệnh trên máy (bản đi kèm Claude desktop) — **phải đăng nhập**: `claude.exe auth login`.
