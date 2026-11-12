@@ -1,0 +1,101 @@
+<template>
+  <style>
+    @font-face { font-family: "BVP"; src: url("assets/fonts/BeVietnamPro-Black.ttf"); font-weight: 900; }
+    @font-face { font-family: "BVP"; src: url("assets/fonts/BeVietnamPro-ExtraBold.ttf"); font-weight: 800; }
+    @font-face { font-family: "BVP"; src: url("assets/fonts/BeVietnamPro-Bold.ttf"); font-weight: 700; }
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      font-family: "BVP", sans-serif;
+      background: linear-gradient(180deg, #1e6fe8 0%, #3f8ff0 55%, #6fbcf5 100%);
+    }
+    .hk-cloud {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(closest-side, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0));
+    }
+    #hk-cloud-a { width: 900px; height: 420px; left: -260px; top: 1380px; }
+    #hk-cloud-b { width: 760px; height: 360px; left: 520px; top: 1500px; }
+    #hk-cloud-c { width: 620px; height: 300px; left: 560px; top: 260px; opacity: 0.6; }
+    #hk-logo { position: absolute; top: 196px; right: 56px; width: 150px; height: 150px; }
+    #hk-block {
+      position: absolute;
+      left: 60px;
+      right: 60px;
+      top: 560px;
+      text-align: center;
+    }
+    .hk-big {
+      display: block;
+      font-weight: 900;
+      font-size: 128px;
+      line-height: 1.24;
+      white-space: nowrap;
+      color: #e81e37;
+      -webkit-text-stroke: 26px #ffffff;
+      paint-order: stroke fill;
+      text-shadow: 0 0 34px rgba(255, 92, 140, 0.75);
+      letter-spacing: -0.01em;
+    }
+    #hk-sub {
+      display: block;
+      margin-top: 40px;
+      font-weight: 800;
+      font-size: 60px;
+      line-height: 1.3;
+      text-wrap: balance;
+      color: #ffffff;
+      -webkit-text-stroke: 14px #e81e37;
+      paint-order: stroke fill;
+    }
+    .hk-q {
+      position: absolute;
+      font-weight: 900;
+      font-size: 120px;
+      color: #ffe360;
+      -webkit-text-stroke: 10px #16245c;
+      paint-order: stroke fill;
+    }
+    #hk-q1 { left: 92px; top: 470px; }
+    #hk-q2 { right: 120px; top: 1150px; }
+    #hk-q3 { left: 170px; top: 1190px; font-size: 90px; }
+  </style>
+  <div
+    id="root"
+    data-composition-id="hook"
+    data-width="1080"
+    data-height="1920"
+    data-composition-variables='[{"id":"hook_1","type":"string","label":"Hook dòng 1","default":"MẤT GỐC"},{"id":"hook_2","type":"string","label":"Hook dòng 2","default":"TIẾNG HÀN?"},{"id":"hook_sub","type":"string","label":"Dòng phụ","default":"Lộ trình chinh phục TOPIK 4 từ số 0"}]'
+  >
+    <div id="hk-cloud-a" class="hk-cloud"></div>
+    <div id="hk-cloud-b" class="hk-cloud"></div>
+    <div id="hk-cloud-c" class="hk-cloud"></div>
+    <img id="hk-logo" src="assets/logo/tt-tron.png" alt="Logo Tiếng Hàn Thầy Tư" />
+    <span id="hk-q1" class="hk-q">?</span>
+    <span id="hk-q2" class="hk-q">?</span>
+    <span id="hk-q3" class="hk-q">?</span>
+    <div id="hk-block" data-layout-allow-overlap>
+      <span id="hk-line1" class="hk-big" data-var-text="hook_1">MẤT GỐC</span>
+      <span id="hk-line2" class="hk-big" data-var-text="hook_2">TIẾNG HÀN?</span>
+      <span id="hk-sub" data-var-text="hook_sub">Lộ trình chinh phục TOPIK 4 từ số 0</span>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    // Frame 0 already shows the hook (thumbnail): only a punch-in, no fade from nothing.
+    tl.fromTo("#hk-line1", { scale: 1.14 }, { scale: 1, duration: 0.32, ease: "power3.out" }, 0);
+    tl.fromTo("#hk-line2", { scale: 1.14 }, { scale: 1, duration: 0.32, ease: "power3.out" }, 0.06);
+    tl.fromTo("#hk-sub", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, 0.45);
+    tl.fromTo("#hk-q1", { opacity: 0, scale: 0.3, rotation: -30 }, { opacity: 1, scale: 1, rotation: -12, duration: 0.28, ease: "back.out(2.2)" }, 0.7);
+    tl.fromTo("#hk-q2", { opacity: 0, scale: 0.3, rotation: 30 }, { opacity: 1, scale: 1, rotation: 14, duration: 0.28, ease: "back.out(2.2)" }, 0.9);
+    tl.fromTo("#hk-q3", { opacity: 0, scale: 0.3, rotation: -20 }, { opacity: 1, scale: 1, rotation: -6, duration: 0.28, ease: "back.out(2.2)" }, 1.1);
+    tl.fromTo(".hk-q", { y: 0 }, { y: -18, duration: 1.6, ease: "sine.inOut" }, 1.4);
+    tl.fromTo("#hk-cloud-a", { x: 0 }, { x: 60, duration: 3.6, ease: "none" }, 0);
+    tl.fromTo("#hk-cloud-b", { x: 0 }, { x: -50, duration: 3.6, ease: "none" }, 0);
+    tl.fromTo("#hk-cloud-c", { x: 0 }, { x: -40, duration: 3.6, ease: "none" }, 0);
+    tl.fromTo("#hk-block", { opacity: 1, scale: 1 }, { opacity: 0, scale: 0.92, duration: 0.22, ease: "power2.in", immediateRender: false }, 3.3);
+    tl.fromTo(".hk-q", { opacity: 1 }, { opacity: 0, duration: 0.18, ease: "power2.in", immediateRender: false }, 3.3);
+    window.__timelines["hook"] = tl;
+  </script>
+</template>

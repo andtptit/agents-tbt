@@ -1,0 +1,15 @@
+VIDEO THAM KHẢO (kênh khác cũng được)
+Mỗi dòng: link | bạn thích điểm gì
+
+1. https:// | 
+2. https:// | 
+3. https:// | 
+4. https:// | 
+5. https:// | 
+
+
+VIDEO/BANNER CỦA 2 KÊNH (nếu chỉ có link, không có file)
+Mỗi dòng: kênh | link | ghi chú (vì sao hiệu quả)
+
+- Tiếng Hàn | https:// | 
+- Du học    | https:// | 

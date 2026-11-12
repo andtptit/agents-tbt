@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>K5 Kết quả học viên – Tiếng Hàn Thầy Tư</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <style>
+      /* Khuôn K5 "Kết quả học viên" – kênh Tiếng Hàn Thầy Tư.
+         Ảnh thật trong assets/img, lời cảm nhận trích nguyên văn (website), giọng Vbee voice_id_dh.
+         Nội dung từng cảnh: data-variable-values của mỗi host. Giọng: các <audio> cuối file.
+         ⚠ Trước khi đăng: An xác nhận học viên đồng ý công khai tên + kết quả. */
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #1e6fe8; }
+      #root { position: relative; width: 100%; height: 100%; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="27.6" data-width="1080" data-height="1920">
+      <div
+        id="hook" class="clip"
+        data-composition-id="hook" data-composition-src="compositions/hook.html"
+        data-start="0" data-duration="3.2" data-track-index="1" data-track-kind="graphics"
+        data-width="1080" data-height="1920"
+        data-variable-values='{"hook_1":"HỌC VIÊN NÓI GÌ","hook_2":"SAU KỲ THI TOPIK?","photo":"assets/img/vinh-danh.jpg","photo_cap":"Vinh danh học viên chinh phục TOPIK"}'
+      ></div>
+      <div
+        id="chat" class="clip"
+        data-composition-id="chat" data-composition-src="compositions/chat.html"
+        data-start="3.2" data-duration="11.6" data-track-index="1" data-track-kind="graphics"
+        data-width="1080" data-height="1920"
+      ></div>
+      <div
+        id="stat" class="clip"
+        data-composition-id="stat" data-composition-src="compositions/stat.html"
+        data-start="14.8" data-duration="4.4" data-track-index="1" data-track-kind="graphics"
+        data-width="1080" data-height="1920"
+        data-variable-values='{"num":12000,"num_suffix":"+","label":"học viên đã đồng hành","pill":"10 NĂM GIẢNG DẠY"}'
+      ></div>
+      <div
+        id="cta" class="clip"
+        data-composition-id="cta" data-composition-src="compositions/cta.html"
+        data-start="19.2" data-duration="5.6" data-track-index="1" data-track-kind="graphics"
+        data-width="1080" data-height="1920"
+        data-variable-values='{"cta_head":"Nhận lộ trình học miễn phí","cta_action":"Nhắn tin ngay","cta_or":"hoặc gọi tổng đài","cta_phone":"1900 4403"}'
+      ></div>
+      <div
+        id="endcard" class="clip"
+        data-composition-id="endcard" data-composition-src="compositions/endcard.html"
+        data-start="24.8" data-duration="2.8" data-track-index="1" data-track-kind="graphics"
+        data-width="1080" data-height="1920"
+        data-variable-values='{"ec_name":"TIẾNG HÀN VÀ DU HỌC\nTHẦY TƯ","ec_hotline":"HOTLINE: 0967 593 548"}'
+      ></div>
+
+      <!-- Giọng đọc Vbee (voice_id_dh), mỗi câu một file để khớp từng cảnh -->
+      <audio id="vo-s1" src="assets/audio/s1.mp3" data-start="0.2" data-duration="2.14" data-track-index="5" data-volume="1"></audio>
+      <audio id="vo-s2a" src="assets/audio/s2a.mp3" data-start="3.5" data-duration="3.79" data-track-index="5" data-volume="1"></audio>
+      <audio id="vo-s2b" src="assets/audio/s2b.mp3" data-start="7.7" data-duration="2.97" data-track-index="5" data-volume="1"></audio>
+      <audio id="vo-s2c" src="assets/audio/s2c.mp3" data-start="10.75" data-duration="2.66" data-track-index="5" data-volume="1"></audio>
+      <audio id="vo-s3" src="assets/audio/s3.mp3" data-start="15.3" data-duration="3.49" data-track-index="5" data-volume="1"></audio>
+      <audio id="vo-s4" src="assets/audio/s4.mp3" data-start="19.4" data-duration="5.24" data-track-index="5" data-volume="1"></audio>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = gsap.timeline({ paused: true });
+    </script>
+  </body>
+</html>

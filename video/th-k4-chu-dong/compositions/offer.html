@@ -1,0 +1,132 @@
+<template>
+  <style>
+    @font-face { font-family: "BVP"; src: url("assets/fonts/BeVietnamPro-Black.ttf"); font-weight: 900; }
+    @font-face { font-family: "BVP"; src: url("assets/fonts/BeVietnamPro-ExtraBold.ttf"); font-weight: 800; }
+    @font-face { font-family: "BVP"; src: url("assets/fonts/BeVietnamPro-SemiBold.ttf"); font-weight: 600; }
+    @font-face { font-family: "BVP"; src: url("assets/fonts/BeVietnamPro-Medium.ttf"); font-weight: 500; }
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      font-family: "BVP", sans-serif;
+      background: linear-gradient(180deg, #1e6fe8 0%, #3f8ff0 55%, #6fbcf5 100%);
+    }
+    #of-logo { position: absolute; top: 196px; right: 56px; width: 150px; height: 150px; }
+    #of-badge {
+      position: absolute;
+      left: 150px;
+      right: 150px;
+      top: 390px;
+      padding: 34px 20px 30px;
+      border-radius: 40px;
+      background: #ffe360;
+      text-align: center;
+      box-shadow: 0 16px 0 #263e8b;
+    }
+    #of-badge-top {
+      display: block;
+      color: #263e8b;
+      font-weight: 900;
+      font-size: 52px;
+      line-height: 1.2;
+      letter-spacing: 0.02em;
+    }
+    #of-badge-main {
+      display: block;
+      color: #e81e37;
+      font-weight: 900;
+      font-size: 136px;
+      line-height: 1.08;
+      white-space: nowrap;
+    }
+    #of-label {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 850px;
+      text-align: center;
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 48px;
+      line-height: 1.3;
+    }
+    #of-price {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 920px;
+      text-align: center;
+      color: #ffffff;
+      font-weight: 900;
+      font-size: 128px;
+      white-space: nowrap;
+      line-height: 1.15;
+      -webkit-text-stroke: 14px #263e8b;
+      paint-order: stroke fill;
+    }
+    #of-pill {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 1130px;
+      text-align: center;
+    }
+    #of-pill span {
+      display: inline-block;
+      padding: 16px 36px;
+      border-radius: 999px;
+      background: #e81e37;
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 40px;
+      line-height: 1.25;
+    }
+    #of-note {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 1240px;
+      text-align: center;
+      font-weight: 500;
+      font-size: 30px;
+      line-height: 1.3;
+    }
+    #of-note span {
+      display: inline-block;
+      padding: 8px 22px;
+      border-radius: 14px;
+      background: rgba(20, 36, 96, 0.72);
+      color: #ffffff;
+    }
+  </style>
+  <div
+    id="root"
+    data-composition-id="offer"
+    data-width="1080"
+    data-height="1920"
+    data-composition-variables='[{"id":"badge_top","type":"string","label":"Huy hiệu dòng trên","default":"CAM KẾT ĐẦU RA"},{"id":"badge_main","type":"string","label":"Huy hiệu chính","default":"TOPIK 3+"},{"id":"price_label","type":"string","label":"Nhãn giá","default":"Học phí trọn lộ trình online"},{"id":"price","type":"string","label":"Học phí (lấy từ bảng giá)","default":"18.000.000đ"},{"id":"perk","type":"string","label":"Quyền lợi","default":"Đã gồm giáo trình · gửi tận nhà"},{"id":"note","type":"string","label":"Ghi chú pháp lý","default":"Cam kết áp dụng theo điều khoản khóa học"}]'
+  >
+    <img id="of-logo" src="assets/logo/tt-tron.png" alt="Logo Tiếng Hàn Thầy Tư" />
+    <div id="of-badge">
+      <span id="of-badge-top" data-var-text="badge_top">CAM KẾT ĐẦU RA</span>
+      <span id="of-badge-main" data-var-text="badge_main">TOPIK 3+</span>
+    </div>
+    <div id="of-label" data-var-text="price_label">Học phí trọn lộ trình online</div>
+    <div id="of-price" data-var-text="price">18.000.000đ</div>
+    <div id="of-pill"><span data-var-text="perk">Đã gồm giáo trình · gửi tận nhà</span></div>
+    <div id="of-note"><span data-var-text="note">Cam kết áp dụng theo điều khoản khóa học</span></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    // Stamp: the commitment lands like a seal.
+    tl.fromTo("#of-badge", { opacity: 0, scale: 1.7, rotation: -10 }, { opacity: 1, scale: 1, rotation: -3, duration: 0.34, ease: "back.out(1.6)" }, 0.05);
+    tl.fromTo("#of-badge-main", { scale: 1 }, { scale: 1.08, duration: 0.2, ease: "power2.out" }, 0.5);
+    tl.fromTo("#of-badge-main", { scale: 1.08 }, { scale: 1, duration: 0.3, ease: "power2.inOut", immediateRender: false }, 0.7);
+    tl.fromTo("#of-label", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.28, ease: "power3.out" }, 1.0);
+    tl.fromTo("#of-price", { opacity: 0, y: 60, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.38, ease: "power3.out" }, 1.2);
+    tl.fromTo("#of-pill span", { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)" }, 1.75);
+    tl.fromTo("#of-note", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power1.out" }, 1.6);
+    tl.fromTo(["#of-badge", "#of-label", "#of-price", "#of-pill", "#of-note"], { opacity: 1 }, { opacity: 0, duration: 0.22, ease: "power2.in", immediateRender: false }, 4.6);
+    window.__timelines["offer"] = tl;
+  </script>
+</template>

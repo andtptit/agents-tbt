@@ -1,0 +1,37 @@
+# --- Bí mật: KHÔNG BAO GIỜ đưa lên GitHub ---
+.env
+.env.*
+noi-bo/
+
+# --- Dữ liệu vận hành (id Telegram, trạng thái duyệt) ---
+data/
+
+# --- Tài liệu nội bộ có chữ ký, ngân sách, nhân sự ---
+*.docx
+*.pdf
+~$*
+
+# --- Media nặng / ảnh thật người (để trên Google Drive) ---
+tu-lieu/**/*.mp4
+tu-lieu/**/*.mov
+tu-lieu/**/*.jpg
+tu-lieu/**/*.jpeg
+tu-lieu/**/*.png
+tu-lieu/am-thanh/
+/Giá trị nhận được*.jpg
+logo.jpg
+
+# Lời thoại video cũ: giữ .txt/.json (nhẹ, dùng để học kịch bản)
+
+# --- Video: giữ mã nguồn khuôn, bỏ bản render, ảnh học viên, cache ---
+video/**/renders/
+video/**/.hyperframes/
+video/**/assets/img/
+video/**/node_modules/
+video/**/*.mp3.raw.mp3
+
+# --- Hệ thống ---
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db

@@ -1,0 +1,133 @@
+<template>
+  <style>
+    @font-face { font-family: "BVP"; src: url("assets/fonts/BeVietnamPro-Black.ttf"); font-weight: 900; }
+    @font-face { font-family: "BVP"; src: url("assets/fonts/BeVietnamPro-ExtraBold.ttf"); font-weight: 800; }
+    @font-face { font-family: "BVP"; src: url("assets/fonts/BeVietnamPro-SemiBold.ttf"); font-weight: 600; }
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      font-family: "BVP", sans-serif;
+      background: linear-gradient(180deg, #1e6fe8 0%, #3f8ff0 55%, #6fbcf5 100%);
+    }
+    #rm-logo { position: absolute; top: 196px; right: 56px; width: 150px; height: 150px; }
+    #rm-title {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 300px;
+      text-align: center;
+    }
+    #rm-title span {
+      display: inline-block;
+      padding: 18px 44px;
+      border-radius: 999px;
+      background: #e81e37;
+      color: #ffffff;
+      font-weight: 900;
+      font-size: 58px;
+      line-height: 1.2;
+      box-shadow: 0 10px 0 rgba(38, 62, 139, 0.35);
+    }
+    #rm-rail {
+      position: absolute;
+      left: 158px;
+      top: 540px;
+      width: 8px;
+      height: 600px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.55);
+      transform-origin: 50% 0%;
+    }
+    .rm-card {
+      position: absolute;
+      left: 80px;
+      right: 80px;
+      height: 158px;
+      border-radius: 32px;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      padding: 0 36px 0 26px;
+      box-shadow: 0 14px 30px rgba(20, 40, 110, 0.22);
+      border: 6px solid #ffffff;
+    }
+    #rm-c1 { top: 470px; }
+    #rm-c2 { top: 660px; }
+    #rm-c3 { top: 850px; }
+    #rm-c4 { top: 1040px; border-color: #ffe360; }
+    .rm-num {
+      flex: 0 0 auto;
+      width: 104px;
+      height: 104px;
+      border-radius: 50%;
+      background: #263e8b;
+      color: #ffe360;
+      font-weight: 900;
+      font-size: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #rm-c4 .rm-num { background: #e81e37; color: #ffffff; }
+    .rm-text { min-width: 0; }
+    .rm-name {
+      display: block;
+      color: #263e8b;
+      font-weight: 900;
+      font-size: 54px;
+      line-height: 1.15;
+    }
+    .rm-desc {
+      display: block;
+      margin-top: 6px;
+      color: #4a5f99;
+      font-weight: 600;
+      font-size: 32px;
+      line-height: 1.25;
+    }
+  </style>
+  <div
+    id="root"
+    data-composition-id="roadmap"
+    data-width="1080"
+    data-height="1920"
+    data-composition-variables='[{"id":"rm_title","type":"string","label":"Tiêu đề","default":"LỘ TRÌNH 4 CHẶNG"},{"id":"step1","type":"string","label":"Chặng 1","default":"Sơ cấp 1"},{"id":"step1_desc","type":"string","label":"Mô tả chặng 1","default":"Nền tảng Nghe · Nói · Đọc · Viết"},{"id":"step2","type":"string","label":"Chặng 2","default":"Sơ cấp 2"},{"id":"step2_desc","type":"string","label":"Mô tả chặng 2","default":"Hoàn thiện kiến thức Sơ cấp"},{"id":"step3","type":"string","label":"Chặng 3","default":"Trung cấp 1"},{"id":"step3_desc","type":"string","label":"Mô tả chặng 3","default":"Đọc lướt, đọc quét, Nghe chủ động"},{"id":"step4","type":"string","label":"Chặng 4","default":"Luyện thi TOPIK 3–4"},{"id":"step4_desc","type":"string","label":"Mô tả chặng 4","default":"Chiến lược giải đề, viết câu 51–53"}]'
+  >
+    <img id="rm-logo" src="assets/logo/tt-tron.png" alt="Logo Tiếng Hàn Thầy Tư" />
+    <div id="rm-title"><span id="rm-title-text" data-var-text="rm_title">LỘ TRÌNH 4 CHẶNG</span></div>
+    <div id="rm-rail"></div>
+    <div id="rm-c1" class="rm-card">
+      <div class="rm-num">01</div>
+      <div class="rm-text"><span class="rm-name" data-var-text="step1">Sơ cấp 1</span><span class="rm-desc" data-var-text="step1_desc">Nền tảng Nghe · Nói · Đọc · Viết</span></div>
+    </div>
+    <div id="rm-c2" class="rm-card">
+      <div class="rm-num">02</div>
+      <div class="rm-text"><span class="rm-name" data-var-text="step2">Sơ cấp 2</span><span class="rm-desc" data-var-text="step2_desc">Hoàn thiện kiến thức Sơ cấp</span></div>
+    </div>
+    <div id="rm-c3" class="rm-card">
+      <div class="rm-num">03</div>
+      <div class="rm-text"><span class="rm-name" data-var-text="step3">Trung cấp 1</span><span class="rm-desc" data-var-text="step3_desc">Đọc lướt, đọc quét, Nghe chủ động</span></div>
+    </div>
+    <div id="rm-c4" class="rm-card">
+      <div class="rm-num">04</div>
+      <div class="rm-text"><span class="rm-name" data-var-text="step4">Luyện thi TOPIK 3–4</span><span class="rm-desc" data-var-text="step4_desc">Chiến lược giải đề, viết câu 51–53</span></div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#rm-title span", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)" }, 0.05);
+    tl.fromTo("#rm-rail", { scaleY: 0 }, { scaleY: 1, duration: 2.2, ease: "power1.inOut" }, 0.4);
+    ["#rm-c1", "#rm-c2", "#rm-c3", "#rm-c4"].forEach((sel, i) => {
+      tl.fromTo(sel, { opacity: 0, x: -80 }, { opacity: 1, x: 0, duration: 0.36, ease: "power3.out" }, 0.4 + i * 0.6);
+      tl.fromTo(sel + " .rm-num", { scale: 0.4 }, { scale: 1, duration: 0.34, ease: "back.out(2.4)" }, 0.5 + i * 0.6);
+    });
+    // Land on the goal: the last stage pulses.
+    tl.fromTo("#rm-c4", { scale: 1 }, { scale: 1.05, duration: 0.25, ease: "power2.out", immediateRender: false }, 3.2);
+    tl.fromTo("#rm-c4", { scale: 1.05 }, { scale: 1, duration: 0.35, ease: "power2.inOut", immediateRender: false }, 3.45);
+    tl.fromTo("#rm-c4 .rm-num", { rotation: 0 }, { rotation: 360, duration: 0.6, ease: "power2.inOut" }, 3.2);
+    tl.fromTo(["#rm-title", "#rm-rail", ".rm-card"], { opacity: 1 }, { opacity: 0, duration: 0.22, ease: "power2.in", immediateRender: false }, 6.5);
+    window.__timelines["roadmap"] = tl;
+  </script>
+</template>

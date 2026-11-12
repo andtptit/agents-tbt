@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>K4 Chữ động – Tiếng Hàn Thầy Tư</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <style>
+      /* Khuôn K4 "Chữ động" – kênh Tiếng Hàn Thầy Tư.
+         Màu: nền xanh tươi #1E6FE8 → xanh trời #6FBCF5, chữ hook đỏ #E81E37 viền trắng,
+         nhấn vàng #FFE360, xanh đậm #263E8B. Font: Be Vietnam Pro (assets/fonts).
+         Nội dung từng cảnh nằm trong data-variable-values của mỗi host bên dưới. */
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: #1e6fe8;
+      }
+      #root { position: relative; width: 100%; height: 100%; }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="20.9"
+      data-width="1080"
+      data-height="1920"
+    >
+      <div
+        id="hook"
+        class="clip"
+        data-composition-id="hook"
+        data-composition-src="compositions/hook.html"
+        data-start="0"
+        data-duration="3.6"
+        data-track-index="1"
+        data-track-kind="graphics"
+        data-width="1080"
+        data-height="1920"
+        data-variable-values='{"hook_1":"MẤT GỐC","hook_2":"TIẾNG HÀN?","hook_sub":"Lộ trình chinh phục TOPIK 4 từ số 0"}'
+      ></div>
+      <div
+        id="roadmap"
+        class="clip"
+        data-composition-id="roadmap"
+        data-composition-src="compositions/roadmap.html"
+        data-start="3.6"
+        data-duration="6.8"
+        data-track-index="1"
+        data-track-kind="graphics"
+        data-width="1080"
+        data-height="1920"
+        data-variable-values='{"rm_title":"LỘ TRÌNH 4 CHẶNG","step1":"Sơ cấp 1","step1_desc":"Nền tảng Nghe · Nói · Đọc · Viết","step2":"Sơ cấp 2","step2_desc":"Hoàn thiện kiến thức Sơ cấp","step3":"Trung cấp 1","step3_desc":"Đọc lướt, đọc quét, Nghe chủ động","step4":"Luyện thi TOPIK 3–4","step4_desc":"Chiến lược giải đề, viết câu 51–53"}'
+      ></div>
+      <div
+        id="offer"
+        class="clip"
+        data-composition-id="offer"
+        data-composition-src="compositions/offer.html"
+        data-start="10.4"
+        data-duration="4.9"
+        data-track-index="1"
+        data-track-kind="graphics"
+        data-width="1080"
+        data-height="1920"
+        data-variable-values='{"badge_top":"CAM KẾT ĐẦU RA","badge_main":"TOPIK 3+","price_label":"Học phí trọn lộ trình online","price":"18.000.000đ","perk":"Đã gồm giáo trình · gửi tận nhà","note":"Cam kết áp dụng theo điều khoản khóa học"}'
+      ></div>
+      <div
+        id="cta"
+        class="clip"
+        data-composition-id="cta"
+        data-composition-src="compositions/cta.html"
+        data-start="15.3"
+        data-duration="2.8"
+        data-track-index="1"
+        data-track-kind="graphics"
+        data-width="1080"
+        data-height="1920"
+        data-variable-values='{"cta_head":"Nhận lộ trình học miễn phí","cta_action":"Nhắn tin ngay","cta_or":"hoặc gọi tổng đài","cta_phone":"1900 4403"}'
+      ></div>
+      <div
+        id="endcard"
+        class="clip"
+        data-composition-id="endcard"
+        data-composition-src="compositions/endcard.html"
+        data-start="18.1"
+        data-duration="2.8"
+        data-track-index="1"
+        data-track-kind="graphics"
+        data-width="1080"
+        data-height="1920"
+        data-variable-values='{"ec_name":"TIẾNG HÀN VÀ DU HỌC\nTHẦY TƯ","ec_hotline":"HOTLINE: 0967 593 548"}'
+      ></div>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

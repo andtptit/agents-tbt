@@ -1,0 +1,6 @@
+TÀI LIỆU API VBEE
+(Không dán token/mật khẩu vào đây. Token đã nằm trong file .env)
+
+Link tài liệu API:
+Endpoint đang dùng:
+Ghi chú (tốc độ đọc, giọng cho từng kênh...):

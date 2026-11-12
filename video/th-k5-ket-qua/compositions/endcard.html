@@ -1,0 +1,74 @@
+<template>
+  <style>
+    @font-face { font-family: "BVP"; src: url("assets/fonts/BeVietnamPro-ExtraBold.ttf"); font-weight: 800; }
+    @font-face { font-family: "BVP"; src: url("assets/fonts/BeVietnamPro-SemiBold.ttf"); font-weight: 600; }
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      font-family: "BVP", sans-serif;
+      background: linear-gradient(160deg, #2e89cf 0%, #2563c4 50%, #1f45aa 100%);
+    }
+    .ec-wave { position: absolute; left: -200px; width: 1480px; height: 900px; }
+    #ec-wave-a { top: 160px; height: 1800px; }
+    #ec-wave-b { top: 960px; height: 1000px; }
+    #ec-logo {
+      position: absolute;
+      left: 340px;
+      top: 520px;
+      width: 400px;
+      height: 400px;
+    }
+    #ec-name {
+      position: absolute;
+      left: 60px;
+      right: 60px;
+      top: 980px;
+      text-align: center;
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 62px;
+      line-height: 1.25;
+      white-space: pre-line;
+    }
+    #ec-hotline {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 1170px;
+      text-align: center;
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 42px;
+      line-height: 1.3;
+      letter-spacing: 0.04em;
+    }
+  </style>
+  <div
+    id="root"
+    data-composition-id="endcard"
+    data-width="1080"
+    data-height="1920"
+    data-composition-variables='[{"id":"ec_name","type":"string","label":"Tên thương hiệu","default":"TIẾNG HÀN VÀ DU HỌC\nTHẦY TƯ"},{"id":"ec_hotline","type":"string","label":"Hotline","default":"HOTLINE: 0967 593 548"}]'
+  >
+    <svg id="ec-wave-a" class="ec-wave" viewBox="0 0 1480 1800" aria-hidden="true">
+      <path d="M0 420 C 260 300, 520 560, 780 430 S 1260 300, 1480 420 L 1480 1800 L 0 1800 Z" fill="rgba(255,255,255,0.08)" />
+    </svg>
+    <svg id="ec-wave-b" class="ec-wave" viewBox="0 0 1480 900" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 300 C 300 180, 560 420, 820 300 S 1260 200, 1480 320 L 1480 900 L 0 900 Z" fill="rgba(10,30,110,0.25)" />
+    </svg>
+    <img id="ec-logo" src="assets/logo/tt-tron.png" alt="Logo Tiếng Hàn Thầy Tư" />
+    <div id="ec-name" data-var-text="ec_name">TIẾNG HÀN VÀ DU HỌC
+THẦY TƯ</div>
+    <div id="ec-hotline" data-var-text="ec_hotline">HOTLINE: 0967 593 548</div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#ec-wave-a", { x: 0 }, { x: -120, duration: 2.8, ease: "none" }, 0);
+    tl.fromTo("#ec-wave-b", { x: -120 }, { x: 0, duration: 2.8, ease: "none" }, 0);
+    tl.fromTo("#ec-logo", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(1.8)" }, 0.05);
+    tl.fromTo("#ec-name", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.32, ease: "power3.out" }, 0.35);
+    tl.fromTo("#ec-hotline", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, 0.55);
+    window.__timelines["endcard"] = tl;
+  </script>
+</template>

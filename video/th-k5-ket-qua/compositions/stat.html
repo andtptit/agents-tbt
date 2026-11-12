@@ -1,0 +1,105 @@
+<template>
+  <style>
+    @font-face { font-family: "BVP"; src: url("assets/fonts/BeVietnamPro-Black.ttf"); font-weight: 900; }
+    @font-face { font-family: "BVP"; src: url("assets/fonts/BeVietnamPro-ExtraBold.ttf"); font-weight: 800; }
+    @font-face { font-family: "BVP"; src: url("assets/fonts/BeVietnamPro-SemiBold.ttf"); font-weight: 600; }
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      font-family: "BVP", sans-serif;
+      background: linear-gradient(180deg, #1e6fe8 0%, #3f8ff0 55%, #6fbcf5 100%);
+    }
+    #k5s-logo { position: absolute; top: 196px; right: 56px; width: 150px; height: 150px; z-index: 5; }
+    .k5s-pol {
+      position: absolute;
+      width: 500px;
+      padding: 12px 12px 34px;
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 18px 40px rgba(15, 35, 100, 0.35);
+    }
+    .k5s-pol img { display: block; width: 100%; height: auto; border-radius: 3px; }
+    #k5s-p1 { left: 60px; top: 270px; z-index: 1; }
+    #k5s-p2 { left: 500px; top: 330px; z-index: 2; }
+    #k5s-p3 { left: 270px; top: 480px; z-index: 3; }
+    #k5s-num {
+      position: absolute;
+      z-index: 4;
+      left: 0;
+      right: 0;
+      top: 950px;
+      text-align: center;
+      color: #ffffff;
+      font-weight: 900;
+      font-size: 190px;
+      line-height: 1.1;
+      -webkit-text-stroke: 16px #263e8b;
+      paint-order: stroke fill;
+      font-variant-numeric: tabular-nums;
+    }
+    #k5s-label {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 1165px;
+      text-align: center;
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 54px;
+      line-height: 1.25;
+    }
+    #k5s-pill {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 1250px;
+      text-align: center;
+    }
+    #k5s-pill span {
+      display: inline-block;
+      padding: 12px 34px;
+      border-radius: 999px;
+      background: #ffe360;
+      color: #263e8b;
+      font-weight: 900;
+      font-size: 40px;
+      line-height: 1.2;
+    }
+  </style>
+  <div
+    id="root"
+    data-composition-id="stat"
+    data-width="1080"
+    data-height="1920"
+    data-composition-variables='[{"id":"num","type":"number","label":"Số học viên","default":12000},{"id":"num_suffix","type":"string","label":"Hậu tố số","default":"+"},{"id":"label","type":"string","label":"Nhãn","default":"học viên đã đồng hành"},{"id":"pill","type":"string","label":"Nhấn","default":"10 NĂM GIẢNG DẠY"}]'
+  >
+    <img id="k5s-logo" src="assets/logo/tt-tron.png" alt="Logo Tiếng Hàn Thầy Tư" />
+    <div id="k5s-p1" class="k5s-pol"><img src="assets/img/giai-ba.jpg" alt="Thầy Tư trao giải cho học viên" /></div>
+    <div id="k5s-p2" class="k5s-pol"><img src="assets/img/lop-hoa.jpg" alt="Thầy Tư và học viên" /></div>
+    <div id="k5s-p3" class="k5s-pol"><img src="assets/img/hoc-vien-vui.jpg" alt="Học viên Tiếng Hàn Thầy Tư" /></div>
+    <div id="k5s-num">12.000+</div>
+    <div id="k5s-label" data-var-text="label">học viên đã đồng hành</div>
+    <div id="k5s-pill"><span data-var-text="pill">10 NĂM GIẢNG DẠY</span></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const vars = (window.__hyperframes && window.__hyperframes.getVariables && window.__hyperframes.getVariables()) || {};
+    const target = Number(vars.num ?? 12000);
+    const suffix = vars.num_suffix ?? "+";
+    const numEl = document.querySelector("#k5s-num");
+    const fmt = (n) => Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + suffix;
+    numEl.textContent = fmt(target);
+    tl.fromTo("#k5s-p1", { opacity: 0, x: -200, rotation: -16 }, { opacity: 1, x: 0, rotation: -8, duration: 0.4, ease: "power3.out" }, 0.05);
+    tl.fromTo("#k5s-p2", { opacity: 0, x: 200, rotation: 16 }, { opacity: 1, x: 0, rotation: 6, duration: 0.4, ease: "power3.out" }, 0.25);
+    tl.fromTo("#k5s-p3", { opacity: 0, y: 160, rotation: 6 }, { opacity: 1, y: 0, rotation: -2, duration: 0.4, ease: "power3.out" }, 0.45);
+    // Count up from 0 to the confirmed figure; text is a pure function of tween progress.
+    const counter = { v: 0 };
+    tl.fromTo(counter, { v: 0 }, { v: target, duration: 1.4, ease: "power2.out", onUpdate: () => { numEl.textContent = fmt(counter.v); } }, 0.6);
+    tl.fromTo("#k5s-num", { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)" }, 0.6);
+    tl.fromTo("#k5s-label", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, 1.1);
+    tl.fromTo("#k5s-pill span", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2.2)" }, 1.6);
+    tl.fromTo([".k5s-pol", "#k5s-num", "#k5s-label", "#k5s-pill"], { opacity: 1 }, { opacity: 0, duration: 0.2, ease: "power2.in", immediateRender: false }, 4.15);
+    window.__timelines["stat"] = tl;
+  </script>
+</template>

@@ -1,0 +1,121 @@
+<template>
+  <style>
+    @font-face { font-family: "BVP"; src: url("assets/fonts/BeVietnamPro-Black.ttf"); font-weight: 900; }
+    @font-face { font-family: "BVP"; src: url("assets/fonts/BeVietnamPro-ExtraBold.ttf"); font-weight: 800; }
+    @font-face { font-family: "BVP"; src: url("assets/fonts/BeVietnamPro-SemiBold.ttf"); font-weight: 600; }
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      font-family: "BVP", sans-serif;
+      background: linear-gradient(180deg, #1e6fe8 0%, #3f8ff0 55%, #6fbcf5 100%);
+    }
+    #ct-logo { position: absolute; top: 196px; right: 56px; width: 150px; height: 150px; }
+    #ct-head {
+      position: absolute;
+      left: 60px;
+      right: 60px;
+      top: 470px;
+      text-align: center;
+      color: #ffffff;
+      font-weight: 900;
+      font-size: 84px;
+      line-height: 1.22;
+      text-wrap: balance;
+      -webkit-text-stroke: 16px #e81e37;
+      paint-order: stroke fill;
+    }
+    #ct-sticker {
+      position: absolute;
+      left: 120px;
+      right: 120px;
+      top: 780px;
+      height: 190px;
+      border-radius: 95px;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      padding: 0 40px 0 30px;
+      box-shadow: 0 16px 0 #263e8b;
+    }
+    #ct-icon { flex: 0 0 auto; width: 130px; height: 130px; }
+    #ct-sticker-text {
+      color: #263e8b;
+      font-weight: 900;
+      font-size: 64px;
+      line-height: 1.1;
+    }
+    #ct-click {
+      position: absolute;
+      left: 640px;
+      top: 935px;
+      padding: 10px 28px;
+      border-radius: 999px;
+      background: #e81e37;
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 38px;
+      line-height: 1.2;
+    }
+    #ct-or {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 1080px;
+      text-align: center;
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 44px;
+      line-height: 1.3;
+    }
+    #ct-phone {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 1145px;
+      text-align: center;
+      color: #ffe360;
+      font-weight: 900;
+      font-size: 88px;
+      line-height: 1.2;
+      -webkit-text-stroke: 12px #263e8b;
+      paint-order: stroke fill;
+    }
+  </style>
+  <div
+    id="root"
+    data-composition-id="cta"
+    data-width="1080"
+    data-height="1920"
+    data-composition-variables='[{"id":"cta_head","type":"string","label":"Câu kêu gọi","default":"Nhận lộ trình học miễn phí"},{"id":"cta_action","type":"string","label":"Nút hành động","default":"Nhắn tin ngay"},{"id":"cta_or","type":"string","label":"Dòng phụ","default":"hoặc gọi tổng đài"},{"id":"cta_phone","type":"string","label":"Số điện thoại","default":"1900 4403"}]'
+  >
+    <img id="ct-logo" src="assets/logo/tt-tron.png" alt="Logo Tiếng Hàn Thầy Tư" />
+    <div id="ct-head" data-var-text="cta_head">Nhận lộ trình học miễn phí</div>
+    <div id="ct-sticker">
+      <svg id="ct-icon" viewBox="0 0 130 130" aria-hidden="true">
+        <circle cx="65" cy="65" r="65" fill="#1e6fe8" />
+        <path d="M34 44 h62 a10 10 0 0 1 10 10 v28 a10 10 0 0 1 -10 10 h-32 l-18 14 v-14 h-12 a10 10 0 0 1 -10 -10 v-28 a10 10 0 0 1 10 -10 z" fill="#ffffff" />
+        <circle cx="50" cy="68" r="6" fill="#1e6fe8" />
+        <circle cx="65" cy="68" r="6" fill="#1e6fe8" />
+        <circle cx="80" cy="68" r="6" fill="#1e6fe8" />
+      </svg>
+      <span id="ct-sticker-text" data-var-text="cta_action">Nhắn tin ngay</span>
+    </div>
+    <div id="ct-click">click</div>
+    <div id="ct-or" data-var-text="cta_or">hoặc gọi tổng đài</div>
+    <div id="ct-phone" data-var-text="cta_phone">1900 4403</div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#ct-head", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, 0.05);
+    tl.fromTo("#ct-sticker", { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 0.34, ease: "back.out(2)" }, 0.3);
+    tl.fromTo("#ct-click", { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.24, ease: "back.out(2.6)" }, 0.7);
+    // Tap: the sticker dips like a pressed button.
+    tl.fromTo("#ct-sticker", { scale: 1 }, { scale: 0.94, duration: 0.12, ease: "power2.in", immediateRender: false }, 0.95);
+    tl.fromTo("#ct-sticker", { scale: 0.94 }, { scale: 1, duration: 0.22, ease: "back.out(3)", immediateRender: false }, 1.07);
+    tl.fromTo("#ct-or", { opacity: 0 }, { opacity: 1, duration: 0.24, ease: "power1.out" }, 0.8);
+    tl.fromTo("#ct-phone", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, 0.9);
+    window.__timelines["cta"] = tl;
+  </script>
+</template>

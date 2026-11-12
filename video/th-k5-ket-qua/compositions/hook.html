@@ -1,0 +1,81 @@
+<template>
+  <style>
+    @font-face { font-family: "BVP"; src: url("assets/fonts/BeVietnamPro-Black.ttf"); font-weight: 900; }
+    @font-face { font-family: "BVP"; src: url("assets/fonts/BeVietnamPro-ExtraBold.ttf"); font-weight: 800; }
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      font-family: "BVP", sans-serif;
+      background: linear-gradient(180deg, #1e6fe8 0%, #3f8ff0 55%, #6fbcf5 100%);
+    }
+    #k5h-logo { position: absolute; top: 196px; right: 56px; width: 150px; height: 150px; z-index: 3; }
+    #k5h-photo {
+      position: absolute;
+      left: 80px;
+      top: 330px;
+      width: 920px;
+      padding: 18px 18px 70px;
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 24px 50px rgba(15, 35, 100, 0.35);
+    }
+    #k5h-photo img { display: block; width: 100%; height: auto; border-radius: 4px; }
+    #k5h-photo-cap {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 14px;
+      text-align: center;
+      color: #263e8b;
+      font-weight: 800;
+      font-size: 32px;
+      line-height: 1.2;
+    }
+    #k5h-text {
+      position: absolute;
+      left: 40px;
+      right: 40px;
+      top: 1090px;
+      text-align: center;
+    }
+    .k5h-big {
+      display: block;
+      white-space: nowrap;
+      font-weight: 900;
+      font-size: 90px;
+      line-height: 1.24;
+      color: #e81e37;
+      -webkit-text-stroke: 22px #ffffff;
+      paint-order: stroke fill;
+      text-shadow: 0 0 30px rgba(255, 92, 140, 0.7);
+    }
+  </style>
+  <div
+    id="root"
+    data-composition-id="hook"
+    data-width="1080"
+    data-height="1920"
+    data-composition-variables='[{"id":"hook_1","type":"string","label":"Hook dòng 1","default":"HỌC VIÊN NÓI GÌ"},{"id":"hook_2","type":"string","label":"Hook dòng 2","default":"SAU KỲ THI TOPIK?"},{"id":"photo","type":"string","label":"Ảnh thật","default":"assets/img/vinh-danh.jpg"},{"id":"photo_cap","type":"string","label":"Chú thích ảnh","default":"Vinh danh học viên chinh phục TOPIK"}]'
+  >
+    <img id="k5h-logo" src="assets/logo/tt-tron.png" alt="Logo Tiếng Hàn Thầy Tư" />
+    <div id="k5h-photo">
+      <img id="k5h-photo-img" src="assets/img/vinh-danh.jpg" data-var-src="photo" alt="Lễ vinh danh học viên" />
+      <div id="k5h-photo-cap" data-var-text="photo_cap">Vinh danh học viên chinh phục TOPIK</div>
+    </div>
+    <div id="k5h-text">
+      <span id="k5h-l1" class="k5h-big" data-var-text="hook_1">HỌC VIÊN NÓI GÌ</span>
+      <span id="k5h-l2" class="k5h-big" data-var-text="hook_2">SAU KỲ THI TOPIK?</span>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    // Frame 0 is the thumbnail: photo and hook already on screen, only settling motion.
+    tl.fromTo("#k5h-photo", { rotation: -7, scale: 1.06 }, { rotation: -3, scale: 1, duration: 0.5, ease: "power3.out" }, 0);
+    tl.fromTo("#k5h-photo-img", { scale: 1 }, { scale: 1.06, duration: 3.2, ease: "none" }, 0);
+    tl.fromTo("#k5h-l1", { scale: 1.12 }, { scale: 1, duration: 0.3, ease: "power3.out" }, 0);
+    tl.fromTo("#k5h-l2", { scale: 1.12 }, { scale: 1, duration: 0.3, ease: "power3.out" }, 0.08);
+    tl.fromTo(["#k5h-photo", "#k5h-text"], { opacity: 1 }, { opacity: 0, duration: 0.2, ease: "power2.in", immediateRender: false }, 2.95);
+    window.__timelines["hook"] = tl;
+  </script>
+</template>
