@@ -4,6 +4,16 @@
 
 ---
 
+## 13/11/2026 (trưa) — Kế hoạch 6 tháng + kết nối Notion
+
+- Lập **kế hoạch 6 tháng 12/2026 – 05/2027** (tài liệu trên claude.ai để PM đọc, comment): 4 giai đoạn (Dạy và chạy thật → Đăng đều theo lịch → Tối ưu theo số liệu → Mở rộng), mục tiêu để PM điền.
+- Quyết định: **dùng Notion bản Free** (đúng như chốt 12/11), An là thành viên duy nhất, PM và bộ phận vào dạng **khách** (tối đa 10) để không bị giới hạn block. Chưa xây site riêng.
+- Đã kết nối: integration "Thay Tu Bot", trang "Nhà máy nội dung Thầy Tư" có 3 bảng: Đơn video (bot tự cập nhật mỗi phút), Lịch nội dung (9 ý tưởng tháng 12), Việc chờ PM quyết (9 việc). Notion chỉ để xem; duyệt vẫn trên Telegram.
+
+**Còn dở:** PM trả lời 9 việc chờ quyết; điền ngày đăng cho lịch tháng 12; bot lấy chủ đề từ Lịch nội dung để tự đặt đơn (chưa làm).
+
+---
+
 ## 13/11/2026 (sáng) — An góp ý video TH-261113-01
 
 - **Logo** quá to, quá thấp → nhỏ lại (108px), sát góc trên phải.

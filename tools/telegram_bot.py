@@ -550,6 +550,27 @@ def maybe_report():
         send_report()
 
 
+NOTION_LAST = [0.0]
+
+
+def maybe_notion():
+    """Mỗi phút đẩy các đơn có thay đổi lên Notion (chạy nền, lỗi không làm dừng bot)."""
+    if time.time() - NOTION_LAST[0] < 60 or "notion" in RUNNING:
+        return
+    NOTION_LAST[0] = time.time()
+
+    def job():
+        try:
+            import notion_sync
+            notion_sync.sync_orders()
+        except Exception as e:  # noqa: BLE001
+            print("Lỗi đồng bộ Notion:", e)
+        finally:
+            RUNNING.discard("notion")
+    RUNNING.add("notion")
+    threading.Thread(target=job, daemon=True).start()
+
+
 def cmd_run():
     offset = int(open(OFFSET).read()) if os.path.exists(OFFSET) else 0
     me = api("getMe").get("result", {})
@@ -557,6 +578,7 @@ def cmd_run():
     print(f"Bot @{me.get('username')} đang chạy. {status}. Ctrl+C để dừng.")
     while True:
         dispatch_jobs()
+        maybe_notion()
         try:
             maybe_report()
         except Exception as e:  # noqa: BLE001
