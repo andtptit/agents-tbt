@@ -112,7 +112,7 @@ Hook đỏ viền trắng phát sáng · dòng phụ · chữ khóa · nhãn xan
 
 ## 7. Cần bạn quyết định
 
-1. ~~Font chữ hook~~ → **Đã chốt (12/11/2026): dùng Be Vietnam Pro cho mọi chữ, kể cả hook.** Giữ "cảm giác" kênh cũ bằng cách xử lý chữ: hook dùng Be Vietnam Pro **Black 900**, màu đỏ `#E81E37`, viền trắng dày và phát sáng hồng nhẹ; dòng phụ Be Vietnam Pro Bold, chữ trắng viền đỏ.
+1. ~~Font chữ hook~~ → **Đã chốt (12/11/2026): dùng Be Vietnam Pro cho mọi chữ, kể cả hook.** Giữ "cảm giác" kênh cũ bằng cách xử lý chữ: hook dùng Be Vietnam Pro **Black 900**, màu đỏ `#E81E37`, viền trắng dày và phát sáng hồng nhẹ; dòng phụ Be Vietnam Pro Bold, chữ trắng viền đỏ. **Cập nhật 13/11/2026:** An thấy viền dày xấu → chuyển sang viền mỏng + bóng đổ, dòng phụ dùng nhãn nền đỏ chữ trắng, logo nhỏ ở góc trên (xem brand.md mục 0.1).
 2. ~~Màu nền~~ → **Đã chốt (12/11/2026): thêm xanh tươi `#1E6FE8` làm nền chính** cho video và banner, giữ `#263E8B` cho chữ và logo. Đã cập nhật brand.md mục 0.1.
 3. Trả lời 4 điểm lệch ở mục 5.
 

@@ -35,11 +35,11 @@ THEMES = {
     "TH": {"speed": "1.05", "bg": "#1e6fe8", "max_lines": 4, "css": """
     #root { position: absolute; inset: 0; overflow: hidden; font-family: "BVP", "KR", sans-serif;
       background: linear-gradient(180deg, #1e6fe8 0%, #3f8ff0 55%, #6fbcf5 100%); }
-    .hook { font-weight: 900; line-height: 1.22; color: #e81e37; -webkit-text-stroke: 22px #ffffff;
-      paint-order: stroke fill; text-shadow: 0 0 30px rgba(255, 92, 140, 0.7); text-wrap: balance; }
-    .head { font-weight: 900; line-height: 1.24; color: #ffffff; -webkit-text-stroke: 14px #263e8b;
-      paint-order: stroke fill; text-wrap: balance; }
-    .sub { font-weight: 800; line-height: 1.3; color: #ffffff; -webkit-text-stroke: 10px #e81e37;
+    .hook { font-weight: 900; line-height: 1.22; color: #e81e37; -webkit-text-stroke: 9px #ffffff;
+      paint-order: stroke fill; text-shadow: 0 6px 14px rgba(20, 40, 110, 0.35); text-wrap: balance; }
+    .head { font-weight: 900; line-height: 1.24; color: #ffffff; -webkit-text-stroke: 7px #263e8b;
+      paint-order: stroke fill; text-shadow: 0 5px 10px rgba(20, 40, 110, 0.3); text-wrap: balance; }
+    .sub { font-weight: 800; line-height: 1.3; color: #ffffff; -webkit-text-stroke: 5px #263e8b;
       paint-order: stroke fill; text-wrap: balance; }
     .phon { font-weight: 700; font-size: 44px; line-height: 1.3; color: #263e8b; background: #ffe360;
       border-radius: 999px; padding: 10px 34px; }"""},
@@ -95,6 +95,10 @@ def part_html(sid, idx, text, first_scene, theme="TH"):
         return f'<div id="{sid}-l{idx}" class="head" style="font-size:{size}px">{t}</div>'
     if in_brackets:
         return f'<div id="{sid}-l{idx}" class="phon">{t}</div>'
+    if idx == 2:
+        # Dòng ngay dưới tiêu đề: chữ trắng trên nền đỏ (kiểu nhãn), kết hợp với dòng chữ viền ở trên.
+        size = int(max(40, min(60, 900 / (0.62 * max(len(raw), 1)))))  # ưu tiên 1 dòng, nhãn ôm sát chữ
+        return f'<div id="{sid}-l{idx}" class="tag" style="font-size:{size}px">{t}</div>'
     size = fit(text, 960, 0.6, 58, 40)
     return f'<div id="{sid}-l{idx}" class="sub" style="font-size:{size}px">{t}</div>'
 
@@ -121,7 +125,9 @@ def scene_html(sid, parts, dur, first_scene, theme="TH"):
   <style>
 {FONT_FACES}
 {THEMES[theme]["css"]}
-    #{sid}-logo {{ position: absolute; top: 196px; right: 56px; width: 150px; height: 150px; }}
+    #{sid}-logo {{ position: absolute; top: 70px; right: 48px; width: 108px; height: 108px; }}
+    .tag {{ font-weight: 800; line-height: 1.3; color: #ffffff; background: #e81e37; border-radius: 18px;
+      padding: 10px 30px; max-width: 960px; text-wrap: balance; box-shadow: 0 8px 18px rgba(20, 40, 110, 0.25); }}
     #{sid}-box {{ position: absolute; left: 60px; right: 60px; top: 230px; height: 1080px;
       display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 34px; text-align: center;
       word-break: keep-all; }}

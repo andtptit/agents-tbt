@@ -33,7 +33,7 @@
 | `Icon TT đen.png` | 1555×1359 | Trong suốt, đơn sắc đen | Bản đơn sắc; **đảo sang trắng** (CSS `filter: invert(1)`) khi đặt trên nền xanh hoặc đỏ đậm |
 | `logo.jpg` | 2048×2047 | Trắng (không trong suốt) | Chỉ dùng tham khảo, **không chèn vào video** |
 
-**Quy tắc dùng logo:** không kéo méo, không đổi màu (ngoài bản đơn sắc), không đặt bản màu trên nền xanh `#263E8B` hoặc đỏ `#E81E37` (chìm màu), khi đó dùng bản trắng. Chừa vùng an toàn ≥ 10% chiều rộng logo. Trên Reels, watermark đặt ở góc trên, tránh vùng UI của Facebook/TikTok (khoảng 15% dưới cùng và cột phải).
+**Quy tắc dùng logo:** không kéo méo, không đổi màu (ngoài bản đơn sắc), không đặt bản màu trên nền xanh `#263E8B` hoặc đỏ `#E81E37` (chìm màu), khi đó dùng bản trắng. Chừa vùng an toàn ≥ 10% chiều rộng logo. Trên Reels, watermark đặt ở góc trên, tránh vùng UI của Facebook/TikTok (khoảng 15% dưới cùng và cột phải). **Trong video (chốt 13/11/2026):** logo tròn **nhỏ, khoảng 10% chiều ngang (108px trên khung 1080)**, sát **góc trên phải** (cách mép trên khoảng 70px, mép phải 48px). Không đặt logo to hay thấp xuống giữa khung.
 
 | Màu | Mã | Vai trò gợi ý |
 |---|---|---|
@@ -43,7 +43,12 @@
 | 🟡 Vàng | **`#FFE360`** | Điểm nhấn phụ: sticker, gạch chân, badge "TOPIK 3+", giá |
 | ⚪ Trắng | `#FFFFFF` | Nền sáng, chữ trên nền xanh hoặc đỏ |
 
-**Cặp màu an toàn cho phụ đề Reels:** chữ trắng viền hoặc bóng xanh `#263E8B` · từ khóa nổi bật dùng vàng `#FFE360` trên nền xanh · chữ đỏ trên nền xanh chỉ dùng khi có viền trắng dày (kiểu hook của kênh).
+**Cặp màu an toàn cho phụ đề Reels:** chữ trắng viền hoặc bóng xanh `#263E8B` · từ khóa nổi bật dùng vàng `#FFE360` trên nền xanh · chữ đỏ trên nền xanh chỉ dùng khi có viền trắng (kiểu hook của kênh).
+
+**Quy tắc chữ trên video (chốt 13/11/2026 theo góp ý của An):**
+- **Viền chữ mỏng**, không dùng viền dày: hook viền trắng khoảng 9px, tiêu đề viền xanh đậm khoảng 7px, dòng phụ khoảng 5px (tính trên khung 1080×1920). Thay quầng phát sáng bằng **bóng đổ nhẹ**.
+- **Kết hợp linh hoạt 2 kiểu chữ:** dòng tiêu đề là chữ viền; dòng ngay dưới là **chữ trắng trên nhãn nền đỏ `#E81E37`** (bo góc, ôm sát chữ, ưu tiên 1 dòng). Ví dụ: tiêu đề "2K9" + nhãn đỏ "TỐT NGHIỆP XONG LÀ ĐI HÀN?".
+- Dòng chữ trên nhãn nên ngắn (khoảng 25 ký tự) để không phải xuống dòng.
 
 **Phân biệt 2 kênh trong cùng bộ màu (đề xuất):**
 - Tiếng Hàn Thầy Tư → **nền xanh tươi `#1E6FE8`** (gradient xanh trời), chữ đỏ viền trắng cho hook, vàng làm điểm nhấn
@@ -53,8 +58,8 @@
 
 | Vai trò | Độ đậm | Ghi chú |
 |---|---|---|
-| Hook / tiêu đề lớn | ExtraBold 800 / Black 900 | Câu mở đầu 3 giây. Kiểu kênh đang dùng: chữ đỏ `#E81E37`, viền trắng dày, phát sáng hồng nhẹ (xem phong-cach-tieng-han.md) |
-| Phụ đề | Bold 700 | Chữ trắng, viền hoặc bóng xanh `#263E8B` |
+| Hook / tiêu đề lớn | ExtraBold 800 / Black 900 | Câu mở đầu 3 giây. Chữ đỏ `#E81E37`, **viền trắng mỏng** + bóng đổ nhẹ (chốt 13/11/2026; video cũ của kênh dùng viền dày + phát sáng, nay bỏ) |
+| Phụ đề | Bold 700 | Chữ trắng viền mỏng xanh `#263E8B`, hoặc **chữ trắng trên nhãn nền đỏ** `#E81E37` |
 | Nội dung, chú thích | Medium 500 / Regular 400 | |
 | Giá, con số | ExtraBold 800 | Vàng `#FFE360` hoặc đỏ `#E81E37` |
 | Chữ Hàn (한국어) | Noto Sans KR | Be Vietnam Pro không có glyph Hangul |
@@ -305,7 +310,7 @@
 ### 2.6 Nhận diện hình ảnh → xem **mục 0.1** (dùng chung bộ nhận diện Thầy Tư)
 
 - **Phong cách hình:** lớp học thật, khoảnh khắc lên đường ở sân bay, lễ trao học bổng, học viên tốt nghiệp tại Hàn, khuôn viên trường Hàn Quốc.
-- **Khuôn chữ động của kênh Du học (K4 bản Du học, chốt sơ bộ 13/11/2026):** nền **trắng**, góc có mảng màu xanh tươi `#1E6FE8` và vàng `#FFE360` (theo ảnh "Giá trị nhận được" của bộ phận Du học); hook **chữ đỏ `#E81E37`**, tiêu đề xanh đậm `#263E8B`, số tiền và học bổng trong nhãn vàng. Khác hẳn nền xanh của kênh Tiếng Hàn để người xem phân biệt ngay. Giọng Vbee tốc độ 1.0 (chậm hơn kênh Tiếng Hàn 1.05).
+- **Khuôn chữ động của kênh Du học (K4 bản Du học, chốt sơ bộ 13/11/2026):** nền **trắng**, góc có mảng màu xanh tươi `#1E6FE8` và vàng `#FFE360` (theo ảnh "Giá trị nhận được" của bộ phận Du học); hook **chữ đỏ `#E81E37`**, tiêu đề xanh đậm `#263E8B`, dòng thứ hai chữ trắng trên nhãn đỏ, số tiền và học bổng trong nhãn vàng. Logo và quy tắc chữ như mục 0.1. Khác hẳn nền xanh của kênh Tiếng Hàn để người xem phân biệt ngay. Giọng Vbee tốc độ 1.0 (chậm hơn kênh Tiếng Hàn 1.05).
 - Chưa có video/banner cũ của kênh Du học trong `tu-lieu/du-hoc/` → khi có, phân tích bổ sung như `phong-cach-tieng-han.md`.
 
 ### 2.7 Trụ cột nội dung Reels

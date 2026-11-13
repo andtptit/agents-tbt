@@ -4,6 +4,18 @@
 
 ---
 
+## 13/11/2026 (sáng) — An góp ý video TH-261113-01
+
+- **Logo** quá to, quá thấp → nhỏ lại (108px), sát góc trên phải.
+- **Viền chữ** quá dày, xấu → viền mỏng (hook 9px, tiêu đề 7px, phụ 5px) + bóng đổ nhẹ, bỏ phát sáng hồng.
+- **Kết hợp kiểu chữ trắng trên nhãn nền đỏ** (theo ảnh mẫu An gửi): dòng thứ 2 mỗi cảnh là nhãn đỏ.
+- Áp dụng cho cả 2 kênh (khuôn K4 trong `tools/video_maker.py`), ghi vào brand.md mục 0.1. Bản dựng lại: `video/jobs/TH-261113-01/renders/TH-261113-01-v2.mp4`.
+- Ghi nhận: đơn TH-261113-01 chủ đề du học nhưng gõ `/tao` thiếu `dh` → vào kênh Tiếng Hàn.
+
+**Còn dở:** buổi dạy thiết kế (designer của An sẽ dạy sau, đề bài `huong-dan-dao-tao/thiet-ke.md`); bot hỏi lại kênh khi chủ đề có từ "du học" mà thiếu `dh` (chưa làm).
+
+---
+
 ## 13/11/2026 — Mở kênh Du học Thầy Tư (Quản lý dự án + Claude)
 
 - Phân tích `Bảng chi phí du học.pdf` + 2 ảnh "Giá trị nhận được" (D4-1/D2-1…4 và D2-6, nội dung giống nhau) và 6 kịch bản của bộ phận Du học.
