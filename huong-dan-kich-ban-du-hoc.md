@@ -15,7 +15,9 @@ Người xem fanpage Du học chỉ ở lại **khoảng 6 giây** (trung vị).
 | **Hook = câu hỏi về một hiểu lầm hay nghịch lý cụ thể**: "Có sổ đóng băng là chắc chắn đỗ visa?", "Đại học Konkuk – trường con nhà giàu?", "TOPIK 3, học bổng 70%?" | Hook kiểu rao: "ĐỪNG BỎ LỠ CHƯƠNG TRÌNH…", "CHÍNH THỨC MỞ CỔNG…" (lượt xem có thể cao nhờ quảng cáo nhưng người xem rời đi sau ~3 giây) |
 | Đưa ý chính **trước giây thứ 6**; tổng 40–60 giây | Mở đầu dài dòng giới thiệu chung chung ("Top 5 trường bạn nên tham khảo") |
 | **Học viên thật, sân bay, lớp học** (video mạnh nhất kênh) — ghi rõ ở cột hình ảnh cảnh cần quay thật | Nội dung luyện thi TOPIK, sách (để ở kênh Tiếng Hàn) |
-| Nói với phụ huynh bằng **tiền bạc thực tế**: tỷ giá won, chi phí, sổ tiết kiệm | Nhắc "khuyến mại quý", "Quỹ Học Bổng Xanh 250 triệu" khi PM chưa xác nhận còn hiệu lực |
+| Nói với phụ huynh bằng **tiền bạc thực tế**: tỷ giá won, chi phí, sổ tiết kiệm | Nhắc "khuyến mại quý III", "Quỹ Học Bổng Xanh 250 triệu": **đã dừng (An xác nhận 13/11/2026), không viết tiếp** |
+
+**Video có KOL / người dẫn:** nhiều Reels của page do một nhân vật đại diện (không phải Thầy Tư) nói trước máy quay. Hệ thống **không thay thế** dạng này (không dựng người dẫn AI, không giả giọng người thật). Khi làm lại một chủ đề từng có video KOL, chuyển sang **dạng chữ động (khuôn K4)**: giữ ý và hook, lời đọc bằng giọng Vbee, người nói xưng "mình" như bình thường; cột hình ảnh ghi "chữ động", không ghi "KOL nói".
 
 **Series đang chạy — viết tiếp, đừng lập series mới trùng ý:** **"Đúng ngành, trúng trường – Du học không lạc đường"** đã có Tập 1–8 (Changwon, Ajou, Nữ sinh Seoul, Pyeongtaek, Konyang, Konkuk, Inha, Catholic). Đơn giới thiệu trường mới = **Tập 9 trở đi**, tiêu đề "TẬP N: ĐẠI HỌC X – <biệt danh / nghịch lý dạng câu hỏi>?". Chỉ dùng số liệu trường có trong `brand.md` 2.3b; trường chưa có số liệu thì nói định tính hoặc chờ PM gửi.
 

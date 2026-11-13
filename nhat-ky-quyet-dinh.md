@@ -4,6 +4,15 @@
 
 ---
 
+## 13/11/2026 (chiều) — An chốt sau research + thử 2 kịch bản
+
+- "Khuyến mại quý III" và "Quỹ Học Bổng Xanh 250 triệu" **đã dừng**, không nhắc lại (brand.md 2.3, Notion đã cập nhật).
+- **Chỉ đăng lên page test** cho đến khi An cho phép đăng 2 page chính.
+- Nhiều Reels cũ có KOL (người đại diện, không phải Thầy Tư) nói trước máy quay: hệ thống không thay thế dạng này, mà **chuyển sang chữ động K4** (ghi vào huong-dan-kich-ban-du-hoc.md mục 0).
+- Thử 2 đơn: DH-261113-01 (Tập 9 Woosong, ~70s) và DH-261113-02 (Phá lời đồn: chưa biết tiếng Hàn, ~50s) — đang chờ An duyệt trên Telegram.
+
+---
+
 ## 13/11/2026 (chiều) — Research fanpage Du học bằng Meta API
 
 - Không dùng Apify: đọc trực tiếp bằng Meta Graph API. An cấp quyền 2 page chính cho app n8n-api; lưu token đọc dài hạn `META_READ_TOKEN` (không hết hạn). Token đăng bài vẫn chỉ trỏ page test. Nhân tiện app giờ chỉ còn quyền trên page test + 2 page chính (đã thu hẹp từ 16 page).

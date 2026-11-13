@@ -239,6 +239,7 @@
 ### 2.3 Sản phẩm, dịch vụ
 
 - **Hệ:** Hệ tiếng (D4-1) · Hệ Đại học · Hệ Thạc sĩ ✅
+- **Chương trình khuyến mại đã dừng** ✅ (An xác nhận 13/11/2026): "Khuyến mại quý III" và "Quỹ Học Bổng Xanh lên tới 250 triệu" từng chạy trên fanpage → **không nhắc lại** trong nội dung mới.
 - **Gói trọn gói:** khoảng **60 triệu đồng** *(theo kế hoạch nội bộ, chưa thấy trên website)* ⚠️ **chưa dùng**: bảng chi phí chính thức (mục 2.3a) không ghi phí dịch vụ. Không dùng từ "giá rẻ".
 - **Khóa tiếng chuẩn bị du học** (Bảng giá 07/BG-TBT) ✅, bán qua Tiếng Hàn Thầy Tư, kênh Du học có thể giới thiệu:
   - Tiếng Hàn định hướng TOPIK 2 cho du học sinh từ số 0 (offline): SC1 + SC2 + Ôn luyện phỏng vấn, **13.000.000đ**
