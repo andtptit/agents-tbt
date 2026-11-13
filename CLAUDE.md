@@ -12,6 +12,7 @@ Dự án của TBT Group: hệ thống AI Agent sản xuất và vận hành vid
 | `brand.md` | **Nguồn sự thật**: định vị 2 kênh, bảng giá (07/BG-TBT), màu, font, logo, giọng Vbee + từ điển phát âm, quy tắc bắt buộc, quyết định vận hành |
 | `phong-cach-tieng-han.md` | Ngôn ngữ hình ảnh kênh Tiếng Hàn (phân tích từ 11 video, 9 banner) |
 | `huong-dan-kich-ban-tieng-han.md` | Công thức kịch bản kênh Tiếng Hàn + mẫu + điều cấm |
+| `huong-dan-kich-ban-du-hoc.md` | Công thức kịch bản kênh Du học (4 dạng T/S/C/H) + mẫu + điều cấm |
 | `PLAYBOOK.md` | Cách làm tổng quát (nguyên tắc, mẫu brand book, chia agent, vận hành) — dùng lại cho dự án khác |
 | `nhat-ky-quyet-dinh.md` | Ai chốt gì, khi nào — **ghi thêm vào đây sau mỗi buổi làm việc** |
 | `huong-dan-dao-tao/` | Đề bài cho các buổi bộ phận chuyên môn "dạy" hệ thống |
@@ -36,7 +37,7 @@ Trả về (kịch bản hoặc video) + lý do → Claude viết lại → ch�
 - Bot **tự chạy cùng Windows**: file `ThayTu-Bot.vbs` trong thư mục Startup gọi `tools/giam_sat_bot.py` (ẩn cửa sổ, tự khởi động lại bot, một bản duy nhất). Nhật ký: `data/bot.log`. Sau khi sửa code bot phải khởi động lại: tắt tiến trình `python.exe … telegram_bot.py run` (trình giám sát tự bật lại sau 10 giây). **Không** chạy thêm `telegram_bot.py run` bằng tay khi giám sát đang chạy. Trạng thái đơn: `data/orders.json`.
 - Báo cáo ngày gửi lúc 8h vào chủ đề 📊 Báo cáo (`/baocao` để gửi ngay).
 - Nhóm Telegram "Nhà máy nội dung Thầy Tư" có 5 chủ đề (id trong `data/telegram_topics.json`): Đặt video, Duyệt kịch bản, Duyệt video, Báo cáo, Cảnh báo.
-- Lệnh: `/tao <chủ đề>`, `/cho`, `/ping` (bot + Claude đăng nhập chưa), `/lai <mã>` (viết lại kịch bản), `/dung <mã>` (dựng lại video).
+- Lệnh: `/tao <chủ đề>` (kênh Tiếng Hàn, mã TH-…), `/tao dh <chủ đề>` hoặc `/taodh <chủ đề>` (kênh Du học, mã DH-…, khuôn K4 nền trắng), `/cho`, `/ping` (bot + Claude đăng nhập chưa), `/lai <mã>` (viết lại kịch bản), `/dung <mã>` (dựng lại video).
 - Viết kịch bản dùng Claude Code chạy dòng lệnh trên máy (bản đi kèm Claude desktop) — **phải đăng nhập**: `claude.exe auth login`.
 - **Page Facebook để TEST đăng bài: "Allisagi là chân ái"** (META_PAGE_ID trong .env). Không đăng thử lên page thật. Đổi page: `python tools/meta_post.py setup "Tên page"`.
 - Theo dõi trên máy: `python tools/theo_doi.py`. Video sinh theo đơn nằm ở `video/jobs/<mã>/` (không đưa lên Git).
@@ -60,7 +61,7 @@ Lệnh HyperFrames trong mỗi thư mục khuôn: `npx hyperframes check`, `npx 
 ## Đang chờ người dùng
 - Chốt **số buổi học** (bảng giá 40 buổi/khóa, banner 89/43, video 28/27 — 3 nguồn lệch).
 - Xác nhận: ưu đãi 10% còn chạy không; điều kiện câu "Có TOPIK 3 – Có ngay VISA".
-- Tư liệu kênh Du học (đã có `Bảng chi phí du học.pdf`, `Giá trị nhận được 1-08/1-09.jpg` ở thư mục gốc — chưa phân tích).
+- Kênh Du học: mức **phí dịch vụ** (gói 60 triệu?), xác nhận số liệu 3 trường Catholic/Pyeongtaek/Woosong (brand.md 2.3b), video/banner cũ của kênh, nghe kiểm tra phát âm D4-1 / won / IELTS.
 - Notion integration; TikTok Developer App; quyền Admin Business Portfolio để chuyển Meta sang System User + 2 fanpage thật.
 - Token Meta đang có quyền trên 16 page (cấp thừa) → nên thu hẹp.
 - Các hướng tiếp theo người dùng có thể chọn: kênh Du học, Notion, buổi dạy thiết kế, AI chấm điểm kịch bản (Agent ⑥), Agent Chiến lược (lịch tháng).

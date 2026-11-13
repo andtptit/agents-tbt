@@ -2,7 +2,7 @@
 
 > Tài liệu nền cho các AI Agent (Chiến lược nội dung, Biên kịch, Sản xuất, Dựng video, Kiểm duyệt).
 > Phạm vi: **Tiếng Hàn Thầy Tư (PC02)** và **Du học Thầy Tư (PC01)**.
-> Nguồn: fanpage, website chính thức, kế hoạch nội bộ, Bảng giá khóa học số 07/BG-TBT (07/11/2026), logo và màu do Marketing cung cấp. Cập nhật lần cuối 12/11/2026.
+> Nguồn: fanpage, website chính thức, kế hoạch nội bộ, Bảng giá khóa học số 07/BG-TBT (07/11/2026), logo và màu do Marketing cung cấp, Bảng chi phí du học (bộ phận Du học). Cập nhật lần cuối 13/11/2026.
 > Ký hiệu: ✅ đã xác minh (nguồn công khai hoặc đã được xác nhận nội bộ) · ⚠️ cần Giám đốc dự án xác nhận.
 > **Người duyệt nội dung:** An (đại diện; số liên hệ trong `noi-bo/lien-he.md`; có người dự phòng, sẽ bổ sung tên)
 
@@ -75,9 +75,17 @@
   | TOPIK | **Tốp pích** | ✅ Xác nhận đọc đúng 12/11/2026. Viết "TOPIK" thì Vbee đánh vần T-O-P-I-K |
   | TOPIK 6 | Tốp pích sáu | Số viết bằng chữ |
   | 1900 4403 | một chín không không, bốn bốn không ba | Đọc từng số |
+  | **Kênh Du học** (thêm 13/11/2026, ⚠️ chưa nghe kiểm tra — nghe ở video Du học đầu tiên rồi sửa bảng này) | | |
+  | D4-1 | đê bốn một | Hệ tiếng |
+  | D2 | đê hai | Hệ chuyên ngành |
+  | GPA 6.9 | điểm trung bình sáu phẩy chín | Không đọc chữ "GPA" |
+  | IELTS 5.5 | ai en năm phẩy năm | |
+  | 5,4 triệu won | năm phẩy bốn triệu uôn | "won" dễ bị đọc kiểu tiếng Anh |
+  | KTX | ký túc xá | |
+  | Seoul / Busan / Daejeon / Gyeonggi | Xơ-un / Bu-xan / Đê-chon / Kiơng-ki | Tên địa danh Hàn |
 
 - **Cách gọi API:** script `tools/vbee_tts.py` (gói hiện tại chỉ hỗ trợ chế độ async: gửi yêu cầu rồi chờ lấy file; webhook điền địa chỉ nội bộ không dùng).
-  - ⚠️ Vbee **cắt cụt âm cuối của mỗi file trả về**. Vì vậy luôn gửi **cả kịch bản trong một yêu cầu** (mỗi câu một dòng, nghỉ 1,2 giây giữa dòng, thêm câu đệm cuối), rồi tách thành từng file theo khoảng nghỉ. Script đã làm sẵn việc này; không gọi Vbee từng câu riêng lẻ. ✅ Đã nghe kiểm tra trên K5 (12/11/2026).
+  - ⚠️ Vbee **cắt cụt âm cuối của mỗi file trả về** và không giữ nghỉ đoạn. Vì vậy script gửi **mỗi câu một yêu cầu song song, thêm câu đệm phía sau**, rồi cắt ở chỗ nghỉ trước câu đệm. Script đã làm sẵn việc này. ✅ Đã nghe kiểm tra (12/11/2026).
   - Cú pháp: `python tools/vbee_tts.py .env voice_id_dh <thư mục ra> <tốc độ> s1 "câu 1" s2 "câu 2" ...` → mỗi câu một file mp3 + `voice.json` (thời lượng).
 
 ---
@@ -226,7 +234,7 @@
 ### 2.3 Sản phẩm, dịch vụ
 
 - **Hệ:** Hệ tiếng (D4-1) · Hệ Đại học · Hệ Thạc sĩ ✅
-- **Gói trọn gói:** khoảng **60 triệu đồng** *(theo kế hoạch nội bộ, chưa thấy trên website)* ⚠️ cần bảng phí chính thức. Không dùng từ "giá rẻ".
+- **Gói trọn gói:** khoảng **60 triệu đồng** *(theo kế hoạch nội bộ, chưa thấy trên website)* ⚠️ **chưa dùng**: bảng chi phí chính thức (mục 2.3a) không ghi phí dịch vụ. Không dùng từ "giá rẻ".
 - **Khóa tiếng chuẩn bị du học** (Bảng giá 07/BG-TBT) ✅, bán qua Tiếng Hàn Thầy Tư, kênh Du học có thể giới thiệu:
   - Tiếng Hàn định hướng TOPIK 2 cho du học sinh từ số 0 (offline): SC1 + SC2 + Ôn luyện phỏng vấn, **13.000.000đ**
   - Ôn luyện phỏng vấn trường và Đại sứ quán (online, 20 buổi): **2.500.000đ**
@@ -238,6 +246,40 @@
   4. Chuẩn bị phỏng vấn, làm visa
   5. Cất cánh, rồi tiếp tục đồng hành
 - **Cấu trúc chi phí công bố** ✅: Đóng cho trường (học phí, nhập học, KTX) · Chuẩn bị trước khi đi (hồ sơ, dịch thuật, vé máy bay; phí dịch vụ tách riêng) · Sinh hoạt dự kiến.
+- **Điều kiện tối thiểu của trung tâm** ✅ (phiếu dự tuyển học bổng nội bộ): hệ tiếng D4 cần **TOPIK 2 trở lên**; hệ chuyên ngành D2 cần **TOPIK 3 trở lên hoặc IELTS 5.5**. Trung tâm định hướng trường theo năng lực học tập và năng lực hồ sơ; khuyến khích đăng ký trường tuyển sinh sớm.
+
+### 2.3a Quyền lợi du học sinh và chi phí hồ sơ ✅
+> Nguồn: `Bảng chi phí du học.pdf` + ảnh `Giá trị nhận được 1-08.jpg` (hệ D4-1, D2-1, D2-2, D2-3, D2-4) và `1-09.jpg` (hệ D2-6) do bộ phận Du học cung cấp, 12/11/2026. Hai bảng **giống hệt nhau** về nội dung.
+> Bắt buộc khi nhắc số tiền: kèm câu "**mức chi phí mang tính tham khảo, có thể thay đổi tùy trường hợp**" (đúng như ghi chú trên ảnh gốc). Luôn dùng dấu "khoảng".
+
+**A. Trọn gói dịch vụ (không tính tiền riêng):** định hướng nghề nghiệp, chọn ngành · tư vấn chọn trường theo năng lực hồ sơ · tư vấn hồ sơ cá nhân hóa · sắp xếp lịch phỏng vấn với trường Hàn · hướng dẫn đóng tiền invoice **trực tiếp sang trường** · hướng dẫn chuẩn bị, nộp hồ sơ visa tại Đại sứ quán/Lãnh sự quán · **lệ phí xét hồ sơ của trường** · hướng dẫn hội nhập, liên lạc sau khi nhập học · hỗ trợ thủ tục nhận học bổng (hệ D2).
+
+**B. Khoản 9.500.000đ chi phí hồ sơ do bên thứ ba thu** (không phải phí dịch vụ của công ty):
+
+| Khoản | Khoảng |
+|---|---:|
+| Công chứng, dịch thuật hồ sơ | 1.000.000đ |
+| Tem xác nhận dịch thuật ("tem vàng") | 500.000đ |
+| Hướng dẫn thủ tục chứng minh tài chính (xác nhận số dư sổ tiết kiệm) | 2.500.000đ |
+| Gửi hồ sơ bản cứng sang trường + hỗ trợ đăng ký KTX/tìm phòng | 1.500.000đ (⚠️ PDF và ảnh ghi đảo 500k/1 triệu giữa hai dòng — chỉ nêu tổng) |
+| Phối hợp với trường đón tại sân bay Hàn Quốc về KTX | 2.000.000đ |
+| Hỗ trợ hồ sơ lên chuyên ngành cho hệ D4-1 | 2.000.000đ |
+| **Cộng** | **9.500.000đ** (đã kiểm tra, cộng đúng) |
+
+- **Nếu trượt code hoặc visa:** đăng ký kỳ tiếp theo thì **không đóng thêm** khoản này; thanh lý hợp đồng thì **được nhận lại 5.000.000đ**. ✅ Đây là điểm "minh bạch" rất mạnh để làm video.
+
+**C. Học viên tự thanh toán trực tiếp** (ngoài 9,5 triệu): tem tư pháp "tem tím" khoảng 832.000đ (4 USD/tem, 4–8 tem) · lệ phí visa tại Đại sứ quán khoảng 1.800.000đ (50 USD + 390.000đ phí KVAC) · khám sức khỏe khoảng 310.000đ · vé máy bay (theo lịch nhập cảnh của trường) · chứng minh tài chính bằng sổ tiết kiệm hoặc K-Study (theo quy định của trường và Đại sứ quán; sổ phải **chính chủ, không kỳ hạn**).
+
+⚠️ **Chưa có:** mức **phí dịch vụ** (bảng chỉ ghi "trọn gói dịch vụ", không ghi số tiền) → **không nêu** "gói 60 triệu" hay bất kỳ con số phí dịch vụ nào. Học phí trường đóng thẳng cho trường theo invoice.
+
+### 2.3b Dữ liệu trường (theo kỳ tuyển sinh)
+> Nguồn: kịch bản do bộ phận Du học soạn (`tu-lieu/kich-ban/du-hoc/kich_ban_dh.txt`, nhận 12/11/2026). Học phí, học bổng **thay đổi theo kỳ** → khi dùng phải ghi "theo thông tin trường công bố" và kỳ áp dụng (nếu có). ⚠️ An xác nhận lại số liệu còn hiệu lực trước khi duyệt video. Trường không có trong bảng này: **không nêu số liệu**, chỉ nói chung và mời nhắn tin kiểm tra hồ sơ.
+
+| Trường | Vị trí, điểm nổi bật | Hệ tiếng D4-1 | Hệ chuyên ngành D2 · học bổng |
+|---|---|---|---|
+| **Catholic** (Đại học Công giáo) | Gần Seoul, giao thông thuận tiện, chi phí sinh hoạt dễ thở hơn trung tâm Seoul. 4 ngành riêng cho SV quốc tế: Quản trị kinh doanh, Âm nhạc, Tiếng Hàn, Truyền thông nghệ thuật. Phát triển AI, Công nghệ sinh học, Y sinh | GPA từ 6,9; tốt nghiệp THPT; trống không quá 2 năm (trên 2 năm cần TOPIK 2+). Học phí khoảng 5,4 triệu won/năm | TOPIK 3 hoặc IELTS 5.5 (TOPIK 2 được nếu đã học đủ 300 giờ tiếng Hàn). Học phí khoảng 4,39 triệu won/kỳ. HB kỳ đầu: TOPIK 3 → 70% · TOPIK 4 → 90% · TOPIK 5–6 → 100% |
+| **Pyeongtaek** | Trường Top 2, tỉnh Gyeonggi; tuyển sinh toàn quốc. Ngành: IT, Logistics, Phúc lợi xã hội, Quảng cáo, Truyền thông, Phim và Kịch | Tốt nghiệp THPT hoặc GDTX; GPA từ 6,5; trống không quá 3 năm. Học phí khoảng 5 triệu won/năm; KTX khoảng 1,08 triệu won/6 tháng | Kỳ **tháng 12/2026**: TOPIK 2+ → 500.000 won · GPA 3 năm THPT từ 8,0 → 500.000 won · có anh chị em ruột đang học tại trường → 500.000 won |
+| **Woosong** | Daejeon, môi trường quốc tế. Có chương trình **100% tiếng Anh** (IELTS từ 5.5 tùy chương trình). Mạnh: Quản trị khách sạn, Ẩm thực, AI, Logistics, CNTT | Tốt nghiệp THPT; GPA từ 6,7; trống không quá 2 năm. Học phí khoảng 5,2 triệu won/năm; KTX khoảng 1,4 triệu won/2 kỳ (gồm 1 bữa/ngày) | Chương trình tiếng Hàn: TOPIK 3; tiếng Anh: IELTS 5.5 tùy ngành. HB kỳ đầu: TOPIK 3 → 30% · TOPIK 4 → 50% · TOPIK 5 → 70% · TOPIK 6 → 100% học phí 4 năm (nếu duy trì kết quả học tập theo yêu cầu) |
 - **Trường nổi bật trên web** ✅: ChungAng (Seoul, TOP 1), Inha (Incheon, TOP 1), Daegu, DongA (Busan), Pyeongtaek (TOP 2), Gimcheon (TOP 3).
 - **Mạng lưới đối tác** ✅: Ajou, Keimyung, Konyang, Ngoại ngữ Busan, Sunmoon, Sejong, Hanyang, Inha, Joongbu, ChungAng, Nữ Sookmyung, Thần học Seoul, Chungnam, Nữ sinh Duksung, Sungkyunkwan, Sungkyul, Konkuk, Kyungsung, Nữ sinh Seoul.
   ⚠️ Cần xác nhận trường nào là đối tác chính thức trước khi nêu tên trong video.
@@ -263,6 +305,8 @@
 ### 2.6 Nhận diện hình ảnh → xem **mục 0.1** (dùng chung bộ nhận diện Thầy Tư)
 
 - **Phong cách hình:** lớp học thật, khoảnh khắc lên đường ở sân bay, lễ trao học bổng, học viên tốt nghiệp tại Hàn, khuôn viên trường Hàn Quốc.
+- **Khuôn chữ động của kênh Du học (K4 bản Du học, chốt sơ bộ 13/11/2026):** nền **trắng**, góc có mảng màu xanh tươi `#1E6FE8` và vàng `#FFE360` (theo ảnh "Giá trị nhận được" của bộ phận Du học); hook **chữ đỏ `#E81E37`**, tiêu đề xanh đậm `#263E8B`, số tiền và học bổng trong nhãn vàng. Khác hẳn nền xanh của kênh Tiếng Hàn để người xem phân biệt ngay. Giọng Vbee tốc độ 1.0 (chậm hơn kênh Tiếng Hàn 1.05).
+- Chưa có video/banner cũ của kênh Du học trong `tu-lieu/du-hoc/` → khi có, phân tích bổ sung như `phong-cach-tieng-han.md`.
 
 ### 2.7 Trụ cột nội dung Reels
 
@@ -354,7 +398,9 @@
 - [ ] Điều kiện và quyền lợi của cam kết TOPIK 3+ (học lại hay hoàn phí), danh sách khóa áp dụng chính xác
 - [ ] Mã khóa trùng `KHCBA_TP2_SC1` (online và offline)
 - [ ] Giá các khóa Giao tiếp nâng cao, Từ vựng, EPS (có trên website, không có trong bảng giá)
-- [ ] Bảng phí du học chính thức (gói 60 triệu gồm những gì, phí nào tách riêng)
+- [x] Bảng chi phí hồ sơ du học (mục 2.3a, nhận 12/11/2026) — [ ] còn thiếu **mức phí dịch vụ** (gói 60 triệu?) và lệch 500k/1 triệu giữa 2 dòng "gửi hồ sơ" và "KTX"
+- [ ] Xác nhận số liệu 3 trường Catholic, Pyeongtaek, Woosong (mục 2.3b) còn hiệu lực; kỳ nhập học sắp tới
+- [ ] Video/banner cũ của kênh Du học (thư mục `tu-lieu/du-hoc/` đang trống)
 - [ ] Điều kiện cụ thể cho câu "Có TOPIK 3 – Có ngay VISA"
 - [ ] Danh sách trường đối tác chính thức, học bổng, kỳ nhập học sắp tới
 - [ ] Top 10 video hoặc bài đăng hiệu quả nhất của mỗi kênh (cần quyền quản trị trang; khi chưa đăng nhập, Facebook chỉ hiện thông tin giới thiệu)

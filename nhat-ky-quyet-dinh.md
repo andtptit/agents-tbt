@@ -4,6 +4,18 @@
 
 ---
 
+## 13/11/2026 — Mở kênh Du học Thầy Tư (Quản lý dự án + Claude)
+
+- Phân tích `Bảng chi phí du học.pdf` + 2 ảnh "Giá trị nhận được" (D4-1/D2-1…4 và D2-6, nội dung giống nhau) và 6 kịch bản của bộ phận Du học.
+- `brand.md`: thêm mục **2.3a** (dịch vụ trọn gói · khoản hồ sơ 9.500.000đ do bên thứ ba thu, đã cộng kiểm tra đúng · trượt code/visa: kỳ sau không đóng thêm, thanh lý nhận lại 5 triệu · khoản học viên tự trả), mục **2.3b** (số liệu 3 trường), điều kiện tối thiểu D4 TOPIK 2+ / D2 TOPIK 3+ hoặc IELTS 5.5, từ phát âm Du học, giao diện K4 bản Du học.
+- Mới: `huong-dan-kich-ban-du-hoc.md` — xưng **mình – bạn**, 4 dạng: T giới thiệu trường, S hậu trường, C chi phí minh bạch (dạng mới, thế mạnh của kênh), H hỏi đáp.
+- Bot: `/tao dh <chủ đề>` (hoặc `/taodh`) tạo đơn mã **DH-…**; Claude viết theo hướng dẫn Du học; video dựng khuôn K4 **nền trắng, mảng xanh/vàng, hook đỏ, con số trong nhãn vàng**, giọng chậm hơn (1.0).
+- Quyết định: **không nêu phí dịch vụ / "gói 60 triệu"** cho tới khi có bảng chính thức; số liệu trường phải kèm "theo thông tin trường công bố".
+
+**Còn dở:** mức phí dịch vụ; PDF và ảnh ghi đảo 500k/1 triệu giữa "gửi hồ sơ" và "KTX"; xác nhận số liệu 3 trường còn hiệu lực; nghe kiểm tra phát âm D4-1, won, IELTS; video/banner cũ kênh Du học; page Facebook thật của kênh Du học (hiện vẫn đăng lên page test).
+
+---
+
 ## 12/11/2026 (chiều) — Hệ thống sơ bộ chạy trọn vòng
 
 - Telegram: nhóm "Nhà máy nội dung Thầy Tư" chia 5 chủ đề; bot tự chạy cùng Windows (trình giám sát), báo cáo 8h sáng.

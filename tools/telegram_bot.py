@@ -212,7 +212,7 @@ def write_script_job(code):
     update_order(code, status="Đang viết kịch bản")
     progress(code, f"⏳ Claude đang {'viết lại' if rewrite else 'viết'} kịch bản… (bắt đầu {start}, thường 1–3 phút)")
     try:
-        s = script_writer.write_script(o["topic"], o.get("channel", "Tiếng Hàn Thầy Tư"),
+        s = script_writer.write_script(o["topic"], script_writer.channel_of(o.get("channel", "TH")),
                                        feedback=o.get("feedback") if rewrite else None,
                                        previous=o.get("script") if rewrite else None)
         r = say(CHAT_ID, script_writer.format_script(code, s), TOPICS.get("duyet_kich_ban"),
@@ -244,7 +244,8 @@ def make_video_job(code):
         path, total = video_maker.make_video(
             code, o["script"], log=lambda msg: progress(code, f"{msg} (bắt đầu {start}, thường 2–4 phút)"))
         s = o["script"]
-        caption = (f"🎬 {code} — {s.get('title', '')}\n{total:.0f} giây · khuôn {s.get('template', 'K4')} · giọng Vbee\n"
+        caption = (f"🎬 {code} — {s.get('title', '')}\n{o.get('channel', 'Tiếng Hàn Thầy Tư')} · {total:.0f} giây · "
+                   f"khuôn {s.get('template', 'K4')} · giọng Vbee\n"
                    f"Kịch bản đã duyệt bởi {o.get('script_approved_by', '?')}.\nBấm Duyệt hoặc Trả về.")
         fields = {"chat_id": CHAT_ID, "caption": caption[:1000], "supports_streaming": "true",
                   "reply_markup": video_buttons(code)}
@@ -463,20 +464,27 @@ def handle_message(m, q):
             say(chat, f"🔁 Đã xếp lại {arg} để Claude viết kịch bản.", thread_of(m), m["message_id"])
         else:
             say(chat, "Gõ /lai <mã đơn>, ví dụ /lai TH-261112-01", thread_of(m), m["message_id"])
-    elif cmd == "/tao":
+    elif cmd in ("/tao", "/taodh", "/taoth"):
         if not allowed:
             say(chat, "Bạn chưa có quyền đặt video.", thread_of(m), m["message_id"])
             return
+        # Chọn kênh: /tao dh <chủ đề> hoặc /taodh <chủ đề> → Du học; còn lại → Tiếng Hàn.
+        chan = "DH" if cmd == "/taodh" else "TH"
+        first = arg.split(" ", 1)[0].lower()
+        if cmd == "/tao" and first in ("dh", "duhoc", "th", "tienghan"):
+            chan = "DH" if first in ("dh", "duhoc") else "TH"
+            arg = arg.split(" ", 1)[1].strip() if " " in arg else ""
         if not arg:
-            say(chat, "Gõ kèm chủ đề, ví dụ:\n/tao Học 1 từ biết thêm 5 từ (gốc Hán Hàn)", thread_of(m),
-                m["message_id"])
+            say(chat, "Gõ kèm chủ đề, ví dụ:\n/tao Học 1 từ biết thêm 5 từ (gốc Hán Hàn)  → kênh Tiếng Hàn\n"
+                      "/tao dh Trượt visa có mất tiền hồ sơ không?  → kênh Du học", thread_of(m), m["message_id"])
             return
         day = datetime.now().strftime("%y%m%d")
-        n = 1 + sum(1 for c in load_orders() if c.startswith(f"TH-{day}-"))
-        code = f"TH-{day}-{n:02d}"
-        r = say(chat, f"📥 Đơn {code}: «{arg}»\n🕒 Đã nhận, đang xếp hàng cho Claude viết kịch bản…",
+        n = 1 + sum(1 for c in load_orders() if c.startswith(f"{chan}-{day}-"))
+        code = f"{chan}-{day}-{n:02d}"
+        cname = script_writer.CHANNELS[chan]["name"]
+        r = say(chat, f"📥 Đơn {code} ({cname}): «{arg}»\n🕒 Đã nhận, đang xếp hàng cho Claude viết kịch bản…",
                 thread_of(m), m["message_id"])
-        update_order(code, topic=arg, channel="Tiếng Hàn Thầy Tư", status="Chờ viết kịch bản",
+        update_order(code, topic=arg, channel=cname, status="Chờ viết kịch bản",
                      by=person(m["from"]), at=now(), order_message_id=m["message_id"],
                      ack_id=r.get("result", {}).get("message_id"))
 
