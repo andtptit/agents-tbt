@@ -231,14 +231,16 @@ def orders_db_for(st, code):
 def sync_orders(verbose=False):
     """Đẩy các đơn có thay đổi lên Notion. Trả về số đơn đã gửi."""
     st = load_state()
-    if not TOKEN or not st.get("orders_db") or not os.path.exists(ORDERS):
+    if not TOKEN or not os.path.exists(ORDERS):
         return 0
     orders = json.load(open(ORDERS, encoding="utf-8"))
     synced = st.setdefault("synced", {})
     sent = 0
     for code, o in orders.items():
-        props = order_props(code, o)
         db = orders_db_for(st, code)
+        if not db:  # kênh chưa có bảng trên Notion (Tiếng Hàn: tạm ẩn từ 13/11/2026) → bỏ qua
+            continue
+        props = order_props(code, o)
         digest = hashlib.sha1(json.dumps([db, props], sort_keys=True, ensure_ascii=False).encode()).hexdigest()
         rec = synced.get(code, {})
         if rec.get("hash") == digest:

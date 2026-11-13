@@ -9,6 +9,8 @@
 - An: **2 kênh có 2 PM riêng** → mỗi kênh một trang Notion riêng, mời PM dạng khách vào đúng trang kênh mình.
 - Đã tạo trang con **🎓 Du học Thầy Tư**: Đơn video Du học (bot tự đẩy đơn DH-…), Lịch nội dung Du học (5 ý tưởng chuyển từ bảng chung, thêm cột Người xem chính), Việc chờ PM Du học quyết (12 việc). Đã bỏ các mục Du học khỏi bảng chung (nằm trong thùng rác Notion, khôi phục được).
 
+- An: **chỉ làm Du học, Tiếng Hàn tính sau** → kế hoạch 6 tháng viết lại chỉ cho Du học (đổi tên "Kế hoạch kênh Du học Thầy Tư"); 3 bảng chung ở trang gốc Notion (đơn Tiếng Hàn) đã cho vào thùng rác Notion (khôi phục được, id lưu ở `data/notion.json` mục `TH_archived`). Bot không đẩy đơn Tiếng Hàn lên Notion nữa.
+
 **Còn dở:** tách trang Tiếng Hàn (khóa học) cho PM thứ hai; tách kế hoạch 6 tháng theo kênh nếu 2 PM cần; đơn TH-261113-01 (chủ đề du học nhưng đặt nhầm kênh) vẫn ở bảng chung.
 
 ---
