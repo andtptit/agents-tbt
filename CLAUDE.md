@@ -39,7 +39,7 @@ Trả về (kịch bản hoặc video) + lý do → Claude viết lại → ch�
 - Bot **tự chạy cùng Windows**: file `ThayTu-Bot.vbs` trong thư mục Startup gọi `tools/giam_sat_bot.py` (ẩn cửa sổ, tự khởi động lại bot, một bản duy nhất). Nhật ký: `data/bot.log`. Sau khi sửa code bot phải khởi động lại: tắt tiến trình `python.exe … telegram_bot.py run` (trình giám sát tự bật lại sau 10 giây). **Không** chạy thêm `telegram_bot.py run` bằng tay khi giám sát đang chạy. Trạng thái đơn: `data/orders.json`.
 - Báo cáo ngày gửi lúc 8h vào chủ đề 📊 Báo cáo (`/baocao` để gửi ngay).
 - Nhóm Telegram "Nhà máy nội dung Thầy Tư" có 5 chủ đề (id trong `data/telegram_topics.json`): Đặt video, Duyệt kịch bản, Duyệt video, Báo cáo, Cảnh báo.
-- Lệnh: `/tao <chủ đề>` (kênh Tiếng Hàn, mã TH-…), `/tao dh <chủ đề>` hoặc `/taodh <chủ đề>` (kênh Du học, mã DH-…, khuôn K4 nền trắng), `/cho`, `/ping` (bot + Claude đăng nhập chưa), `/lai <mã>` (viết lại kịch bản), `/dung <mã>` (dựng lại video).
+- Lệnh: `/tao <chủ đề>` (kênh Tiếng Hàn, mã TH-…), `/tao dh <chủ đề>` hoặc `/taodh <chủ đề>` (kênh Du học, mã DH-…, khuôn K4 nền trắng). Gõ `/tao` thiếu `dh` mà chủ đề có từ du học/visa/trường/học bổng… thì bot **hỏi lại kênh** bằng 2 nút. `/cho`, `/ping` (bot + Claude đăng nhập chưa), `/lai <mã>` (viết lại kịch bản), `/dung <mã>` (dựng lại video).
 - Viết kịch bản dùng Claude Code chạy dòng lệnh trên máy (bản đi kèm Claude desktop) — **phải đăng nhập**: `claude.exe auth login`.
 - **Page Facebook để TEST đăng bài: "Allisagi là chân ái"** (META_PAGE_ID trong .env). Không đăng thử lên page thật. Đổi page: `python tools/meta_post.py setup "Tên page"`.
 - Theo dõi trên máy: `python tools/theo_doi.py`. Video sinh theo đơn nằm ở `video/jobs/<mã>/` (không đưa lên Git).

@@ -329,6 +329,20 @@ def handle_callback(cb, q):
         api("editMessageReplyMarkup", {"chat_id": msg["chat"]["id"], "message_id": msg["message_id"],
                                        "reply_markup": {"inline_keyboard": [[{"text": label, "callback_data": "noop|x"}]]}})
 
+    if action == "ch":  # chọn kênh cho đơn /tao thiếu "dh"
+        chan, pid = code.split("|", 1)
+        pend = load_pending()
+        p = pend.pop(pid, None)
+        if not p:
+            api("answerCallbackQuery", {"callback_query_id": cb["id"], "text": "Đơn này đã được tạo rồi."})
+            return
+        save_pending(pend)
+        cname = script_writer.CHANNELS[chan]["name"]
+        mark(f"{name} chọn kênh {cname}")
+        api("answerCallbackQuery", {"callback_query_id": cb["id"], "text": f"Đã chọn {cname}"})
+        create_order(chan, p["topic"], p["by"], p["chat"], p["thread"], p["msg"])
+        return
+
     if action in ("pb_now", "pb_20", "pb_draft"):
         o = load_orders().get(code)
         if not o or not o.get("video"):
@@ -469,7 +483,7 @@ def handle_message(m, q):
             say(chat, "Bạn chưa có quyền đặt video.", thread_of(m), m["message_id"])
             return
         # Chọn kênh: /tao dh <chủ đề> hoặc /taodh <chủ đề> → Du học; còn lại → Tiếng Hàn.
-        chan = "DH" if cmd == "/taodh" else "TH"
+        chan = "DH" if cmd == "/taodh" else "TH" if cmd == "/taoth" else None
         first = arg.split(" ", 1)[0].lower()
         if cmd == "/tao" and first in ("dh", "duhoc", "th", "tienghan"):
             chan = "DH" if first in ("dh", "duhoc") else "TH"
@@ -478,15 +492,54 @@ def handle_message(m, q):
             say(chat, "Gõ kèm chủ đề, ví dụ:\n/tao Học 1 từ biết thêm 5 từ (gốc Hán Hàn)  → kênh Tiếng Hàn\n"
                       "/tao dh Trượt visa có mất tiền hồ sơ không?  → kênh Du học", thread_of(m), m["message_id"])
             return
-        day = datetime.now().strftime("%y%m%d")
-        n = 1 + sum(1 for c in load_orders() if c.startswith(f"{chan}-{day}-"))
-        code = f"{chan}-{day}-{n:02d}"
-        cname = script_writer.CHANNELS[chan]["name"]
-        r = say(chat, f"📥 Đơn {code} ({cname}): «{arg}»\n🕒 Đã nhận, đang xếp hàng cho Claude viết kịch bản…",
-                thread_of(m), m["message_id"])
-        update_order(code, topic=arg, channel=cname, status="Chờ viết kịch bản",
-                     by=person(m["from"]), at=now(), order_message_id=m["message_id"],
-                     ack_id=r.get("result", {}).get("message_id"))
+        if chan is None and looks_like_duhoc(arg):
+            # Gõ /tao thiếu "dh" mà chủ đề nghe như du học → hỏi lại kênh, chưa tạo đơn.
+            pid = uuid.uuid4().hex[:10]
+            pend = load_pending()
+            pend[pid] = {"topic": arg, "by": person(m["from"]), "user_id": m["from"]["id"], "chat": chat,
+                         "thread": thread_of(m), "msg": m["message_id"], "at": now()}
+            save_pending(pend)
+            say(chat, f"🤔 Chủ đề «{arg}» nghe như nội dung du học, nhưng lệnh thiếu chữ dh. Đơn này thuộc kênh nào?",
+                thread_of(m), m["message_id"],
+                {"inline_keyboard": [[{"text": "🎓 Du học Thầy Tư", "callback_data": f"ch|DH|{pid}"},
+                                      {"text": "📘 Tiếng Hàn Thầy Tư", "callback_data": f"ch|TH|{pid}"}]]})
+            return
+        create_order(chan or "TH", arg, person(m["from"]), chat, thread_of(m), m["message_id"])
+
+
+# Từ khóa cho thấy chủ đề thuộc kênh Du học (dùng khi /tao thiếu "dh").
+DUHOC_WORDS = ("du học", "duhoc", "visa", "trường", "đại học", "học bổng", "d4-1", "d4", "d2", "kỳ nhập học",
+               "hồ sơ", "sang hàn", "đi hàn", "ký túc xá", "ktx", "chứng minh tài chính", "sổ tiết kiệm", "phỏng vấn trường",
+               "đại sứ quán", "seoul", "busan", "2k8", "2k9")
+
+
+def looks_like_duhoc(topic):
+    t = " " + topic.lower() + " "
+    return any(w in t for w in DUHOC_WORDS)
+
+
+PENDING = os.path.join(DATA, "pending_channel.json")
+
+
+def load_pending():
+    return json.load(open(PENDING, encoding="utf-8")) if os.path.exists(PENDING) else {}
+
+
+def save_pending(p):
+    json.dump(p, open(PENDING, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+
+
+def create_order(chan, topic, who, chat, thread, reply_to):
+    day = datetime.now().strftime("%y%m%d")
+    n = 1 + sum(1 for c in load_orders() if c.startswith(f"{chan}-{day}-"))
+    code = f"{chan}-{day}-{n:02d}"
+    cname = script_writer.CHANNELS[chan]["name"]
+    r = say(chat, f"📥 Đơn {code} ({cname}): «{topic}»\n🕒 Đã nhận, đang xếp hàng cho Claude viết kịch bản…",
+            thread, reply_to)
+    update_order(code, topic=topic, channel=cname, status="Chờ viết kịch bản",
+                 by=who, at=now(), order_message_id=reply_to,
+                 ack_id=r.get("result", {}).get("message_id"))
+    return code
 
 
 # ---------- Báo cáo ----------
