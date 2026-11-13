@@ -4,6 +4,11 @@
   python tools/notion_sync.py setup          tạo 3 bảng trong trang gốc (chạy 1 lần), ghi id vào data/notion.json
   python tools/notion_sync.py seed           đổ sẵn "Việc chờ PM quyết" + ý tưởng lịch tháng 12 (chạy 1 lần)
   python tools/notion_sync.py sync           đẩy đơn trong data/orders.json lên bảng "Đơn video"
+  python tools/notion_sync.py setup-dh       tạo trang con "Du học Thầy Tư" (3 bảng riêng cho PM Du học),
+                                             chuyển ý tưởng + việc chờ quyết của Du học từ bảng chung sang
+
+Mỗi kênh một trang riêng để chia sẻ cho PM của kênh đó (mời PM dạng khách vào ĐÚNG trang con của kênh).
+Đơn mã DH-… đồng bộ vào bảng của trang Du học; đơn khác vào bảng ở trang gốc (sẽ tách trang Tiếng Hàn sau).
 
 Cấu hình trong .env: NOTION_TOKEN (integration nội bộ "Thay Tu Bot"), NOTION_ROOT_PAGE (id trang gốc, không bắt buộc).
 Không bao giờ in token. Không đưa họ tên/số điện thoại khách hàng lên Notion.
@@ -216,6 +221,13 @@ def order_props(code, o):
     }
 
 
+def orders_db_for(st, code):
+    """Bảng Đơn video đúng kênh: DH-… → trang Du học (nếu đã tách), còn lại → bảng ở trang gốc."""
+    if code.startswith("DH-") and st.get("DH", {}).get("orders_db"):
+        return st["DH"]["orders_db"]
+    return st.get("orders_db")
+
+
 def sync_orders(verbose=False):
     """Đẩy các đơn có thay đổi lên Notion. Trả về số đơn đã gửi."""
     st = load_state()
@@ -226,15 +238,20 @@ def sync_orders(verbose=False):
     sent = 0
     for code, o in orders.items():
         props = order_props(code, o)
-        digest = hashlib.sha1(json.dumps(props, sort_keys=True, ensure_ascii=False).encode()).hexdigest()
+        db = orders_db_for(st, code)
+        digest = hashlib.sha1(json.dumps([db, props], sort_keys=True, ensure_ascii=False).encode()).hexdigest()
         rec = synced.get(code, {})
         if rec.get("hash") == digest:
             continue
+        if rec.get("page") and rec.get("db", db) != db:  # đơn nằm nhầm bảng → bỏ vào thùng rác, tạo lại đúng bảng
+            api("PATCH", f"pages/{rec['page']}", {"archived": True})
+            rec = {}
         if rec.get("page"):
             api("PATCH", f"pages/{rec['page']}", {"properties": props})
         else:
-            page = api("POST", "pages", {"parent": {"database_id": st["orders_db"]}, "properties": props})
+            page = api("POST", "pages", {"parent": {"database_id": db}, "properties": props})
             rec["page"] = page["id"]
+        rec["db"] = db
         rec["hash"] = digest
         synced[code] = rec
         save_state(st)
@@ -242,6 +259,136 @@ def sync_orders(verbose=False):
         if verbose:
             print("Đã đồng bộ", code, "-", o.get("status"))
     return sent
+
+
+# ---------- Trang riêng kênh Du học ----------
+DH_DECISIONS = [
+    ("Kỳ nhập học đang tuyển (tháng 3/6/9/12?) và hạn nộp hồ sơ từng kỳ", "Lịch", True),
+    ("Số video mỗi tuần cho kênh Du học", "Lịch", True),
+    ("Người dạy kịch bản Du học (bộ phận Du học) và ngày dạy", "Lịch", True),
+    ("Quyền đăng lên fanpage Du học Thầy Tư thật (Admin Business Portfolio)", "Đăng bài", True),
+    ("Mức phí dịch vụ du học (gói 60 triệu?) — hiện cấm nêu trong video", "Chi phí", False),
+    ("Bảng chi phí: dòng 'gửi hồ sơ' và 'ký túc xá' ghi đảo 500 nghìn / 1 triệu giữa PDF và ảnh", "Chi phí", False),
+    ("Số liệu Catholic, Pyeongtaek, Woosong còn hiệu lực không; bổ sung trường khác", "Trường", False),
+    ("Điều kiện câu 'Có TOPIK 3 – Có ngay VISA' (hiện cấm dùng)", "Chi phí", False),
+    ("Danh sách trường đối tác chính thức được nêu tên", "Trường", False),
+    ("Học viên du học nào đồng ý xuất hiện trong video", "Chất liệu", False),
+    ("Video/banner cũ của kênh Du học để phân tích phong cách", "Chất liệu", False),
+    ("Phòng tư vấn có ghi được khách đến từ video nào không", "Đo lường", False),
+]
+DH_FORMATS = ["T giới thiệu trường", "S hậu trường", "C chi phí minh bạch", "H hỏi đáp"]
+
+
+def _query_all(db):
+    out, cursor = [], None
+    while True:
+        body = {"page_size": 100} | ({"start_cursor": cursor} if cursor else {})
+        r = api("POST", f"databases/{db}/query", body)
+        out += r["results"]
+        if not r.get("has_more"):
+            return out
+        cursor = r["next_cursor"]
+
+
+def setup_dh():
+    st = load_state()
+    dh = st.setdefault("DH", {})
+    if not dh.get("page"):
+        page = api("POST", "pages", {
+            "parent": {"type": "page_id", "page_id": ROOT_PAGE}, "icon": {"type": "emoji", "emoji": "🎓"},
+            "properties": {"title": {"title": txt("Du học Thầy Tư")}},
+            "children": [{"object": "block", "type": "callout", "callout": {
+                "icon": {"type": "emoji", "emoji": "📌"}, "color": "red_background",
+                "rich_text": txt("Trang riêng của kênh Du học Thầy Tư (PC01), dành cho PM Du học. Chỉ để XEM và theo dõi: "
+                                 "duyệt kịch bản/video vẫn bấm trên Telegram. Bảng \"Đơn video Du học\" do bot tự cập nhật "
+                                 "mỗi phút, đừng sửa tay. \"Lịch nội dung\" và \"Việc chờ PM quyết\" thì PM sửa thoải mái. "
+                                 "Đặt video Du học trên Telegram: /tao dh <chủ đề>.")}}]})
+        dh["page"] = page["id"]
+        save_state(st)
+    parent = {"type": "page_id", "page_id": dh["page"]}
+    status_colors = {s: ("red" if s.startswith("Lỗi") else "yellow" if s.startswith(("Chờ duyệt", "Trả về"))
+                         else "green" if s in ("Đã đăng", "Đã duyệt video", "Đã lên lịch") else "blue")
+                     for s in STATUSES}
+    if not dh.get("orders_db"):
+        dh["orders_db"] = api("POST", "databases", {
+            "parent": parent, "is_inline": True, "icon": {"type": "emoji", "emoji": "🎬"},
+            "title": txt("Đơn video Du học"),
+            "properties": {
+                "Chủ đề": {"title": {}}, "Mã đơn": {"rich_text": {}},
+                "Kênh": {"select": opts(["Du học Thầy Tư"], {"Du học Thầy Tư": "red"})},
+                "Trạng thái": {"select": opts(STATUSES, status_colors)},
+                "Tiêu đề kịch bản": {"rich_text": {}}, "Dạng": {"rich_text": {}},
+                "Thời lượng (giây)": {"number": {}}, "Bản kịch bản": {"number": {}},
+                "Người đặt": {"rich_text": {}}, "Ngày đặt": {"date": {}},
+                "Duyệt kịch bản": {"rich_text": {}}, "Duyệt video": {"rich_text": {}},
+                "Góp ý gần nhất": {"rich_text": {}}, "Link Facebook": {"url": {}},
+                "Lịch đăng": {"date": {}}, "Lỗi": {"rich_text": {}}}})["id"]
+        save_state(st)
+    if not dh.get("calendar_db"):
+        dh["calendar_db"] = api("POST", "databases", {
+            "parent": parent, "is_inline": True, "icon": {"type": "emoji", "emoji": "🗓️"},
+            "title": txt("Lịch nội dung Du học"),
+            "properties": {
+                "Chủ đề": {"title": {}}, "Ngày đăng": {"date": {}},
+                "Dạng": {"select": opts(DH_FORMATS)},
+                "Trục": {"select": opts(["Điểm đau", "Câu chuyện sản phẩm", "Điểm khác biệt"])},
+                "Người xem chính": {"select": opts(["Học sinh", "Phụ huynh", "Sinh viên và người đi làm"])},
+                "Trạng thái": {"select": opts(["Ý tưởng", "PM đã chốt", "Đã đặt đơn", "Đã đăng"],
+                                              {"Ý tưởng": "gray", "PM đã chốt": "yellow", "Đã đặt đơn": "blue",
+                                               "Đã đăng": "green"})},
+                "Mã đơn": {"rich_text": {}}, "Ghi chú": {"rich_text": {}}}})["id"]
+        save_state(st)
+    if not dh.get("decisions_db"):
+        dh["decisions_db"] = api("POST", "databases", {
+            "parent": parent, "is_inline": True, "icon": {"type": "emoji", "emoji": "❓"},
+            "title": txt("Việc chờ PM Du học quyết"),
+            "properties": {
+                "Việc": {"title": {}},
+                "Nhóm": {"select": opts(["Lịch", "Chi phí", "Trường", "Chất liệu", "Đăng bài", "Đo lường"])},
+                "Chặn lịch tháng 12": {"checkbox": {}},
+                "Trạng thái": {"select": opts(["Chờ PM", "Đã trả lời", "Đã đưa vào brand.md"],
+                                              {"Chờ PM": "yellow", "Đã trả lời": "blue", "Đã đưa vào brand.md": "green"})},
+                "Câu trả lời của PM": {"rich_text": {}}}})["id"]
+        save_state(st)
+
+    if not dh.get("seeded"):
+        for title, group, blocking in DH_DECISIONS:
+            api("POST", "pages", {"parent": {"database_id": dh["decisions_db"]}, "properties": {
+                "Việc": {"title": txt(title)}, "Nhóm": {"select": {"name": group}},
+                "Chặn lịch tháng 12": {"checkbox": blocking}, "Trạng thái": {"select": {"name": "Chờ PM"}}}})
+        audience = {"C chi phí minh bạch": "Phụ huynh"}
+        moved = 0
+        # Ý tưởng Du học ở bảng chung → chép sang lịch Du học, rồi bỏ khỏi bảng chung (vào thùng rác Notion).
+        for p in _query_all(st["calendar_db"]):
+            pr = p["properties"]
+            if (pr["Kênh"]["select"] or {}).get("name") != "Du học Thầy Tư":
+                continue
+            fmt = (pr["Dạng"]["select"] or {}).get("name")
+            api("POST", "pages", {"parent": {"database_id": dh["calendar_db"]}, "properties": {
+                "Chủ đề": {"title": txt("".join(t["plain_text"] for t in pr["Chủ đề"]["title"]))},
+                "Ngày đăng": {"date": pr["Ngày đăng"]["date"]},
+                "Dạng": {"select": {"name": fmt} if fmt else None},
+                "Trục": {"select": pr["Trục"]["select"] and {"name": pr["Trục"]["select"]["name"]}},
+                "Người xem chính": {"select": {"name": audience.get(fmt, "Học sinh")}},
+                "Trạng thái": {"select": pr["Trạng thái"]["select"] and {"name": pr["Trạng thái"]["select"]["name"]}},
+                "Ghi chú": {"rich_text": txt("".join(t["plain_text"] for t in pr["Ghi chú"]["rich_text"]))}}})
+            api("PATCH", f"pages/{p['id']}", {"archived": True})
+            moved += 1
+        # Việc chờ quyết của Du học ở bảng chung đã có bản đầy đủ hơn ở trang Du học → bỏ khỏi bảng chung.
+        dh_words = ("du học", "Du học", "Kỳ nhập học", "3 trường")
+        removed = 0
+        for p in _query_all(st["decisions_db"]):
+            title = "".join(t["plain_text"] for t in p["properties"]["Việc"]["title"])
+            if (p["properties"]["Nhóm"]["select"] or {}).get("name") == "Kênh Du học" or any(w in title for w in dh_words):
+                api("PATCH", f"pages/{p['id']}", {"archived": True})
+                removed += 1
+        dh["seeded"] = True
+        save_state(st)
+        print(f"Trang Du học: {len(DH_DECISIONS)} việc chờ quyết; chuyển {moved} ý tưởng; "
+              f"bỏ {removed} việc Du học khỏi bảng chung.")
+    # Đơn DH-… đã đồng bộ vào bảng chung sẽ được sync_orders chuyển sang bảng Du học.
+    print("Đã có trang Du học Thầy Tư với 3 bảng riêng.")
+    return dh
 
 
 if __name__ == "__main__":
@@ -255,6 +402,9 @@ if __name__ == "__main__":
         setup()
     elif cmd == "seed":
         seed()
+    elif cmd == "setup-dh":
+        setup_dh()
+        print("Số đơn đã gửi:", sync_orders(verbose=True))
     elif cmd == "sync":
         print("Số đơn đã gửi:", sync_orders(verbose=True))
     else:

@@ -4,6 +4,15 @@
 
 ---
 
+## 13/11/2026 (chiều) — Tách Notion theo kênh, làm trước Du học
+
+- An: **2 kênh có 2 PM riêng** → mỗi kênh một trang Notion riêng, mời PM dạng khách vào đúng trang kênh mình.
+- Đã tạo trang con **🎓 Du học Thầy Tư**: Đơn video Du học (bot tự đẩy đơn DH-…), Lịch nội dung Du học (5 ý tưởng chuyển từ bảng chung, thêm cột Người xem chính), Việc chờ PM Du học quyết (12 việc). Đã bỏ các mục Du học khỏi bảng chung (nằm trong thùng rác Notion, khôi phục được).
+
+**Còn dở:** tách trang Tiếng Hàn (khóa học) cho PM thứ hai; tách kế hoạch 6 tháng theo kênh nếu 2 PM cần; đơn TH-261113-01 (chủ đề du học nhưng đặt nhầm kênh) vẫn ở bảng chung.
+
+---
+
 ## 13/11/2026 (trưa) — Kế hoạch 6 tháng + kết nối Notion
 
 - Lập **kế hoạch 6 tháng 12/2026 – 05/2027** (tài liệu trên claude.ai để PM đọc, comment): 4 giai đoạn (Dạy và chạy thật → Đăng đều theo lịch → Tối ưu theo số liệu → Mở rộng), mục tiêu để PM điền.
