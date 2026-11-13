@@ -3,6 +3,24 @@
 > Dành cho **Agent Biên kịch** (và người viết kịch bản). Đọc cùng `brand.md` (dữ liệu gốc, quy tắc) và `phong-cach-tieng-han.md` (hình ảnh).
 > Rút ra từ **lời thoại thật của 11 video** kênh đang có (Whisper large-v3, 12/11/2026), lưu tại `tu-lieu/loi-thoai/tieng-han/` (file `.txt` dễ đọc, `.json` có thời điểm từng từ).
 > Lời trích dưới đây đã sửa lỗi nhận giọng của máy (ví dụ máy ghi "Kem" = "các em", "tố bích" = "TOPIK").
+> **Cập nhật 13/11/2026 theo số liệu thật của fanpage** (66 Reels, 4 tháng): xem `phan-tich-fanpage-tieng-han.md`.
+
+---
+
+## 0. Bài học từ fanpage thật (ưu tiên cao nhất)
+
+Người xem fanpage Tiếng Hàn ở lại **khoảng 5,5 giây** (trung vị), Reels trung vị lại dài 78 giây.
+
+| Làm | Không làm |
+|---|---|
+| **Dạng A: Thầy Tư giải thích một nghịch lý của người học** ("học chăm, làm nhiều đề mà điểm không nhúc nhích?" → "không phải A, mà là B"). Video kiểu này giữ chân 10–27 giây, tốt nhất kênh | Hook rao ưu đãi ("15 SUẤT ƯU ĐÃI", "GIẢM SÂU 60%"): lượt xem cao nhờ quảng cáo nhưng người xem rời đi sau ~3 giây; và **hiện chưa được dùng** (xem dưới) |
+| Tổng **45–60 giây**, ý chính trước giây thứ 6 | Review sản phẩm dài; series "Review bộ sách 8 cuốn" **đã xong 8 tập**, đừng làm lại |
+| Nội dung **"lưu về"**: từ vựng theo chủ đề, mẫu câu 54, đề dự đoán → CTA "Lưu video lại để ôn" (tương tác cao nhất kênh) | Số liệu bịa kiểu "99% mọi người nghĩ…" (page từng dùng) |
+| Series mới theo **dạng câu TOPIK II** (Đọc câu 3–4, 5–8, Nghe, Viết 51–54…), mỗi tập một mẹo | Nội dung du học (visa, trường) — để ở kênh Du học |
+
+**Ưu đãi:** page đang có bài "giảm tới 10%", "giảm sâu tới 60% học phí", voucher -10% sách (10–11/2026), nhưng `brand.md` ghi "không có khuyến mãi" → **không viết ưu đãi** cho đến khi PM Tiếng Hàn xác nhận chương trình, điều kiện, thời hạn và ghi vào brand.md.
+
+**Video có giáo viên/KOL nói trước máy quay hoặc livestream:** hệ thống không thay thế người thật, không dựng người dẫn AI. Khi làm lại chủ đề đó, chuyển sang **chữ động K4** với giọng Vbee; cắt clip livestream chỉ khi giáo viên đã đồng ý.
 
 ---
 

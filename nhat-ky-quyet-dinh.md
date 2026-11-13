@@ -4,6 +4,16 @@
 
 ---
 
+## 13/11/2026 (chiều) — Research fanpage Tiếng Hàn + Notion riêng
+
+- Kéo **4 tháng** page Tiếng Hàn Thầy Tư (An yêu cầu giảm để tiết kiệm): 198 bài + 66 Reels → `phan-tich-fanpage-tieng-han.md`. Dạng A (Thầy Tư giải thích nghịch lý) giữ chân tốt nhất (10–27 s); bài ưu đãi lượt cao nhưng ~3 s; series review 8 cuốn sách đã xong; album "lưu về" tương tác cao nhất. Đã thêm mục 0 vào huong-dan-kich-ban-tieng-han.md.
+- Notion: trang 📘 **Tiếng Hàn Thầy Tư** riêng (Đơn video Tiếng Hàn, Lịch nội dung Tiếng Hàn – 6 ý tưởng, Việc chờ PM Tiếng Hàn quyết – 11 việc). **Tách hoàn toàn** với trang Du học: 2 PM, 2 chiến lược. Đơn TH-… đồng bộ lại vào trang này.
+- Thử 2 đơn: TH-261113-02 (dạng A: học chăm mà điểm không nhúc nhích), TH-261113-03 (lưu về: gốc 학).
+
+**Còn dở:** ⚠️ PM Tiếng Hàn xác nhận các ưu đãi đang chạy trên page (giảm 10%, giảm 60%, voucher sách) — brand.md vẫn ghi không có khuyến mãi nên hiện cấm viết; giáo viên livestream đồng ý cắt clip chưa.
+
+---
+
 ## 13/11/2026 (chiều) — An chốt sau research + thử 2 kịch bản
 
 - "Khuyến mại quý III" và "Quỹ Học Bổng Xanh 250 triệu" **đã dừng**, không nhắc lại (brand.md 2.3, Notion đã cập nhật).

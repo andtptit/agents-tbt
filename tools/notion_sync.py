@@ -4,6 +4,7 @@
   python tools/notion_sync.py setup          tạo 3 bảng trong trang gốc (chạy 1 lần), ghi id vào data/notion.json
   python tools/notion_sync.py seed           đổ sẵn "Việc chờ PM quyết" + ý tưởng lịch tháng 12 (chạy 1 lần)
   python tools/notion_sync.py sync           đẩy đơn trong data/orders.json lên bảng "Đơn video"
+  python tools/notion_sync.py setup-th       tạo trang con "Tiếng Hàn Thầy Tư" (3 bảng riêng cho PM Tiếng Hàn)
   python tools/notion_sync.py setup-dh       tạo trang con "Du học Thầy Tư" (3 bảng riêng cho PM Du học),
                                              chuyển ý tưởng + việc chờ quyết của Du học từ bảng chung sang
 
@@ -222,9 +223,11 @@ def order_props(code, o):
 
 
 def orders_db_for(st, code):
-    """Bảng Đơn video đúng kênh: DH-… → trang Du học (nếu đã tách), còn lại → bảng ở trang gốc."""
+    """Bảng Đơn video đúng kênh: DH-… → trang Du học, TH-… → trang Tiếng Hàn (mỗi kênh một trang riêng)."""
     if code.startswith("DH-") and st.get("DH", {}).get("orders_db"):
         return st["DH"]["orders_db"]
+    if code.startswith("TH-") and st.get("TH", {}).get("orders_db"):
+        return st["TH"]["orders_db"]
     return st.get("orders_db")
 
 
@@ -393,6 +396,111 @@ def setup_dh():
     return dh
 
 
+# ---------- Trang riêng kênh Tiếng Hàn (khóa học) — tách hoàn toàn với Du học ----------
+TH_DECISIONS = [
+    ("Ưu đãi đang chạy trên page ('giảm tới 10%', 'giảm sâu 60%', voucher -10% sách): còn hiệu lực không, điều kiện, "
+     "thời hạn? (brand.md đang ghi không có khuyến mãi → hiện cấm viết)", "Giá và ưu đãi", True),
+    ("Số video mỗi tuần cho kênh Tiếng Hàn", "Lịch", True),
+    ("Người dạy kịch bản Tiếng Hàn và ngày dạy", "Lịch", True),
+    ("Lịch thi TOPIK 2027 và lịch thi thử của trung tâm", "Lịch", True),
+    ("Quyền đăng lên fanpage Tiếng Hàn Thầy Tư thật", "Đăng bài", True),
+    ("Số buổi học chính thức (bảng giá 40 buổi, banner 89/43, video 28/27 đang lệch)", "Giá và ưu đãi", False),
+    ("Điều kiện và quyền lợi cam kết TOPIK 3+ (học lại hay hoàn phí), danh sách khóa áp dụng", "Giá và ưu đãi", False),
+    ("Giá khóa Giao tiếp nâng cao, Từ vựng, EPS (có trên web, chưa có trong bảng giá)", "Giá và ưu đãi", False),
+    ("Giáo viên trong livestream (Cô Thúy, Cô My) có đồng ý cắt clip đăng lại không", "Chất liệu", False),
+    ("Bài nào trong top lượt xem đã chạy quảng cáo", "Đo lường", False),
+    ("Học viên nào đồng ý xuất hiện trong video (kết quả, cảm nhận)", "Chất liệu", False),
+]
+TH_FORMATS = ["A series chuyên môn", "B bán khóa", "Lưu về (từ vựng và mẫu câu)", "Clip ngắn bắt trend"]
+TH_IDEAS = [
+    ("Học chăm, làm nhiều đề mà điểm TOPIK không nhúc nhích? (không phải A mà là B)", "A series chuyên môn", "Điểm đau", "Người ôn TOPIK II"),
+    ("Series mẹo theo dạng câu: Đọc TOPIK II câu 5–8 — mất điểm oan ở đâu", "A series chuyên môn", "Điểm đau", "Người ôn TOPIK II"),
+    ("Viết câu 54: viết đúng trước, viết hay sau", "A series chuyên môn", "Điểm đau", "Người ôn TOPIK II"),
+    ("Lưu về: 10 từ Hán Hàn gốc 학 (học 1 từ biết thêm 5 từ)", "Lưu về (từ vựng và mẫu câu)", "Điểm khác biệt", "Người mới học"),
+    ("Học xong sơ cấp mà vẫn 'đứng hình' khi làm đề TOPIK I", "A series chuyên môn", "Điểm đau", "Người mới học"),
+    ("Chinh phục TOPIK 4 từ số 0 (cam kết TOPIK 3+ theo điều khoản)", "B bán khóa", "Câu chuyện sản phẩm", "Người mới học"),
+]
+
+
+def setup_th():
+    st = load_state()
+    th = st.setdefault("TH", {})
+    if not th.get("page"):
+        th["page"] = api("POST", "pages", {
+            "parent": {"type": "page_id", "page_id": ROOT_PAGE}, "icon": {"type": "emoji", "emoji": "📘"},
+            "properties": {"title": {"title": txt("Tiếng Hàn Thầy Tư")}},
+            "children": [{"object": "block", "type": "callout", "callout": {
+                "icon": {"type": "emoji", "emoji": "📌"}, "color": "blue_background",
+                "rich_text": txt("Trang riêng của kênh Tiếng Hàn Thầy Tư (PC02 – khóa học), dành cho PM Tiếng Hàn. Tách riêng "
+                                 "hoàn toàn với kênh Du học. Chỉ để XEM và theo dõi: duyệt kịch bản/video vẫn bấm trên "
+                                 "Telegram. Bảng \"Đơn video Tiếng Hàn\" do bot tự cập nhật mỗi phút, đừng sửa tay. "
+                                 "\"Lịch nội dung\" và \"Việc chờ PM quyết\" thì PM sửa thoải mái. Đặt video trên "
+                                 "Telegram: /tao <chủ đề>.")}}]})["id"]
+        save_state(st)
+    parent = {"type": "page_id", "page_id": th["page"]}
+    status_colors = {s: ("red" if s.startswith("Lỗi") else "yellow" if s.startswith(("Chờ duyệt", "Trả về"))
+                         else "green" if s in ("Đã đăng", "Đã duyệt video", "Đã lên lịch") else "blue")
+                     for s in STATUSES}
+    if not th.get("orders_db"):
+        th["orders_db"] = api("POST", "databases", {
+            "parent": parent, "is_inline": True, "icon": {"type": "emoji", "emoji": "🎬"},
+            "title": txt("Đơn video Tiếng Hàn"),
+            "properties": {
+                "Chủ đề": {"title": {}}, "Mã đơn": {"rich_text": {}},
+                "Kênh": {"select": opts(["Tiếng Hàn Thầy Tư"], {"Tiếng Hàn Thầy Tư": "blue"})},
+                "Trạng thái": {"select": opts(STATUSES, status_colors)},
+                "Tiêu đề kịch bản": {"rich_text": {}}, "Dạng": {"rich_text": {}},
+                "Thời lượng (giây)": {"number": {}}, "Bản kịch bản": {"number": {}},
+                "Người đặt": {"rich_text": {}}, "Ngày đặt": {"date": {}},
+                "Duyệt kịch bản": {"rich_text": {}}, "Duyệt video": {"rich_text": {}},
+                "Góp ý gần nhất": {"rich_text": {}}, "Link Facebook": {"url": {}},
+                "Lịch đăng": {"date": {}}, "Lỗi": {"rich_text": {}}}})["id"]
+        save_state(st)
+    if not th.get("calendar_db"):
+        th["calendar_db"] = api("POST", "databases", {
+            "parent": parent, "is_inline": True, "icon": {"type": "emoji", "emoji": "🗓️"},
+            "title": txt("Lịch nội dung Tiếng Hàn"),
+            "properties": {
+                "Chủ đề": {"title": {}}, "Ngày đăng": {"date": {}},
+                "Dạng": {"select": opts(TH_FORMATS)},
+                "Trục": {"select": opts(["Điểm đau", "Câu chuyện sản phẩm", "Điểm khác biệt"])},
+                "Người xem chính": {"select": opts(["Người mới học", "Người ôn TOPIK II", "Người chuẩn bị du học",
+                                                    "Lao động EPS"])},
+                "Khóa liên quan (mã bảng giá)": {"rich_text": {}},
+                "Trạng thái": {"select": opts(["Ý tưởng", "PM đã chốt", "Đã đặt đơn", "Đã đăng"],
+                                              {"Ý tưởng": "gray", "PM đã chốt": "yellow", "Đã đặt đơn": "blue",
+                                               "Đã đăng": "green"})},
+                "Mã đơn": {"rich_text": {}}, "Ghi chú": {"rich_text": {}}}})["id"]
+        save_state(st)
+    if not th.get("decisions_db"):
+        th["decisions_db"] = api("POST", "databases", {
+            "parent": parent, "is_inline": True, "icon": {"type": "emoji", "emoji": "❓"},
+            "title": txt("Việc chờ PM Tiếng Hàn quyết"),
+            "properties": {
+                "Việc": {"title": {}},
+                "Nhóm": {"select": opts(["Lịch", "Giá và ưu đãi", "Chất liệu", "Đăng bài", "Đo lường"])},
+                "Chặn lịch tháng 12": {"checkbox": {}},
+                "Trạng thái": {"select": opts(["Chờ PM", "Đã trả lời", "Đã đưa vào brand.md"],
+                                              {"Chờ PM": "yellow", "Đã trả lời": "blue", "Đã đưa vào brand.md": "green"})},
+                "Câu trả lời của PM": {"rich_text": {}}}})["id"]
+        save_state(st)
+    if not th.get("seeded"):
+        for title, group, blocking in TH_DECISIONS:
+            api("POST", "pages", {"parent": {"database_id": th["decisions_db"]}, "properties": {
+                "Việc": {"title": txt(title)}, "Nhóm": {"select": {"name": group}},
+                "Chặn lịch tháng 12": {"checkbox": blocking}, "Trạng thái": {"select": {"name": "Chờ PM"}}}})
+        for title, fmt, axis, aud in TH_IDEAS:
+            api("POST", "pages", {"parent": {"database_id": th["calendar_db"]}, "properties": {
+                "Chủ đề": {"title": txt(title)}, "Dạng": {"select": {"name": fmt}}, "Trục": {"select": {"name": axis}},
+                "Người xem chính": {"select": {"name": aud}}, "Trạng thái": {"select": {"name": "Ý tưởng"}},
+                "Ghi chú": {"rich_text": txt("Ý tưởng từ phân tích fanpage 13/11/2026; PM điền ngày đăng và chốt.")}}})
+        th["seeded"] = True
+        save_state(st)
+        print(f"Trang Tiếng Hàn: {len(TH_DECISIONS)} việc chờ quyết, {len(TH_IDEAS)} ý tưởng.")
+    print("Đã có trang Tiếng Hàn Thầy Tư với 3 bảng riêng.")
+    return th
+
+
 if __name__ == "__main__":
     sys.stdout.reconfigure(encoding="utf-8")
     cmd = sys.argv[1] if len(sys.argv) > 1 else ""
@@ -404,6 +512,9 @@ if __name__ == "__main__":
         setup()
     elif cmd == "seed":
         seed()
+    elif cmd == "setup-th":
+        setup_th()
+        print("Số đơn đã gửi:", sync_orders(verbose=True))
     elif cmd == "setup-dh":
         setup_dh()
         print("Số đơn đã gửi:", sync_orders(verbose=True))

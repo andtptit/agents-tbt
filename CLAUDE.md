@@ -13,6 +13,7 @@ Dự án của TBT Group: hệ thống AI Agent sản xuất và vận hành vid
 | `phong-cach-tieng-han.md` | Ngôn ngữ hình ảnh kênh Tiếng Hàn (phân tích từ 11 video, 9 banner) |
 | `huong-dan-kich-ban-tieng-han.md` | Công thức kịch bản kênh Tiếng Hàn + mẫu + điều cấm |
 | `huong-dan-kich-ban-du-hoc.md` | Công thức kịch bản kênh Du học (dạng T/S/C/H/P) + mẫu + điều cấm; mục 0 = bài học từ số liệu fanpage |
+| `phan-tich-fanpage-tieng-han.md` | Phân tích 4 tháng fanpage Tiếng Hàn Thầy Tư (Meta API): dạng A giữ chân tốt nhất, ưu đãi đang chạy cần PM xác nhận |
 | `phan-tich-fanpage-du-hoc.md` | Phân tích 6 tháng fanpage Du học Thầy Tư (Meta API): nhóm nội dung hiệu quả, series đang chạy |
 | `PLAYBOOK.md` | Cách làm tổng quát (nguyên tắc, mẫu brand book, chia agent, vận hành) — dùng lại cho dự án khác |
 | `nhat-ky-quyet-dinh.md` | Ai chốt gì, khi nào — **ghi thêm vào đây sau mỗi buổi làm việc** |
@@ -49,7 +50,7 @@ Trả về (kịch bản hoặc video) + lý do → Claude viết lại → ch�
 | Chuyển lời video | `tools/whisper_transcribe.py` | faster-whisper large-v3 trên GPU RTX 3060 |
 | Dựng video | `video/<khuôn>/` | HyperFrames (miễn phí, Apache 2.0). Khuôn **K4 Chữ động** (`th-k4-chu-dong`), **K5 Kết quả học viên** (`th-k5-ket-qua`). Font Be Vietnam Pro, 1080×1920 |
 | Duyệt | `tools/telegram_bot.py` | Bot `@thaytu_duyet_bot`, nhóm "Nhà máy nội dung Thầy Tư" (5 Topics). `whoami` / `send` / `run`. Trạng thái: `data/orders.json`, `data/review_queue.json` |
-| Notion (chỉ xem) | `tools/notion_sync.py` | Trang "Nhà máy nội dung Thầy Tư" (bản Free, PM vào dạng khách). **Mỗi kênh một trang con riêng cho PM của kênh đó**: đã có trang 🎓 **Du học Thầy Tư** (đơn DH-… vào bảng "Đơn video Du học"); kênh Tiếng Hàn **tạm chưa có trên Notion** (bảng cũ đã vào thùng rác 13/11, bot bỏ qua đơn TH), sẽ làm trang riêng sau. Mỗi trang 3 bảng: **Đơn video** (bot tự đẩy mỗi phút, đừng sửa tay), **Lịch nội dung**, **Việc chờ PM quyết** (PM sửa). Token `NOTION_TOKEN` trong `.env`, id bảng trong `data/notion.json`. Duyệt vẫn trên Telegram |
+| Notion (chỉ xem) | `tools/notion_sync.py` | Trang "Nhà máy nội dung Thầy Tư" (bản Free, PM vào dạng khách). **Mỗi kênh một trang con riêng cho PM của kênh đó**: 🎓 **Du học Thầy Tư** (đơn DH-…) và 📘 **Tiếng Hàn Thầy Tư** (đơn TH-…), **tách riêng hoàn toàn** vì 2 PM, 2 chiến lược khác nhau. Mỗi trang 3 bảng: **Đơn video** (bot tự đẩy mỗi phút, đừng sửa tay), **Lịch nội dung**, **Việc chờ PM quyết** (PM sửa). Token `NOTION_TOKEN` trong `.env`, id bảng trong `data/notion.json`. Duyệt vẫn trên Telegram |
 | Research fanpage (chỉ đọc) | `tools/meta_research.py duhoc|tienghan [tháng]` | Dùng `META_READ_TOKEN` (token đọc dài hạn, thấy 2 page chính). Kết quả thô vào `noi-bo/research/` (không lên Git). Không đụng token đăng bài page test |
 | Lời thoại 11 video cũ | `tu-lieu/loi-thoai/tieng-han/` | `.txt` đọc, `.json` có thời điểm từng từ |
 
