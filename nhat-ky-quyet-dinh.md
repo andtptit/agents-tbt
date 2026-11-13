@@ -4,6 +4,15 @@
 
 ---
 
+## 13/11/2026 (chiều) — Research fanpage Du học bằng Meta API
+
+- Không dùng Apify: đọc trực tiếp bằng Meta Graph API. An cấp quyền 2 page chính cho app n8n-api; lưu token đọc dài hạn `META_READ_TOKEN` (không hết hạn). Token đăng bài vẫn chỉ trỏ page test. Nhân tiện app giờ chỉ còn quyền trên page test + 2 page chính (đã thu hẹp từ 16 page).
+- Kéo 6 tháng page Du Học Thầy Tư: 211 bài + 84 Reels → `phan-tich-fanpage-du-hoc.md`. Kết luận chính: hook = câu hỏi về hiểu lầm/nghịch lý; học viên thật giữ chân tốt nhất; series "Đúng ngành, trúng trường" đã tới Tập 8 → viết tiếp Tập 9; thêm dạng P (phá lời đồn); không đăng nội dung TOPIK trên page Du học.
+
+**Còn dở:** PM xác nhận "khuyến mại quý III" và "Quỹ Học Bổng Xanh 250 triệu" (đang mâu thuẫn với brand.md "không có khuyến mãi"); bài nào đã chạy quảng cáo; học viên trong video "trước khi bay" đồng ý chưa; research page Tiếng Hàn (để sau).
+
+---
+
 ## 13/11/2026 (chiều) — Tách Notion theo kênh, làm trước Du học
 
 - An: **2 kênh có 2 PM riêng** → mỗi kênh một trang Notion riêng, mời PM dạng khách vào đúng trang kênh mình.

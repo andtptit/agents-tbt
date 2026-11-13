@@ -2,7 +2,24 @@
 
 > Dành cho **Agent Biên kịch**. Đọc cùng `brand.md` mục 2 (dữ liệu gốc kênh Du học: chi phí 2.3a, trường 2.3b) và mục 4 (quy tắc chung).
 > Rút ra từ **6 kịch bản thật** của bộ phận Du học (`tu-lieu/kich-ban/du-hoc/kich_ban_dh.txt`, nhận 12/11/2026) và bảng quyền lợi du học sinh. Kênh chưa có video cũ để đo nhịp → nhịp dưới đây là đề xuất, sẽ chỉnh khi có video thật.
-> Lập ngày 13/11/2026.
+> Lập ngày 13/11/2026. **Cập nhật 13/11/2026 theo số liệu thật của fanpage** (84 Reels, 6 tháng): xem `phan-tich-fanpage-du-hoc.md`.
+
+---
+
+## 0. Bài học từ fanpage thật (ưu tiên cao nhất)
+
+Người xem fanpage Du học chỉ ở lại **khoảng 6 giây** (trung vị). Những video giữ chân 11–13 giây đều có điểm chung:
+
+| Làm | Không làm |
+|---|---|
+| **Hook = câu hỏi về một hiểu lầm hay nghịch lý cụ thể**: "Có sổ đóng băng là chắc chắn đỗ visa?", "Đại học Konkuk – trường con nhà giàu?", "TOPIK 3, học bổng 70%?" | Hook kiểu rao: "ĐỪNG BỎ LỠ CHƯƠNG TRÌNH…", "CHÍNH THỨC MỞ CỔNG…" (lượt xem có thể cao nhờ quảng cáo nhưng người xem rời đi sau ~3 giây) |
+| Đưa ý chính **trước giây thứ 6**; tổng 40–60 giây | Mở đầu dài dòng giới thiệu chung chung ("Top 5 trường bạn nên tham khảo") |
+| **Học viên thật, sân bay, lớp học** (video mạnh nhất kênh) — ghi rõ ở cột hình ảnh cảnh cần quay thật | Nội dung luyện thi TOPIK, sách (để ở kênh Tiếng Hàn) |
+| Nói với phụ huynh bằng **tiền bạc thực tế**: tỷ giá won, chi phí, sổ tiết kiệm | Nhắc "khuyến mại quý", "Quỹ Học Bổng Xanh 250 triệu" khi PM chưa xác nhận còn hiệu lực |
+
+**Series đang chạy — viết tiếp, đừng lập series mới trùng ý:** **"Đúng ngành, trúng trường – Du học không lạc đường"** đã có Tập 1–8 (Changwon, Ajou, Nữ sinh Seoul, Pyeongtaek, Konyang, Konkuk, Inha, Catholic). Đơn giới thiệu trường mới = **Tập 9 trở đi**, tiêu đề "TẬP N: ĐẠI HỌC X – <biệt danh / nghịch lý dạng câu hỏi>?". Chỉ dùng số liệu trường có trong `brand.md` 2.3b; trường chưa có số liệu thì nói định tính hoặc chờ PM gửi.
+
+**Dạng mới: P — Phá lời đồn** (nằm giữa dạng C và H): Hook nêu lời đồn dạng câu hỏi → "Thực tế là…" (1 câu) → 2–3 ý giải thích dựa trên dữ liệu brand.md → câu đúc kết → CTA kiểm tra hồ sơ. Ví dụ đề tài: sổ đóng băng và visa; phải có vài tỷ mới đi được; chưa biết tiếng Hàn có đi được không; có IELTS mà không có TOPIK.
 
 ---
 
