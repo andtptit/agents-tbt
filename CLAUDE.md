@@ -29,7 +29,7 @@ Dự án của TBT Group: hệ thống AI Agent sản xuất và vận hành vid
 
 ```
 Telegram /tao <chủ đề> → Claude viết kịch bản (tools/script_writer.py) → An duyệt kịch bản
-  → Vbee tạo giọng → HyperFrames dựng video khuôn K4 (tools/video_maker.py) → An duyệt video → [Đăng: chưa có]
+  → Vbee tạo giọng → HyperFrames dựng video khuôn K4 (tools/video_maker.py) → An duyệt video → Đăng Facebook (tools/meta_post.py: Đăng ngay / Lên lịch 20:00 / Nháp)
 Trả về (kịch bản hoặc video) + lý do → Claude viết lại → chạy lại từ đầu.
 ```
 
@@ -43,17 +43,17 @@ Trả về (kịch bản hoặc video) + lý do → Claude viết lại → ch�
 
 | Thành phần | Ở đâu | Ghi chú |
 |---|---|---|
-| Giọng đọc | `tools/vbee_tts.py` | Gửi **cả kịch bản 1 lần** rồi tách câu (Vbee cắt cụt cuối mỗi file). Giọng `voice_id_dh` |
+| Giọng đọc | `tools/vbee_tts.py` | **Mỗi câu một yêu cầu song song** + câu đệm, cắt ở chỗ nghỉ trước câu đệm (Vbee cắt cụt cuối mỗi file và KHÔNG giữ nghỉ đoạn). Giọng `voice_id_dh` |
 | Chuyển lời video | `tools/whisper_transcribe.py` | faster-whisper large-v3 trên GPU RTX 3060 |
 | Dựng video | `video/<khuôn>/` | HyperFrames (miễn phí, Apache 2.0). Khuôn **K4 Chữ động** (`th-k4-chu-dong`), **K5 Kết quả học viên** (`th-k5-ket-qua`). Font Be Vietnam Pro, 1080×1920 |
-| Duyệt | `tools/telegram_bot.py` | Bot `@thaytu_duyet_bot`, nhóm "Duyệt Marketing". `whoami` / `send` / `run`. Trạng thái: `data/review_queue.json` |
+| Duyệt | `tools/telegram_bot.py` | Bot `@thaytu_duyet_bot`, nhóm "Nhà máy nội dung Thầy Tư" (5 Topics). `whoami` / `send` / `run`. Trạng thái: `data/orders.json`, `data/review_queue.json` |
 | Lời thoại 11 video cũ | `tu-lieu/loi-thoai/tieng-han/` | `.txt` đọc, `.json` có thời điểm từng từ |
 
 Lệnh HyperFrames trong mỗi thư mục khuôn: `npx hyperframes check`, `npx hyperframes snapshot --at 1,3`, `npx hyperframes render -o renders/<tên>.mp4`. Đọc skill `/hyperframes` trước khi sửa khuôn.
 
 ## Đã chốt (tóm tắt — đầy đủ trong nhat-ky-quyet-dinh.md)
 - Công cụ dựng: **HyperFrames** (không dùng Remotion vì phí giấy phép 100 USD/tháng cho công ty >3 người).
-- Duyệt và thông báo: **Telegram** (không dùng Zalo). Dashboard: **Notion** (chưa dựng). Đăng Facebook: **Meta Graph API** (chưa có app). TikTok: tạm qua TikTok Studio.
+- Duyệt và thông báo: **Telegram** (không dùng Zalo). Dashboard: **Notion** (chưa dựng). Đăng Facebook: **Meta Graph API** qua app `n8n-api` (token Page không hết hạn, đang dùng page test). Chạy thật với 2 fanpage cần System User trong Business Portfolio (người dùng chưa có quyền Admin Business). TikTok: tạm qua TikTok Studio.
 - Màu: xanh tươi `#1E6FE8` (nền), xanh đậm `#263E8B`, đỏ `#E81E37`, vàng `#FFE360`. Font: **Be Vietnam Pro** cho mọi chữ.
 - Video 9:16, **30–90 giây**. Dạy hệ thống và lập kế hoạch: **chat trực tiếp với Claude**; vận hành hằng ngày: Telegram.
 
@@ -61,8 +61,13 @@ Lệnh HyperFrames trong mỗi thư mục khuôn: `npx hyperframes check`, `npx 
 - Chốt **số buổi học** (bảng giá 40 buổi/khóa, banner 89/43, video 28/27 — 3 nguồn lệch).
 - Xác nhận: ưu đãi 10% còn chạy không; điều kiện câu "Có TOPIK 3 – Có ngay VISA".
 - Tư liệu kênh Du học (đã có `Bảng chi phí du học.pdf`, `Giá trị nhận được 1-08/1-09.jpg` ở thư mục gốc — chưa phân tích).
-- Bật Topics cho nhóm Telegram + cấp quyền quản lý chủ đề cho bot (để chia 5 chủ đề: Đặt video, Duyệt kịch bản, Duyệt video, Báo cáo, Cảnh báo).
-- Notion integration, Meta App, TikTok Developer App.
+- Notion integration; TikTok Developer App; quyền Admin Business Portfolio để chuyển Meta sang System User + 2 fanpage thật.
+- Token Meta đang có quyền trên 16 page (cấp thừa) → nên thu hẹp.
+- Các hướng tiếp theo người dùng có thể chọn: kênh Du học, Notion, buổi dạy thiết kế, AI chấm điểm kịch bản (Agent ⑥), Agent Chiến lược (lịch tháng).
+
+## Trạng thái gần nhất (13/11/2026)
+- Đơn TH-261112-03 đã chạy trọn vòng và **đã đăng** lên page test. Bot tự chạy cùng Windows, không cần mở app Claude; chỉ cần máy bật, đã đăng nhập Windows, Claude Code còn đăng nhập.
+- Remote Control (chat với Claude từ xa) người dùng phải tự bật công tắc trên thanh công cụ app Claude (auto mode chặn Claude tự bật).
 
 ## Cách làm việc chung (nhiều người cùng dạy hệ thống)
 - Mỗi bộ phận dạy trong **một cuộc chat riêng**, mở **cùng thư mục** này.
