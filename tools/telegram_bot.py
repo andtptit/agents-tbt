@@ -634,7 +634,17 @@ def maybe_notion():
     threading.Thread(target=job, daemon=True).start()
 
 
+def resume_stuck_orders():
+    """Bot bị tắt giữa chừng thì đơn kẹt ở 'Đang…' → đưa về hàng chờ để làm lại."""
+    back = {"Đang viết kịch bản": "Chờ viết kịch bản", "Đang dựng video": "Kịch bản đã duyệt"}
+    for code, o in load_orders().items():
+        if o.get("status") in back:
+            print(f"Làm tiếp đơn dở {code}: {o['status']} → {back[o['status']]}")
+            update_order(code, status=back[o["status"]])
+
+
 def cmd_run():
+    resume_stuck_orders()
     offset = int(open(OFFSET).read()) if os.path.exists(OFFSET) else 0
     me = api("getMe").get("result", {})
     ok, status = script_writer.claude_status()
