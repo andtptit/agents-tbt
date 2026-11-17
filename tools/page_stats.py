@@ -70,46 +70,66 @@ def top_reels(pid, tok, days=7, n=3):
         except Exception:  # noqa: BLE001
             continue
         # Chữ "in đậm" kiểu 𝐁𝐢́ 𝐦𝐚̣̂𝐭 trên Facebook -> chữ thường để đọc được
-        title = " ".join(unicodedata.normalize("NFKC", r.get("description") or "(không mô tả)").split())[:45]
+        title = " ".join(unicodedata.normalize("NFKC", r.get("description") or "(không mô tả)").split())
         rows.append((ins.get("blue_reels_play_count") or 0, (ins.get("post_video_avg_time_watched") or 0) / 1000, title))
         time.sleep(0.05)
     return sorted(rows, reverse=True)[:n], len(rows)
 
 
-def page_section(key, pid, name, user_tok):
+def short(text, n=45):
+    """Cắt ở chỗ hết từ, thêm dấu … (không cắt giữa chữ)."""
+    text = " ".join(text.split())
+    if len(text) <= n:
+        return text
+    cut = text[:n].rsplit(" ", 1)[0]
+    return cut.rstrip(",.;:-–— ") + "…"
+
+
+def page_data(key, pid, name, user_tok):
+    """Số liệu có cấu trúc của một page (dùng cho cả chữ và thẻ ảnh)."""
     tok = get(pid, {"fields": "access_token"}, user_tok)["access_token"]
-    followers = get(pid, {"fields": "followers_count"}, tok).get("followers_count")
     d = daily(pid, tok)
-    alerts = []
     views = d.get("page_media_view") or []
+    out = {"key": key, "name": name, "followers": get(pid, {"fields": "followers_count"}, tok).get("followers_count") or 0,
+           "views_series": views[-8:], "ok": bool(views)}
     if not views:
-        return [f"━ {name}", "  (Chưa lấy được số liệu hôm qua)"], alerts
-    day, v = views[-1]
-    prev = [x for _, x in views[-8:-1]]
-    avg = sum(prev) / len(prev) if prev else 0
-    change = (v - avg) / avg if avg else 0
-    trend = f"{'+' if change >= 0 else '−'}{abs(change) * 100:.0f}% so với TB 7 ngày" if avg else ""
+        return out
 
     def last(met):
         s = d.get(met) or []
         return s[-1][1] if s else 0
 
-    fol, unf = last("page_daily_follows_unique"), last("page_daily_unfollows_unique")
-    lines = [f"━ {name} ({day:%d/%m})",
-             f"  👁 {fmt(v)} lượt xem ({trend}) · {fmt(last('page_total_media_view_unique'))} người",
-             f"  👥 +{fol} / −{unf} → {'+' if fol - unf >= 0 else ''}{fol - unf} · tổng {fmt(followers or 0)}"
-             f" · {fmt(last('page_views_total'))} lượt vào trang"]
+    day, v = views[-1]
+    prev = [x for _, x in views[-8:-1]]
+    avg = sum(prev) / len(prev) if prev else 0
+    out.update(day=day, views=v, avg=avg, change=(v - avg) / avg if avg else 0,
+               reach=last("page_total_media_view_unique"), visits=last("page_views_total"),
+               follows=last("page_daily_follows_unique"), unfollows=last("page_daily_unfollows_unique"))
     try:
-        top, total = top_reels(pid, tok)
-        if top:
-            lines.append(f"  🏆 Top Reels 7 ngày ({total} video):")
-            for plays, avg_s, title in top:
-                lines.append(f"     • {fmt(plays)} lượt phát · xem TB {sec(avg_s)} — {title}")
-    except Exception as e:  # noqa: BLE001
-        lines.append(f"  (Không lấy được Reels: {str(e)[:60]})")
-    if avg and change <= -DROP_ALERT:
-        alerts.append(f"⚠️ {name}: lượt xem ngày {day:%d/%m} giảm {abs(change) * 100:.0f}% so với trung bình 7 ngày "
-                      f"({fmt(v)} so với {fmt(avg)}).")
+        out["top"], out["reel_count"] = top_reels(pid, tok)
+    except Exception:  # noqa: BLE001
+        out["top"], out["reel_count"] = [], 0
+    return out
+
+
+def page_section(key, pid, name, user_tok, data=None):
+    p = data or page_data(key, pid, name, user_tok)
+    alerts = []
+    if not p["ok"]:
+        return [f"━ {name}", "  (Chưa lấy được số liệu hôm qua)"], alerts
+    ch, net = p["change"], p["follows"] - p["unfollows"]
+    trend = f"{'+' if ch >= 0 else '−'}{abs(ch) * 100:.0f}% so với TB 7 ngày" if p["avg"] else ""
+    lines = [f"━ {name} ({p['day']:%d/%m})",
+             f"  👁 {fmt(p['views'])} lượt xem ({trend}) · {fmt(p['reach'])} người",
+             f"  👥 +{p['follows']} / −{p['unfollows']} → {'+' if net >= 0 else ''}{net} · tổng {fmt(p['followers'])}"
+             f" · {fmt(p['visits'])} lượt vào trang"]
+    if p.get("top"):
+        lines.append(f"  🏆 Top Reels 7 ngày ({p['reel_count']} video):")
+        for plays, avg_s, title in p["top"]:
+            lines.append(f"     • {fmt(plays)} lượt phát · xem TB {sec(avg_s)} — {short(title)}")
+    if p["avg"] and ch <= -DROP_ALERT:
+        alerts.append(f"⚠️ {name}: lượt xem ngày {p['day']:%d/%m} giảm {abs(ch) * 100:.0f}% so với trung bình 7 ngày "
+                      f"({fmt(p['views'])} so với {fmt(p['avg'])}).")
     return lines, alerts
 
 

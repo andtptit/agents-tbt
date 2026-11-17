@@ -33,6 +33,7 @@ import script_writer  # noqa: E402
 import video_maker  # noqa: E402
 import meta_post  # noqa: E402
 import page_stats  # noqa: E402
+import report_send  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, "data")
@@ -595,8 +596,15 @@ def build_report():
 
 
 def send_report():
-    text, today, alerts = build_report()
-    r = say(CHAT_ID, text, TOPICS.get("bao_cao"))
+    """Báo cáo dạng thẻ ảnh (mỗi page 1 ảnh + tin Nhà máy gọn). Lỗi thì gửi bản chữ cũ."""
+    today = datetime.now().strftime("%Y-%m-%d")
+    try:
+        alerts = report_send.send(sys.modules[__name__])
+        r = {"ok": True}
+    except Exception as e:  # noqa: BLE001
+        print("Lỗi báo cáo thẻ ảnh, gửi bản chữ:", e)
+        text, today, alerts = build_report()
+        r = say(CHAT_ID, text, TOPICS.get("bao_cao"))
     if r.get("ok"):
         json.dump({"last_report": today}, open(REPORT_STATE, "w", encoding="utf-8"))
     for a in alerts:  # lượt xem giảm hơn 30% so với trung bình 7 ngày
