@@ -21,7 +21,8 @@ def card_caption(p):
     trend = f"{'tăng' if ch >= 0 else 'giảm'} {abs(ch) * 100:.0f}%"
     warn = " ⚠️" if p["avg"] and ch <= -ps.DROP_ALERT else ""
     return (f"{ICON.get(p['key'], '📊')} <b>{html.escape(p['name'])}</b> · {p['day']:%d/%m}{warn}\n"
-            f"👁 <b>{ps.fmt(p['views'])}</b> lượt xem ({trend}) · 👥 <b>{'+' if net >= 0 else ''}{net}</b> theo dõi")
+            f"👁 <b>{ps.fmt(p['views'])}</b> lượt xem ({trend}) · 👥 <b>{'+' if net >= 0 else ''}{net}</b> theo dõi"
+            f" · 💬 <b>{p.get('msgs', 0)}</b> tin nhắn mới")
 
 
 def factory_message(orders, claude_ok=True):

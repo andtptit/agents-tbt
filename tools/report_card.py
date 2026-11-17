@@ -22,7 +22,7 @@ OUT_DIR = os.path.join(ROOT, "data", "report_cards")
 BLUE, NAVY, RED, YELLOW = "#1E6FE8", "#263E8B", "#E81E37", "#FFE360"
 INK, MUTED, LINE, BG, CARD = "#141A33", "#5B6383", "#E3E7F2", "#F4F6FB", "#FFFFFF"
 GREEN = "#17834F"
-W, H = 1080, 1440
+W, H = 1080, 1664
 S = 2  # vẽ to gấp đôi rồi thu nhỏ cho nét
 
 
@@ -69,12 +69,16 @@ def render(p, path):
     ch = p["change"]
     up = ch >= 0
     net = p["follows"] - p["unfollows"]
+    vid = (p.get("paid") or 0) + (p.get("organic") or 0)
+    paid_pct = 100 * (p.get("paid") or 0) / vid if vid else 0
     tiles = [
         ("LƯỢT XEM", ps.fmt(p["views"]), (f"{'Tăng' if up else 'Giảm'} {abs(ch) * 100:.0f}% so với TB 7 ngày", GREEN if up else RED)),
         ("NGƯỜI XEM", ps.fmt(p["reach"]), ("không trùng lặp", MUTED)),
         ("THEO DÕI MỚI", f"{'+' if net >= 0 else ''}{net}", (f"+{p['follows']} / -{p['unfollows']} · tổng {ps.fmt(p['followers'])}",
                                                               GREEN if net >= 0 else RED)),
         ("LƯỢT VÀO TRANG", ps.fmt(p["visits"]), ("trong ngày", MUTED)),
+        ("TIN NHẮN MỚI", ps.fmt(p.get("msgs", 0)), (f"người mới nhắn inbox · TB 7 ngày {p.get('msgs_avg', 0):.0f}".replace(".", ","), MUTED)),
+        ("XEM VIDEO TỪ QUẢNG CÁO", f"{paid_pct:.0f}%", (f"quảng cáo {ps.fmt(p.get('paid', 0))} · tự nhiên {ps.fmt(p.get('organic', 0))}", MUTED)),
     ]
     tw, th, gap, x0, y0 = 480, 200, 24, 48, 236
     for i, (label, value, (sub, sub_c)) in enumerate(tiles):
@@ -86,7 +90,7 @@ def render(p, path):
         text(d, (x + 30, y + 156), fit_text(d, sub, font("semi", 24), tw - 60), font("semi", 24), sub_c)
 
     # Biểu đồ lượt xem 8 ngày
-    cy = y0 + 2 * (th + gap) + 8
+    cy = y0 + 3 * (th + gap) + 8
     rr(d, (48, cy, W - 48, cy + 430), 22, CARD, LINE, 2)
     text(d, (78, cy + 26), "LƯỢT XEM 8 NGÀY GẦN NHẤT", font("bold", 24), MUTED)
     if p["avg"]:
@@ -117,16 +121,16 @@ def render(p, path):
     # Top Reels
     ry = cy + 450
     rr(d, (48, ry, W - 48, H - 40), 22, CARD, LINE, 2)
-    text(d, (78, ry + 24), f"TOP REELS 7 NGÀY ({p.get('reel_count', 0)} VIDEO)", font("bold", 24), MUTED)
+    text(d, (78, ry + 24), f"TOP REELS 7 NGÀY ({p.get('reel_count', 0)} VIDEO) · LƯỢT PHÁT · XEM TB · CÒN XEM SAU 3 GIÂY", font("bold", 24), MUTED)
     top = p.get("top") or []
     if not top:
         text(d, (78, ry + 74), "Chưa có Reels mới trong 7 ngày", font("semi", 26), MUTED)
-    for i, (plays, avg_s, title) in enumerate(top[:3]):
+    for i, (plays, avg_s, title, keep) in enumerate(top[:3]):
         yy = ry + 70 + i * 62
         medal = ["#E8B21E", "#A7B0C2", "#C98A55"][i]
         d.ellipse([(78 * S, (yy + 2) * S), (118 * S, (yy + 42) * S)], fill=medal)
         text(d, (98, yy + 22), str(i + 1), font("black", 22), "#FFFFFF", "mm")
-        stat = f"{ps.fmt(plays)} lượt · {ps.sec(avg_s)}"
+        stat = f"{ps.fmt(plays)} lượt · {ps.sec(avg_s)}" + (f" · còn {keep * 100:.0f}% sau 3s" if keep is not None else "")
         title = clean(title)
         text(d, (136, yy + 6), stat, font("xbold", 26), NAVY)
         sw = d.textlength(stat, font=font("xbold", 26)) / S

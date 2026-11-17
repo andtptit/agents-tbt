@@ -24,7 +24,8 @@ import meta_post as m  # noqa: E402
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PAGES = [("tienghan", "892203107517134", "Tiếng Hàn Thầy Tư"), ("duhoc", "111519684743413", "Du học Thầy Tư")]
 DAY_METRICS = ["page_media_view", "page_total_media_view_unique", "page_views_total",
-               "page_daily_follows_unique", "page_daily_unfollows_unique", "page_video_views"]
+               "page_daily_follows_unique", "page_daily_unfollows_unique", "page_video_views",
+               "page_messages_new_conversations_unique", "page_video_views_paid", "page_video_views_organic"]
 DROP_ALERT = 0.30  # lượt xem giảm hơn 30% so với trung bình 7 ngày trước -> cảnh báo
 
 
@@ -59,21 +60,31 @@ def daily(pid, tok):
 
 def top_reels(pid, tok, days=7, n=3):
     since = (datetime.now() - timedelta(days=days)).timestamp()
-    reels = get(f"{pid}/video_reels", {"fields": "id,description,created_time", "limit": 40}, tok).get("data", [])
+    reels = get(f"{pid}/video_reels", {"fields": "id,description,created_time,length", "limit": 40}, tok).get("data", [])
     rows = []
     for r in reels:
         if datetime.fromisoformat(r["created_time"].replace("+0000", "+00:00")).timestamp() < since:
             continue
         try:
             ins = {d["name"]: (d.get("values") or [{}])[0].get("value") for d in get(
-                f"{r['id']}/video_insights", {"metric": "blue_reels_play_count,post_video_avg_time_watched"}, tok)["data"]}
+                f"{r['id']}/video_insights", {"metric": "blue_reels_play_count,post_video_avg_time_watched,post_video_retention_graph"}, tok)["data"]}
         except Exception:  # noqa: BLE001
             continue
+        keep = hook_keep(ins.get("post_video_retention_graph"), r.get("length"))
         # Chữ "in đậm" kiểu 𝐁𝐢́ 𝐦𝐚̣̂𝐭 trên Facebook -> chữ thường để đọc được
         title = " ".join(unicodedata.normalize("NFKC", r.get("description") or "(không mô tả)").split())
-        rows.append((ins.get("blue_reels_play_count") or 0, (ins.get("post_video_avg_time_watched") or 0) / 1000, title))
+        rows.append((ins.get("blue_reels_play_count") or 0, (ins.get("post_video_avg_time_watched") or 0) / 1000, title, keep))
         time.sleep(0.05)
     return sorted(rows, reverse=True)[:n], len(rows)
+
+
+def hook_keep(graph, length, at=3):
+    """% người xem còn ở lại sau `at` giây đầu (đồ thị giữ chân của Meta: 41 điểm từ 0% đến 100% thời lượng)."""
+    if not graph or not length:
+        return None
+    pts = sorted((int(k), v) for k, v in graph.items())
+    idx = min(len(pts) - 1, round(at / float(length) * (len(pts) - 1)))
+    return pts[idx][1]
 
 
 def short(text, n=45):
@@ -104,7 +115,11 @@ def page_data(key, pid, name, user_tok):
     avg = sum(prev) / len(prev) if prev else 0
     out.update(day=day, views=v, avg=avg, change=(v - avg) / avg if avg else 0,
                reach=last("page_total_media_view_unique"), visits=last("page_views_total"),
-               follows=last("page_daily_follows_unique"), unfollows=last("page_daily_unfollows_unique"))
+               follows=last("page_daily_follows_unique"), unfollows=last("page_daily_unfollows_unique"),
+               msgs=last("page_messages_new_conversations_unique"),
+               paid=last("page_video_views_paid"), organic=last("page_video_views_organic"))
+    ms = [x for _, x in (d.get("page_messages_new_conversations_unique") or [])[-8:-1]]
+    out["msgs_avg"] = sum(ms) / len(ms) if ms else 0
     try:
         out["top"], out["reel_count"] = top_reels(pid, tok)
     except Exception:  # noqa: BLE001
@@ -122,11 +137,13 @@ def page_section(key, pid, name, user_tok, data=None):
     lines = [f"━ {name} ({p['day']:%d/%m})",
              f"  👁 {fmt(p['views'])} lượt xem ({trend}) · {fmt(p['reach'])} người",
              f"  👥 +{p['follows']} / −{p['unfollows']} → {'+' if net >= 0 else ''}{net} · tổng {fmt(p['followers'])}"
-             f" · {fmt(p['visits'])} lượt vào trang"]
+             f" · {fmt(p['visits'])} lượt vào trang",
+             f"  💬 {p['msgs']} người mới nhắn tin · 🎬 lượt xem video: quảng cáo {fmt(p['paid'])} / tự nhiên {fmt(p['organic'])}"]
     if p.get("top"):
         lines.append(f"  🏆 Top Reels 7 ngày ({p['reel_count']} video):")
-        for plays, avg_s, title in p["top"]:
-            lines.append(f"     • {fmt(plays)} lượt phát · xem TB {sec(avg_s)} — {short(title)}")
+        for plays, avg_s, title, keep in p["top"]:
+            k = f" · còn {keep * 100:.0f}% sau 3s" if keep is not None else ""
+            lines.append(f"     • {fmt(plays)} lượt phát · xem TB {sec(avg_s)}{k} — {short(title)}")
     if p["avg"] and ch <= -DROP_ALERT:
         alerts.append(f"⚠️ {name}: lượt xem ngày {p['day']:%d/%m} giảm {abs(ch) * 100:.0f}% so với trung bình 7 ngày "
                       f"({fmt(p['views'])} so với {fmt(p['avg'])}).")
