@@ -32,3 +32,9 @@ Thumbs.db
 
 # --- Video sinh tự động theo từng đơn (tạo lại được từ kịch bản) ---
 video/jobs/
+
+# --- Banner sinh theo đơn (tạo lại được từ banner.json) ---
+banner/jobs/
+
+# --- Footage trám cảnh của trung tâm (nặng, để trên máy/Drive) ---
+Video-Trám cảnh-TBT/

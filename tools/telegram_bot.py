@@ -30,6 +30,7 @@ from datetime import datetime
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import script_writer  # noqa: E402
+import script_judge  # noqa: E402
 import video_maker  # noqa: E402
 import meta_post  # noqa: E402
 import page_stats  # noqa: E402
@@ -175,6 +176,7 @@ def cmd_send(path, code, caption):
 # ---------- Đơn đặt video (orders) ----------
 ORDERS_LOCK = threading.Lock()
 RUNNING = set()
+AUTO_REWRITES = 2  # số lần Agent chấm điểm được tự cho viết lại trước khi gửi An
 
 
 def load_orders():
@@ -214,16 +216,32 @@ def write_script_job(code):
     update_order(code, status="Đang viết kịch bản")
     progress(code, f"⏳ Claude đang {'viết lại' if rewrite else 'viết'} kịch bản… (bắt đầu {start}, thường 1–3 phút)")
     try:
-        s = script_writer.write_script(o["topic"], script_writer.channel_of(o.get("channel", "TH")),
+        chan = script_writer.channel_of(o.get("channel", "TH"))
+        s = script_writer.write_script(o["topic"], chan,
                                        feedback=o.get("feedback") if rewrite else None,
                                        previous=o.get("script") if rewrite else None)
-        r = say(CHAT_ID, script_writer.format_script(code, s), TOPICS.get("duyet_kich_ban"),
+        # Agent ⑥ chấm trước khi gửi An; chưa đạt thì tự viết lại (tối đa AUTO_REWRITES lần).
+        auto, res = 0, None
+        while True:
+            progress(code, "🧮 Agent đang chấm kịch bản trước khi gửi An…")
+            res = script_judge.evaluate(s, chan, o["topic"])
+            if res["passed"] or auto >= AUTO_REWRITES:
+                break
+            auto += 1
+            why = "; ".join(i["text"] for i in res["issues"] if i.get("level") == "lỗi")[:200] or f"điểm {res['score']}/10"
+            progress(code, f"🧮 Agent chấm {res['score']}/10, chưa đạt ({why}). Tự viết lại lần {auto}…")
+            s = script_writer.write_script(o["topic"], chan, feedback="Agent chấm điểm yêu cầu sửa:\n" + res["fix"],
+                                           previous=s)
+        text = script_judge.format_result(res, auto) + "\n\n" + script_writer.format_script(code, s)
+        r = say(CHAT_ID, text if len(text) <= 4000 else text[:3990] + "…", TOPICS.get("duyet_kich_ban"),
                 markup=script_buttons(code))
         if not r.get("ok"):
             raise RuntimeError(f"Gửi Telegram lỗi: {r.get('description')}")
         version = o.get("script_version", 0) + 1
         update_order(code, status="Chờ duyệt kịch bản", script=s, script_version=version,
-                     script_msg_id=r["result"]["message_id"], script_at=now())
+                     script_msg_id=r["result"]["message_id"], script_at=now(),
+                     judge={"score": res["score"], "passed": res["passed"], "auto_rewrites": auto,
+                            "issues": res["issues"][:8], "at": now()})
         progress(code, f"✅ Kịch bản bản {version} đã gửi sang ✍️ Duyệt kịch bản lúc {datetime.now():%H:%M}.")
     except Exception as e:  # noqa: BLE001
         update_order(code, status="Lỗi viết kịch bản", error=str(e)[:300])

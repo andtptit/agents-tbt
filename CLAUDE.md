@@ -32,7 +32,8 @@ Dự án của TBT Group: hệ thống AI Agent sản xuất và vận hành vid
 ## Hệ thống đang có (sơ bộ — đã chạy trọn vòng 12/11/2026)
 
 ```
-Telegram /tao <chủ đề> → Claude viết kịch bản (tools/script_writer.py) → An duyệt kịch bản
+Telegram /tao <chủ đề> → Claude viết kịch bản (tools/script_writer.py)
+  → Agent ⑥ chấm điểm (tools/script_judge.py; chưa đạt thì tự viết lại, tối đa 2 lần) → An duyệt kịch bản
   → Vbee tạo giọng → HyperFrames dựng video khuôn K4 (tools/video_maker.py) → An duyệt video → Đăng Facebook (tools/meta_post.py: Đăng ngay / Lên lịch 20:00 / Nháp)
 Trả về (kịch bản hoặc video) + lý do → Claude viết lại → chạy lại từ đầu.
 ```
@@ -53,6 +54,9 @@ Trả về (kịch bản hoặc video) + lý do → Claude viết lại → ch�
 | Duyệt | `tools/telegram_bot.py` | Bot `@thaytu_duyet_bot`, nhóm "Nhà máy nội dung Thầy Tư" (5 Topics). `whoami` / `send` / `run`. Trạng thái: `data/orders.json`, `data/review_queue.json` |
 | Notion (chỉ xem) | `tools/notion_sync.py` | Trang "Nhà máy nội dung Thầy Tư" (bản Free, PM vào dạng khách). **Mỗi kênh một trang con riêng cho PM của kênh đó**: 🎓 **Du học Thầy Tư** (đơn DH-…) và 📘 **Tiếng Hàn Thầy Tư** (đơn TH-…), **tách riêng hoàn toàn** vì 2 PM, 2 chiến lược khác nhau. Mỗi trang 3 bảng: **Đơn video** (bot tự đẩy mỗi phút, đừng sửa tay), **Lịch nội dung**, **Việc chờ PM quyết** (PM sửa). Token `NOTION_TOKEN` trong `.env`, id bảng trong `data/notion.json`. Duyệt vẫn trên Telegram |
 | Research fanpage (chỉ đọc) | `tools/meta_research.py duhoc|tienghan [tháng]` | Dùng `META_READ_TOKEN` (token đọc dài hạn, thấy 2 page chính). Kết quả thô vào `noi-bo/research/` (không lên Git). Không đụng token đăng bài page test |
+| Chấm kịch bản (Agent ⑥) | `tools/script_judge.py <mã đơn>` | Luật cứng (từ cấm, khuyến mãi, số tiền kênh Du học, số buổi, thời lượng, chữ số trong lời đọc) + Claude chấm 6 tiêu chí theo brand.md và hướng dẫn kịch bản. Đạt khi không có lỗi và điểm ≥ 7,5. Điểm hiện trên đầu tin kịch bản gửi An; lưu ở `judge` trong `data/orders.json` |
+| Series review trường | skill `/review-truong` (`.claude/skills/review-truong/`) | KOL Linh AI (HeyGen, giọng Vbee) + footage kho TBT + cảnh YouTube kênh chính thức trường + thẻ D4-1/D2/học bổng + nhạc nền. Dữ liệu: `python tools/truong_data.py update|tim <tên>` (sheet → `noi-bo/truong-hoc/`). Công cụ: `tools/truong_media.py`, `tools/truong_build.py`, `tools/footage_index.py`. Mẫu: Konkuk, Catholic. Chưa nối bot |
+| Banner (thử, chưa nối bot) | `tools/banner_maker.py "chủ đề"` | Claude viết nội dung → khuôn HTML `banner/b1-the/` → Chrome chụp PNG 2160×2160. Kết quả `banner/jobs/<mã>/` (không lên Git). Chỉ kênh Du học |
 | Lời thoại 11 video cũ | `tu-lieu/loi-thoai/tieng-han/` | `.txt` đọc, `.json` có thời điểm từng từ |
 
 Lệnh HyperFrames trong mỗi thư mục khuôn: `npx hyperframes check`, `npx hyperframes snapshot --at 1,3`, `npx hyperframes render -o renders/<tên>.mp4`. Đọc skill `/hyperframes` trước khi sửa khuôn.
@@ -70,7 +74,7 @@ Lệnh HyperFrames trong mỗi thư mục khuôn: `npx hyperframes check`, `npx 
 - Trả lời các việc trong bảng Notion "Việc chờ PM quyết"; kế hoạch 6 tháng (tài liệu claude.ai/artifact/CeUguQTWg2DBzFshqmvhXW) chờ PM góp ý.
 - TikTok Developer App; quyền Admin Business Portfolio để chuyển Meta sang System User + 2 fanpage thật.
 - Token Meta đang có quyền trên 16 page (cấp thừa) → nên thu hẹp.
-- Các hướng tiếp theo người dùng có thể chọn: kênh Du học, Notion, buổi dạy thiết kế, AI chấm điểm kịch bản (Agent ⑥), Agent Chiến lược (lịch tháng).
+- Các hướng tiếp theo người dùng có thể chọn: kênh Du học, Notion, buổi dạy thiết kế, Agent Chiến lược (lịch tháng).
 
 ## Trạng thái gần nhất (13/11/2026)
 - Đơn TH-261112-03 đã chạy trọn vòng và **đã đăng** lên page test. Bot tự chạy cùng Windows, không cần mở app Claude; chỉ cần máy bật, đã đăng nhập Windows, Claude Code còn đăng nhập.

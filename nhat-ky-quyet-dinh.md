@@ -4,6 +4,44 @@
 
 ---
 
+## 17/11/2026 — Series review trường: thử Đại học Catholic (An)
+
+- Nguồn dữ liệu trường: Google Sheet của bộ phận du học (14 tab: D4-1 TOP1–3, D2-x, LIST MOU, ghi chú) → tải về `noi-bo/truong-hoc/` (không lên Git). Video **không nêu số tiền**, không dùng ghi chú nội bộ (cọc, sổ, VPĐD, "phỏng vấn 100% đậu").
+- An chốt: được dùng cảnh tải từ **YouTube kênh chính thức của trường**, mỗi cảnh 3–5 giây, tối đa ~3 cảnh/video, bỏ tiếng gốc, tránh logo/chữ, ghi nguồn trên hình + file `nguon-youtube.json` trong job. (Claude đã nói rõ: không có quy định "dưới 3–5 giây thì không vi phạm"; rủi ro thấp, công ty quyết.) Video chạy quảng cáo nên thay bằng footage xin từ trường.
+- Công cụ mới: `tools/footage_index.py` (danh mục 292 clip kho TBT, chọn clip ít dùng, ghi `data/footage_usage.json`), `tools/truong_media.py` (ghép giọng Vbee, dựng Linh trên HeyGen, chuẩn hóa footage), `tools/truong_build.py` (khung dựng HyperFrames chung). Nhạc nền: kho nhạc HeyGen (nhạc AI, không lời), tự nhỏ khi Linh nói.
+- Quy trình chuẩn (An chốt): sheet → **đối chiếu internet nguồn chính thức** (ghi `doi-chieu.md`, lệch thì báo PM, không đưa số lệch vào video) → kịch bản → Vbee → Linh → YouTube → footage → nhạc → dựng → An duyệt → đăng page test. Konkuk và Catholic đã đăng page test (17/11) nhưng **chưa** qua bước đối chiếu internet.
+- Lưu thành skill dự án `/review-truong` (`.claude/skills/review-truong/SKILL.md` + `mau-build.py`), thêm `tools/truong_data.py` (tải sheet, tìm trường; id sheet ở `data/truong_sheet.json`).
+- Kết quả: `video/jobs/DH-CATHOLIC-LINH/` 65 s. Việc còn dở: nối lệnh `/taodh truong <tên>` vào bot (Claude tự viết build từ sheet); PM xác nhận câu "không phân biệt tôn giáo" và có được nói MOU; nghe kiểm tra phát âm "Ca tô lích"; kiểm tra điều khoản nhạc HeyGen; đổi chế độ chia sẻ sheet (đang ai có link cũng xem).
+
+---
+
+## 17/11/2026 — Thử video KOL Linh AI (HeyGen) + giọng Vbee (An)
+
+- Nối HeyGen qua cầu nối MCP (tài khoản Creator, trừ credit gói, không cần API key). Avatar "Linh Du Học" (photo avatar) nói khớp miệng theo **file giọng Vbee** (`create_video_from_avatar` + `audioAssetId`), không dùng giọng HeyGen.
+- Làm lại video mẫu `tu-lieu/du-hoc/video/Konkuk.mp4` → `video/jobs/DH-KONKUK-LINH/` (61 s): Linh AI + footage trung tâm (`Video-Trám cảnh-TBT/`, đã chặn khỏi Git) + dải không chữ của B-roll Konkuk trong video gốc + thẻ D4-1/D2 dựng bằng HyperFrames. Bỏ mọi số tiền học phí, bỏ "top 1", bỏ câu hứa "bóc giá"; giữ điều kiện tuyển sinh + học bổng 30–100% kèm "theo thông tin trường công bố". Gắn nhãn "Hình ảnh AI" khi Linh xuất hiện.
+- ⚠️ Cần chốt trước khi đăng thật: (1) sửa quy tắc 5 (hiện cấm người dẫn AI); (2) Linh có được tạo từ ảnh người thật (KOL trong video Konkuk gốc rất giống) → cần văn bản đồng ý; (3) PM xác nhận số liệu Konkuk; (4) phát âm "Côn Cúc"; (5) chưa có nhạc nền.
+
+---
+
+## 17/11/2026 — Agent ⑥ chấm điểm kịch bản (An)
+
+- Mỗi kịch bản Claude viết xong được **chấm trước khi gửi An**: (1) luật cứng bằng Python: khuyến mãi, khan hiếm giả, "giá rẻ", cam kết visa/đỗ, % bịa; kênh Du học thêm số tiền, hứa thu nhập, HB Xanh; kênh Tiếng Hàn thêm số buổi học, cam kết TOPIK thiếu điều khoản; thời lượng 30–90s, tốc độ đọc, hook dài, chữ số trong lời đọc. (2) Claude chấm 6 tiêu chí (hook, cấu trúc, dữ liệu, lời đọc, giữ chân, CTA).
+- **Đạt** = không có lỗi + điểm ≥ 7,5. Chưa đạt thì bot tự cho viết lại theo hướng dẫn sửa, **tối đa 2 lần**; vẫn chưa đạt thì vẫn gửi An nhưng ghi "⚠️ CHƯA ĐẠT".
+- Thử: DH-261117-01 được 8,0/10 (đạt), bắt được câu hứa việc riêng với học viên, đọc ngày quá dài, clip tư liệu dễ bị hiểu là của Hùng. Luật cứng bắt được "5,2 triệu", "1,4 triệu" ở đơn DH-261113-01 (làm trước ngày chốt không nêu số tiền).
+- Đổi lại: mỗi kịch bản lâu thêm khoảng 1–2 phút (thêm 2–4 phút mỗi lần tự viết lại).
+- Việc còn dở: chưa có lịch sử An trả về để chỉnh tiêu chí; sau 2–3 tuần xem lại `judge` trong orders.json so với lần An trả về, chỉnh mức đạt 7,5 nếu cần.
+
+---
+
+## 17/11/2026 — Thử làm banner bằng HTML (An)
+
+- Sửa thử banner cũ "Hệ tiếng D4-1": bỏ khối ưu đãi (HB GPA 10–20 triệu, HB Xanh 250 triệu, quà ngày hội) → "Thầy Tư đồng hành"; nút "Nhận tư vấn ngay". Còn chờ PM: kỳ tuyển hiện tại (banner ghi kỳ 12/2026).
+- Dựng **khuôn banner B1 "Thẻ"** (`banner/b1-the/`) + `tools/banner_maker.py`: Claude viết nội dung theo brand.md → ghép HTML → Chrome chụp ảnh. Chạy thử 2 banner: "Lộ trình 5 bước", "Cần TOPIK mấy?" (ảnh ở `noi-bo/banner-thu/`).
+- Đã cân nhắc Canva (có cầu nối chính thức cho Claude, cần mẫu do người thiết kế làm + gói Canva phù hợp) và ChatGPT/Gemini vẽ ảnh (hay sai dấu tiếng Việt; chỉ hợp làm hình minh họa, gắn nhãn AI).
+- Việc còn dở: ảnh campus đang cắt từ banner cũ (mờ) → cần ảnh gốc chất lượng cao; người thiết kế duyệt khuôn; chưa nối Telegram (`/banner`), chưa đăng.
+
+---
+
 ## 17/11/2026 — Số liệu fanpage vào báo cáo Telegram
 
 - Đã thử Meta API trên 2 page chính: dùng được lượt xem (page_media_view), người xem, lượt vào trang, theo dõi mới/bỏ, lượt xem video, followers; Reels: lượt phát + thời gian xem TB. Meta đã bỏ page_impressions / page_fans / page_fan_adds_unique; page_post_engagements của page Tiếng Hàn luôn = 0 nên không dùng.
