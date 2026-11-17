@@ -15,7 +15,7 @@ Người xem fanpage Du học chỉ ở lại **khoảng 6 giây** (trung vị).
 | **Hook = câu hỏi về một hiểu lầm hay nghịch lý cụ thể**: "Có sổ đóng băng là chắc chắn đỗ visa?", "Đại học Konkuk – trường con nhà giàu?", "TOPIK 3, học bổng 70%?" | Hook kiểu rao: "ĐỪNG BỎ LỠ CHƯƠNG TRÌNH…", "CHÍNH THỨC MỞ CỔNG…" (lượt xem có thể cao nhờ quảng cáo nhưng người xem rời đi sau ~3 giây) |
 | Đưa ý chính **trước giây thứ 6**; tổng 40–60 giây | Mở đầu dài dòng giới thiệu chung chung ("Top 5 trường bạn nên tham khảo") |
 | **Học viên thật, sân bay, lớp học** (video mạnh nhất kênh) — ghi rõ ở cột hình ảnh cảnh cần quay thật | Nội dung luyện thi TOPIK, sách (để ở kênh Tiếng Hàn) |
-| Nói với phụ huynh bằng **tiền bạc thực tế**: tỷ giá won, chi phí, sổ tiết kiệm | Nhắc "khuyến mại quý III", "Quỹ Học Bổng Xanh 250 triệu": **đã dừng (An xác nhận 13/11/2026), không viết tiếp** |
+| Nói với phụ huynh bằng **chuyện tiền bạc thực tế**: khoản nào ai thu, sổ tiết kiệm, trượt visa thì sao. **Không đọc số tiền phí của công ty** (PM chốt 17/11/2026) | Nhắc "khuyến mại quý III", "Quỹ Học Bổng Xanh 250 triệu": **đã dừng (An xác nhận 13/11/2026), không viết tiếp** |
 
 **Video có KOL / người dẫn:** nhiều Reels của page do một nhân vật đại diện (không phải Thầy Tư) nói trước máy quay. Hệ thống **không thay thế** dạng này (không dựng người dẫn AI, không giả giọng người thật). Khi làm lại một chủ đề từng có video KOL, chuyển sang **dạng chữ động (khuôn K4)**: giữ ý và hook, lời đọc bằng giọng Vbee, người nói xưng "mình" như bình thường; cột hình ảnh ghi "chữ động", không ghi "KOL nói".
 
@@ -24,6 +24,13 @@ Người xem fanpage Du học chỉ ở lại **khoảng 6 giây** (trung vị).
 **Dạng mới: P — Phá lời đồn** (nằm giữa dạng C và H): Hook nêu lời đồn dạng câu hỏi → "Thực tế là…" (1 câu) → 2–3 ý giải thích dựa trên dữ liệu brand.md → câu đúc kết → CTA kiểm tra hồ sơ. Ví dụ đề tài: sổ đóng băng và visa; phải có vài tỷ mới đi được; chưa biết tiếng Hàn có đi được không; có IELTS mà không có TOPIK.
 
 ---
+
+**PM Du học chốt ngày 17/11/2026 (bắt buộc):**
+- **Video không nói mức giá:** không phí dịch vụ, không "9,5 triệu", không kê từng khoản, không "hoàn 5 triệu". Nói chính sách bằng lời, giá thì CTA "nhắn tin nhận bảng chi phí chi tiết".
+- **Video trường (dạng T) chỉ làm theo đơn PM đặt, kèm số liệu mới nhất PM gửi.** Agent không tự đề xuất hay tự lấy số trường trong brand.md 2.3b.
+- **"Có TOPIK 3 – Có ngay VISA":** không đọc, không giải thích; chỉ được hiện làm khẩu hiệu chữ ở cảnh cuối (outro).
+- **Học viên Du học đều đã đồng ý** dùng hình ảnh → được ghi ở cột hình ảnh "dùng ảnh/clip học viên thật" (kể cả video "trước khi bay" cũ).
+- Nhịp đăng: **3 bài/ngày (video + ảnh)**.
 
 ## 1. Khác kênh Tiếng Hàn ở đâu
 
@@ -53,7 +60,7 @@ Người xem fanpage Du học chỉ ở lại **khoảng 6 giây** (trung vị).
 | 7 | **CTA nối lại hook** | "TOPIK 3 đã có 70% học bổng, còn bạn thì sao? Nhắn Du học Thầy Tư để kiểm tra hồ sơ ngay!" |
 
 Thumbnail 2 dòng: **tên trường / con số học bổng** ("VÌ SAO NHIỀU BẠN CHỌN CATHOLIC? / TOPIK 3 ĐÃ CÓ HỌC BỔNG 70%").
-**Chỉ dùng số liệu trường có trong brand.md mục 2.3b.** Trường khác: chỉ viết khi người đặt đơn gửi kèm số liệu, hoặc nói chung không có con số.
+**Chỉ viết dạng T khi PM đặt đơn và gửi kèm số liệu mới nhất** (chốt 17/11/2026). Số trong brand.md 2.3b chỉ dùng khi đơn ghi rõ dùng bảng đó. Thiếu số liệu thì nói chung, không có con số.
 
 ### Dạng S — Hậu trường, sự kiện (3/6 mẫu: lớp ôn phỏng vấn, thi thử TOPIK, sách mới)
 
@@ -73,13 +80,13 @@ Ngày giờ sự kiện (ngày thi thử…) **chỉ viết khi người đặt 
 | # | Bước | Gợi ý |
 |---|---|---|
 | 1 | Hook nỗi lo | "Làm hồ sơ du học Hàn, tiền hồ sơ đi đâu hết?" · "Lỡ trượt visa thì tiền hồ sơ có mất trắng không?" |
-| 2 | Tách nhóm chi phí | Dịch vụ tư vấn (trọn gói) · khoản hồ sơ bên thứ ba thu (9,5 triệu) · khoản học viên tự trả (tem tím, visa, khám sức khỏe, vé máy bay) |
-| 3 | 2–3 khoản cụ thể | công chứng dịch thuật khoảng 1 triệu; đón sân bay khoảng 2 triệu; lệ phí xét hồ sơ của trường đã nằm trong trọn gói |
-| 4 | **Quyền lợi khi trượt** | Đăng ký kỳ sau không đóng thêm; thanh lý hợp đồng được nhận lại 5 triệu |
+| 2 | Tách nhóm chi phí (không đọc số tiền) | Dịch vụ tư vấn (trọn gói) · khoản hồ sơ do bên thứ ba thu, tách riêng · khoản học viên tự trả (tem tím, visa, khám sức khỏe, vé máy bay) |
+| 3 | 2–3 việc cụ thể đã nằm trong gói | lệ phí xét hồ sơ của trường; sắp lịch phỏng vấn; hướng dẫn đóng tiền thẳng cho trường; phối hợp đón sân bay |
+| 4 | **Quyền lợi khi trượt** | Đăng ký kỳ sau không đóng thêm; thanh lý hợp đồng được hoàn lại một phần |
 | 5 | Đúc kết | "Chi phí rõ ràng, hành trình vững vàng." |
 | 6 | CTA | "Nhắn Du học Thầy Tư để nhận bảng chi phí chi tiết cho hồ sơ của bạn." |
 
-Bắt buộc có dòng chữ nhỏ trên màn hình: **"Chi phí tham khảo, có thể thay đổi tùy trường hợp"**. **Không** nêu phí dịch vụ hay "gói 60 triệu" (chưa xác nhận).
+**Không có con số tiền nào** (PM chốt 17/11/2026). Chữ nhỏ trên màn hình: **"Chi tiết theo từng hồ sơ, nhắn tin để nhận bảng chi phí"**.
 
 ### Dạng H — Hỏi đáp (FAQ thật trên website, brand.md mục 2.4)
 "Chưa biết tiếng Hàn có đi được không?" · "Seoul hay tỉnh?" · "Khi nào nên bắt đầu chuẩn bị?" · "D4-1 khác D2 thế nào?"
@@ -101,14 +108,15 @@ Dữ liệu dùng được: điều kiện tối thiểu của trung tâm (D4 c�
 
 | Không viết | Vì sao | Viết thay |
 |---|---|---|
-| "Có TOPIK 3 – có ngay VISA", "bao đậu visa", "đỗ 100%" | Cam kết kết quả, chưa xác nhận điều kiện; vi phạm chính sách Meta | "TOPIK 3 giúp hồ sơ của bạn mạnh hơn" · "tăng cơ hội" |
-| "Gói du học 60 triệu", "giá rẻ", bất kỳ mức phí dịch vụ nào | Chưa có trong bảng chính thức | Nêu khoản hồ sơ 9,5 triệu + "nhắn tin để nhận bảng chi phí chi tiết" |
+| Đọc hoặc giải thích "Có TOPIK 3 – có ngay VISA"; "bao đậu visa", "đỗ 100%" | Cam kết kết quả. PM cho phép câu khẩu hiệu **chỉ hiện chữ ở outro** | Thân video: "TOPIK 3 giúp hồ sơ của bạn mạnh hơn" · "tăng cơ hội" |
+| "Gói du học 60 triệu", "giá rẻ", phí dịch vụ, "9,5 triệu", từng khoản phí, "hoàn 5 triệu" | PM chốt 17/11: video không nói mức giá | Nói chính sách bằng lời + "nhắn tin để nhận bảng chi phí chi tiết" |
+| Tự lên video giới thiệu trường | PM tự đặt đơn trường kèm số liệu mới | Chỉ viết khi đơn có tên trường và số liệu |
 | "Vừa học vừa làm kiếm nhiều tiền", "sang Hàn đi làm trả nợ" | Kỳ vọng sai, rủi ro chính sách | "học tiếng để sống tự lập" |
-| Học phí, học bổng của trường **không có** trong brand.md 2.3b | Số liệu thay đổi theo kỳ, dễ sai | Nói chung + CTA kiểm tra hồ sơ |
+| Học phí, học bổng của trường **không có trong đơn PM** | Số liệu thay đổi theo kỳ, dễ sai | Nói chung + CTA kiểm tra hồ sơ |
 | Ngày thi, hạn nộp hồ sơ tự nghĩ ra | Bịa thông tin | Chỉ dùng ngày có trong chủ đề đơn |
 | "Trường đối tác của Du học Thầy Tư" cho một trường cụ thể | Chưa xác nhận danh sách đối tác chính thức | "trường được nhiều học viên Du học Thầy Tư lựa chọn" |
 | Nhắc chi tiết đời tư trong phiếu dự tuyển (hôn nhân bố mẹ, người nhà bất hợp pháp…) | Nhạy cảm, nhắm đặc điểm cá nhân | Nói chung "hồ sơ gia đình, tài chính" |
-| Tên, ảnh, kết quả học viên | Chỉ khi An xác nhận đã đồng ý | — |
+| Tên, kết quả học viên **tự nghĩ ra** | Bịa thông tin | Ảnh/clip học viên Du học thật: **được dùng** (PM xác nhận tất cả đã đồng ý, 17/11/2026); tên và kết quả lấy đúng theo đơn |
 
 Khi nhắc học phí, học bổng của trường: thêm chữ nhỏ **"Theo thông tin trường công bố, có thể thay đổi theo kỳ"**.
 
@@ -147,18 +155,18 @@ Giống `huong-dan-kich-ban-tieng-han.md` mục 7, khác:
 | Cảnh | Lời đọc (TTS) | Chữ trên màn hình |
 |---|---|---|
 | Hook | Lỡ trượt visa, tiền hồ sơ du học có mất trắng không? | TRƯỢT VISA / TIỀN HỒ SƠ CÓ MẤT? |
-| Tách nhóm | Ở Du học Thầy Tư, chi phí được tách rõ: dịch vụ tư vấn trọn gói, và khoản hồ sơ chín triệu năm trăm nghìn đồng do bên thứ ba thu. | KHOẢN HỒ SƠ / 9.500.000đ |
-| Chi tiết | Khoản này dùng cho công chứng dịch thuật, chứng minh tài chính, gửi hồ sơ sang trường, và cả đón bạn ở sân bay Hàn Quốc. | CÔNG CHỨNG · TÀI CHÍNH / ĐÓN SÂN BAY |
+| Tách nhóm | Ở Du học Thầy Tư, chi phí được tách rõ: dịch vụ tư vấn trọn gói, và khoản hồ sơ do bên thứ ba thu, ghi riêng từ đầu. | TÁCH RÕ / TỪNG KHOẢN |
+| Chi tiết | Khoản hồ sơ dùng cho công chứng dịch thuật, chứng minh tài chính, gửi hồ sơ sang trường, và cả đón bạn ở sân bay Hàn Quốc. | CÔNG CHỨNG · TÀI CHÍNH / ĐÓN SÂN BAY |
 | Quyền lợi | Nếu trượt code hay visa, bạn đăng ký kỳ sau thì không phải đóng thêm. | ĐĂNG KÝ KỲ SAU / KHÔNG ĐÓNG THÊM |
-| Quyền lợi 2 | Còn nếu thanh lý hợp đồng, bạn được nhận lại năm triệu đồng. | THANH LÝ HỢP ĐỒNG / NHẬN LẠI 5.000.000đ |
+| Quyền lợi 2 | Còn nếu thanh lý hợp đồng, bạn được hoàn lại một phần chi phí. | THANH LÝ HỢP ĐỒNG / HOÀN LẠI MỘT PHẦN |
 | Đúc kết | Chi phí rõ ràng, hành trình vững vàng. | CHI PHÍ RÕ RÀNG / HÀNH TRÌNH VỮNG VÀNG |
 | CTA | Nhắn Du học Thầy Tư để nhận bảng chi phí chi tiết cho hồ sơ của bạn nhé! | NHẮN TIN / NHẬN BẢNG CHI PHÍ |
 
-*(Chữ nhỏ cố định: "Chi phí tham khảo, có thể thay đổi tùy trường hợp".)*
+*(Chữ nhỏ cố định: "Chi tiết theo từng hồ sơ, nhắn tin để nhận bảng chi phí". Outro có thể hiện khẩu hiệu "CÓ TOPIK 3 – CÓ NGAY VISA" bằng chữ, không đọc.)*
 
 ---
 
 ## 9. Việc cần làm tiếp
 - [ ] An duyệt mẫu ở mục 8 và nghe phát âm D4-1, won, IELTS ở video Du học đầu tiên → sửa bảng brand.md 0.2.
 - [ ] Gửi video/banner cũ kênh Du học vào `tu-lieu/du-hoc/` → đo nhịp thật, cập nhật mục 3.
-- [ ] Xác nhận số liệu 3 trường (brand.md 2.3b); bổ sung trường khác theo cùng mẫu.
+- [x] Số liệu trường: PM tự đặt đơn kèm số liệu mới (17/11/2026).

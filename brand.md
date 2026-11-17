@@ -234,13 +234,14 @@
   3. **Minh bạch từng khoản phí.** Rõ trước khi ký, hạn chế phát sinh.
   4. **Đồng hành cả sau khi bay.** Từ chọn ngành, phỏng vấn đến ổn định tại Hàn.
 
-> ⚠️ **Lưu ý mâu thuẫn giọng điệu:** tagline fanpage "Có TOPIK 3 – Có ngay VISA" mang tính cam kết mạnh, trong khi website nhấn "không hứa hẹn viển vông". Cần thống nhất. Khuyến nghị: video dùng giọng minh bạch như website. Câu "Có ngay VISA" chỉ dùng khi có điều kiện cụ thể đã được xác nhận (rủi ro chính sách Meta về quảng cáo cam kết kết quả).
+> ✅ **Câu "Có TOPIK 3 – Có ngay VISA"** (PM Du học chốt 17/11/2026): **không nói** trong lời đọc và thân video, không giải thích điều kiện; **chỉ được hiện làm khẩu hiệu chữ ở màn kết (outro)**. Thân video vẫn dùng giọng minh bạch như website ("TOPIK 3 giúp hồ sơ mạnh hơn").
 
 ### 2.3 Sản phẩm, dịch vụ
 
 - **Hệ:** Hệ tiếng (D4-1) · Hệ Đại học · Hệ Thạc sĩ ✅
 - **Chương trình khuyến mại đã dừng** ✅ (An xác nhận 13/11/2026): "Khuyến mại quý III" và "Quỹ Học Bổng Xanh lên tới 250 triệu" từng chạy trên fanpage → **không nhắc lại** trong nội dung mới.
-- **Gói trọn gói:** khoảng **60 triệu đồng** *(theo kế hoạch nội bộ, chưa thấy trên website)* ⚠️ **chưa dùng**: bảng chi phí chính thức (mục 2.3a) không ghi phí dịch vụ. Không dùng từ "giá rẻ".
+- **Gói trọn gói / phí dịch vụ:** ⛔ **video không nói mức giá** (PM Du học chốt 17/11/2026). Không nêu "gói 60 triệu" hay bất kỳ con số phí dịch vụ nào. Không dùng từ "giá rẻ". Muốn nói về giá thì CTA "nhắn tin để nhận bảng chi phí chi tiết".
+- **Hình ảnh học viên Du học** ✅ (PM Du học xác nhận 17/11/2026): **tất cả học viên** trong ảnh/video của kênh, gồm các video "trước khi bay", **đã đồng ý** cho dùng (trung tâm xin phép trước khi chụp, quay). Được dùng lại chất liệu cũ của kênh Du học. Chỉ áp dụng cho kênh Du học.
 - **Khóa tiếng chuẩn bị du học** (Bảng giá 07/BG-TBT) ✅, bán qua Tiếng Hàn Thầy Tư, kênh Du học có thể giới thiệu:
   - Tiếng Hàn định hướng TOPIK 2 cho du học sinh từ số 0 (offline): SC1 + SC2 + Ôn luyện phỏng vấn, **13.000.000đ**
   - Ôn luyện phỏng vấn trường và Đại sứ quán (online, 20 buổi): **2.500.000đ**
@@ -256,7 +257,8 @@
 
 ### 2.3a Quyền lợi du học sinh và chi phí hồ sơ ✅
 > Nguồn: `Bảng chi phí du học.pdf` + ảnh `Giá trị nhận được 1-08.jpg` (hệ D4-1, D2-1, D2-2, D2-3, D2-4) và `1-09.jpg` (hệ D2-6) do bộ phận Du học cung cấp, 12/11/2026. Hai bảng **giống hệt nhau** về nội dung.
-> Bắt buộc khi nhắc số tiền: kèm câu "**mức chi phí mang tính tham khảo, có thể thay đổi tùy trường hợp**" (đúng như ghi chú trên ảnh gốc). Luôn dùng dấu "khoảng".
+> ⛔ **Dùng trong video (PM Du học chốt 17/11/2026): không đọc, không hiện số tiền** của bảng này (9,5 triệu, từng khoản, hoàn 5 triệu) và **không kê từng khoản** (2 dòng "gửi hồ sơ"/"KTX" đang ghi lệch). Video chỉ nói **chính sách**: dịch vụ trọn gói gồm gì; khoản hồ sơ do bên thứ ba thu, tách riêng; trượt code/visa đăng ký kỳ sau không đóng thêm, thanh lý được hoàn lại một phần. Con số chỉ dùng cho tư vấn viên trả lời tin nhắn.
+> Khi tư vấn viên nhắc số tiền: kèm câu "**mức chi phí mang tính tham khảo, có thể thay đổi tùy trường hợp**" (đúng như ghi chú trên ảnh gốc). Luôn dùng dấu "khoảng".
 
 **A. Trọn gói dịch vụ (không tính tiền riêng):** định hướng nghề nghiệp, chọn ngành · tư vấn chọn trường theo năng lực hồ sơ · tư vấn hồ sơ cá nhân hóa · sắp xếp lịch phỏng vấn với trường Hàn · hướng dẫn đóng tiền invoice **trực tiếp sang trường** · hướng dẫn chuẩn bị, nộp hồ sơ visa tại Đại sứ quán/Lãnh sự quán · **lệ phí xét hồ sơ của trường** · hướng dẫn hội nhập, liên lạc sau khi nhập học · hỗ trợ thủ tục nhận học bổng (hệ D2).
 
@@ -279,7 +281,7 @@
 ⚠️ **Chưa có:** mức **phí dịch vụ** (bảng chỉ ghi "trọn gói dịch vụ", không ghi số tiền) → **không nêu** "gói 60 triệu" hay bất kỳ con số phí dịch vụ nào. Học phí trường đóng thẳng cho trường theo invoice.
 
 ### 2.3b Dữ liệu trường (theo kỳ tuyển sinh)
-> Nguồn: kịch bản do bộ phận Du học soạn (`tu-lieu/kich-ban/du-hoc/kich_ban_dh.txt`, nhận 12/11/2026). Học phí, học bổng **thay đổi theo kỳ** → khi dùng phải ghi "theo thông tin trường công bố" và kỳ áp dụng (nếu có). ⚠️ An xác nhận lại số liệu còn hiệu lực trước khi duyệt video. Trường không có trong bảng này: **không nêu số liệu**, chỉ nói chung và mời nhắn tin kiểm tra hồ sơ.
+> Nguồn: kịch bản do bộ phận Du học soạn (`tu-lieu/kich-ban/du-hoc/kich_ban_dh.txt`, nhận 12/11/2026). Học phí, học bổng **thay đổi theo kỳ** → khi dùng phải ghi "theo thông tin trường công bố" và kỳ áp dụng (nếu có). ✅ **PM Du học chốt 17/11/2026: PM sẽ tự đặt đơn video trường và gửi kèm số liệu mới nhất.** Agent **không tự lên video giới thiệu trường** (dạng T, series Đúng ngành trúng trường) và không tự lấy số trong bảng dưới. Bảng này là bản 11/2026, chỉ dùng khi đơn của PM ghi rõ dùng nó; số liệu PM gửi trong đơn luôn được ưu tiên. Trường không có số liệu: chỉ nói chung và mời nhắn tin kiểm tra hồ sơ.
 
 | Trường | Vị trí, điểm nổi bật | Hệ tiếng D4-1 | Hệ chuyên ngành D2 · học bổng |
 |---|---|---|---|
@@ -288,7 +290,7 @@
 | **Woosong** | Daejeon, môi trường quốc tế. Có chương trình **100% tiếng Anh** (IELTS từ 5.5 tùy chương trình). Mạnh: Quản trị khách sạn, Ẩm thực, AI, Logistics, CNTT | Tốt nghiệp THPT; GPA từ 6,7; trống không quá 2 năm. Học phí khoảng 5,2 triệu won/năm; KTX khoảng 1,4 triệu won/2 kỳ (gồm 1 bữa/ngày) | Chương trình tiếng Hàn: TOPIK 3; tiếng Anh: IELTS 5.5 tùy ngành. HB kỳ đầu: TOPIK 3 → 30% · TOPIK 4 → 50% · TOPIK 5 → 70% · TOPIK 6 → 100% học phí 4 năm (nếu duy trì kết quả học tập theo yêu cầu) |
 - **Trường nổi bật trên web** ✅: ChungAng (Seoul, TOP 1), Inha (Incheon, TOP 1), Daegu, DongA (Busan), Pyeongtaek (TOP 2), Gimcheon (TOP 3).
 - **Mạng lưới đối tác** ✅: Ajou, Keimyung, Konyang, Ngoại ngữ Busan, Sunmoon, Sejong, Hanyang, Inha, Joongbu, ChungAng, Nữ Sookmyung, Thần học Seoul, Chungnam, Nữ sinh Duksung, Sungkyunkwan, Sungkyul, Konkuk, Kyungsung, Nữ sinh Seoul.
-  ⚠️ Cần xác nhận trường nào là đối tác chính thức trước khi nêu tên trong video.
+  Tên trường trong video: **theo đơn PM đặt** (PM chốt 17/11/2026). Vẫn không viết "trường đối tác của Du học Thầy Tư" nếu đơn không ghi rõ.
 
 ### 2.4 Chân dung khách hàng
 
@@ -376,6 +378,8 @@
 | Đăng TikTok | Cowork qua TikTok Studio, hoặc API đẩy vào nháp, cho đến khi app qua audit |
 | Nội dung AI | Cảnh AI chỉ minh họa, luôn gắn nhãn AI (xem mục 4, quy tắc 8) |
 | Pháp lý (cam kết, dữ liệu cá nhân, giấy phép tư vấn du học, quyền hình ảnh) | Đã đầy đủ |
+| Tần suất kênh Du học | **3 bài/ngày (gồm video và ảnh)** (PM Du học chốt 17/11/2026). ⚠️ Chưa rõ tỷ lệ video/ảnh; hệ thống hiện chỉ làm video |
+| Đo lường kênh Du học | **Đo chung** lượt xem tự nhiên và quảng cáo, không cần tách bài chạy quảng cáo (PM Du học 17/11/2026). Chất lượng nội dung vẫn so bằng thời gian xem trung bình |
 
 **Mốc ban đầu (12/11/2026)** để so sánh hiệu quả:
 
@@ -404,11 +408,13 @@
 - [ ] Điều kiện và quyền lợi của cam kết TOPIK 3+ (học lại hay hoàn phí), danh sách khóa áp dụng chính xác
 - [ ] Mã khóa trùng `KHCBA_TP2_SC1` (online và offline)
 - [ ] Giá các khóa Giao tiếp nâng cao, Từ vựng, EPS (có trên website, không có trong bảng giá)
-- [x] Bảng chi phí hồ sơ du học (mục 2.3a, nhận 12/11/2026) — [ ] còn thiếu **mức phí dịch vụ** (gói 60 triệu?) và lệch 500k/1 triệu giữa 2 dòng "gửi hồ sơ" và "KTX"
-- [ ] Xác nhận số liệu 3 trường Catholic, Pyeongtaek, Woosong (mục 2.3b) còn hiệu lực; kỳ nhập học sắp tới
+- [x] Bảng chi phí hồ sơ du học (mục 2.3a) — phí dịch vụ và chỗ lệch 500k/1 triệu: **không nói trong video** (PM 17/11/2026)
+- [x] Số liệu trường, danh sách trường (2.3b): PM tự đặt đơn kèm số liệu mới nhất (17/11/2026)
+- [ ] Kỳ nhập học đang tuyển và hạn nộp hồ sơ từng kỳ
 - [ ] Video/banner cũ của kênh Du học (thư mục `tu-lieu/du-hoc/` đang trống)
-- [ ] Điều kiện cụ thể cho câu "Có TOPIK 3 – Có ngay VISA"
-- [ ] Danh sách trường đối tác chính thức, học bổng, kỳ nhập học sắp tới
+- [x] Câu "Có TOPIK 3 – Có ngay VISA": chỉ hiện ở outro, không nói (17/11/2026)
+- [x] Học viên Du học: tất cả đã đồng ý (17/11/2026)
+- [ ] Tỷ lệ video/ảnh trong 3 bài/ngày của kênh Du học
 - [ ] Top 10 video hoặc bài đăng hiệu quả nhất của mỗi kênh (cần quyền quản trị trang; khi chưa đăng nhập, Facebook chỉ hiện thông tin giới thiệu)
-- [ ] Danh sách học viên đồng ý xuất hiện trong video
+- [ ] Danh sách học viên **Tiếng Hàn** đồng ý xuất hiện trong video (Du học: đã xong)
 - [ ] Người duyệt nội dung của từng kênh

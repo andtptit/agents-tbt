@@ -28,9 +28,11 @@ CHANNELS = {
     "DH": {"name": "Du học Thầy Tư", "guide": "huong-dan-kich-ban-du-hoc.md",
            "style": None, "formats": "T (giới thiệu trường, series Đúng ngành trúng trường) | S (hậu trường, sự kiện) | C (chi phí minh bạch) | H (hỏi đáp) | P (phá lời đồn)",
            "hashtags": '["#DuHocThayTu", "#DuHocHanQuoc"]',
-           "rules": "xưng mình – bạn; chi phí chỉ lấy từ brand.md 2.3a (kèm 'chi phí tham khảo'), số liệu trường chỉ lấy "
-                    "từ brand.md 2.3b (kèm 'theo thông tin trường công bố'); không cam kết visa, không 'gói 60 triệu', "
-                    "không phí dịch vụ, không bịa ngày sự kiện; chữ nhỏ bắt buộc ghi vào dòng cuối của 'screen' trong ngoặc tròn."},
+           "rules": "xưng mình – bạn; VIDEO KHÔNG NÓI MỨC GIÁ: không phí dịch vụ, không '9,5 triệu', không kê từng khoản, "
+                    "không 'hoàn 5 triệu', chỉ nói chính sách bằng lời + CTA nhận bảng chi phí; số liệu trường (học phí, học bổng) "
+                    "chỉ dùng khi chủ đề đơn có ghi số liệu (kèm 'theo thông tin trường công bố'), không thì nói chung; "
+                    "không đọc câu 'Có TOPIK 3 – Có ngay VISA' (chỉ được hiện chữ ở cảnh cuối); không cam kết visa; "
+                    "không bịa ngày sự kiện; chữ nhỏ bắt buộc ghi vào dòng cuối của 'screen' trong ngoặc tròn."},
 }
 
 

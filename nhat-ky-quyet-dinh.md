@@ -4,6 +4,18 @@
 
 ---
 
+## 17/11/2026 — PM Du học trả lời "Việc chờ quyết" (qua Notion)
+**Ai:** PM Du học (trả lời trên Notion), An chuyển cho Claude cập nhật.
+- **Video không nói mức giá:** không phí dịch vụ, không 9,5 triệu và từng khoản, không "hoàn 5 triệu". Video chỉ nói chính sách. *(Claude hiểu theo nghĩa chặt: bỏ mọi con số tiền của công ty trong video. PM muốn nới thì báo.)*
+- **Video trường:** PM tự đặt đơn kèm số liệu mới nhất. Agent không tự làm video trường, không tự lấy số ở brand.md 2.3b.
+- **"Có TOPIK 3 – Có ngay VISA":** không nói, chỉ được hiện chữ ở outro.
+- **Học viên Du học:** tất cả đã đồng ý dùng hình ảnh (xin phép trước khi chụp, quay), kể cả video "trước khi bay".
+- **Đo lường:** đo chung lượt xem tự nhiên và quảng cáo.
+- **Tần suất:** 3 bài/ngày (video + ảnh).
+- Đã sửa: `brand.md` (2.2, 2.3, 2.3a, 2.3b, mục 5, mục 6), `huong-dan-kich-ban-du-hoc.md` (mục 0, dạng T/C, mục 4, mẫu mục 8), quy tắc kênh DH trong `tools/script_writer.py`. Notion: 9 việc chuyển "Đã đưa vào brand.md"; ghi chú vào 6 ý tưởng lịch dạng T/C.
+- **Còn chờ PM Du học:** video/banner cũ, quyền đăng fanpage thật, người dạy kịch bản, kỳ nhập học và hạn hồ sơ, **mới:** 3 bài/ngày thì mấy video mấy ảnh, ảnh có cần hệ thống làm không.
+- PM Tiếng Hàn: chưa trả lời việc nào.
+
 ## 13/11/2026 (chiều) — Research fanpage Tiếng Hàn + Notion riêng
 
 - Kéo **4 tháng** page Tiếng Hàn Thầy Tư (An yêu cầu giảm để tiết kiệm): 198 bài + 66 Reels → `phan-tich-fanpage-tieng-han.md`. Dạng A (Thầy Tư giải thích nghịch lý) giữ chân tốt nhất (10–27 s); bài ưu đãi lượt cao nhưng ~3 s; series review 8 cuốn sách đã xong; album "lưu về" tương tác cao nhất. Đã thêm mục 0 vào huong-dan-kich-ban-tieng-han.md.
