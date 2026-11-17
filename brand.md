@@ -239,6 +239,9 @@
 ### 2.3 Sản phẩm, dịch vụ
 
 - **Hệ:** Hệ tiếng (D4-1) · Hệ Đại học · Hệ Thạc sĩ ✅
+- ⚠️ **Chương trình thấy trên banner/video cũ (17/11/2026), chờ PM xác nhận còn tuyển:** cao đẳng D2-1 · thạc sĩ D2-3 · hệ tiếng Anh (IELTS ≥ 5.5) · du học bằng TOEIC/IELTS · kỹ sư tay nghề cao (TOPIK 2, miễn học phí và KTX, chuyển visa kỹ sư). Chi tiết: `phong-cach-du-hoc.md` mục 5. Chưa xác nhận thì chỉ nhắc tên hệ, không nêu điều kiện, học bổng.
+- ⚠️ **Chương trình đối tác B2B của TBT Group** (phối hợp tuyển sinh; đối tượng: du học sinh, giáo viên, trung tâm ngoại ngữ): đã có 2 video 09/2026. Video loại này chỉ làm khi PM đặt đơn.
+- **Ưu đãi trên video/banner cũ** (giảm 10% khóa tiếng, miễn phí 2–3 tháng KTX, tặng máy tính bảng, 5 suất miễn phí TOPIK, HB GPA 10–20 triệu, hỗ trợ đi lại): ⚠️ coi như **không còn**, không viết cho đến khi PM xác nhận lại.
 - **Chương trình khuyến mại đã dừng** ✅ (An xác nhận 13/11/2026): "Khuyến mại quý III" và "Quỹ Học Bổng Xanh lên tới 250 triệu" từng chạy trên fanpage → **không nhắc lại** trong nội dung mới.
 - **Gói trọn gói / phí dịch vụ:** ⛔ **video không nói mức giá** (PM Du học chốt 17/11/2026). Không nêu "gói 60 triệu" hay bất kỳ con số phí dịch vụ nào. Không dùng từ "giá rẻ". Muốn nói về giá thì CTA "nhắn tin để nhận bảng chi phí chi tiết".
 - **Hình ảnh học viên Du học** ✅ (PM Du học xác nhận 17/11/2026): **tất cả học viên** trong ảnh/video của kênh, gồm các video "trước khi bay", **đã đồng ý** cho dùng (trung tâm xin phép trước khi chụp, quay). Được dùng lại chất liệu cũ của kênh Du học. Chỉ áp dụng cho kênh Du học.
@@ -411,7 +414,8 @@
 - [x] Bảng chi phí hồ sơ du học (mục 2.3a) — phí dịch vụ và chỗ lệch 500k/1 triệu: **không nói trong video** (PM 17/11/2026)
 - [x] Số liệu trường, danh sách trường (2.3b): PM tự đặt đơn kèm số liệu mới nhất (17/11/2026)
 - [ ] Kỳ nhập học đang tuyển và hạn nộp hồ sơ từng kỳ
-- [ ] Video/banner cũ của kênh Du học (thư mục `tu-lieu/du-hoc/` đang trống)
+- [x] Video/banner cũ của kênh Du học: 5 video + 8 banner (17/11/2026) → `phong-cach-du-hoc.md`
+- [ ] Pyeongtaek kỳ 12/2026: banner ("TOPIK 2 giảm 10%", "HB GPA 10–20 triệu") lệch với 2.3b (500.000 won)
 - [x] Câu "Có TOPIK 3 – Có ngay VISA": chỉ hiện ở outro, không nói (17/11/2026)
 - [x] Học viên Du học: tất cả đã đồng ý (17/11/2026)
 - [ ] Tỷ lệ video/ảnh trong 3 bài/ngày của kênh Du học

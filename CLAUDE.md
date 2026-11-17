@@ -12,6 +12,7 @@ Dự án của TBT Group: hệ thống AI Agent sản xuất và vận hành vid
 | `brand.md` | **Nguồn sự thật**: định vị 2 kênh, bảng giá (07/BG-TBT), màu, font, logo, giọng Vbee + từ điển phát âm, quy tắc bắt buộc, quyết định vận hành |
 | `phong-cach-tieng-han.md` | Ngôn ngữ hình ảnh kênh Tiếng Hàn (phân tích từ 11 video, 9 banner) |
 | `huong-dan-kich-ban-tieng-han.md` | Công thức kịch bản kênh Tiếng Hàn + mẫu + điều cấm |
+| `phong-cach-du-hoc.md` | Phong cách và lời thoại kênh Du học (từ 5 video, 8 banner PM gửi 17/11/2026); câu cũ cấm dùng lại; thông tin mới chờ PM xác nhận |
 | `huong-dan-kich-ban-du-hoc.md` | Công thức kịch bản kênh Du học (dạng T/S/C/H/P) + mẫu + điều cấm; mục 0 = bài học từ số liệu fanpage |
 | `phan-tich-fanpage-tieng-han.md` | Phân tích 4 tháng fanpage Tiếng Hàn Thầy Tư (Meta API): dạng A giữ chân tốt nhất, ưu đãi đang chạy cần PM xác nhận |
 | `phan-tich-fanpage-du-hoc.md` | Phân tích 6 tháng fanpage Du học Thầy Tư (Meta API): nhóm nội dung hiệu quả, series đang chạy |

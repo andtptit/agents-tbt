@@ -32,6 +32,11 @@ Người xem fanpage Du học chỉ ở lại **khoảng 6 giây** (trung vị).
 - **Học viên Du học đều đã đồng ý** dùng hình ảnh → được ghi ở cột hình ảnh "dùng ảnh/clip học viên thật" (kể cả video "trước khi bay" cũ).
 - Nhịp đăng: **3 bài/ngày (video + ảnh)**.
 
+**Bài học từ 5 video cũ của kênh (17/11/2026, xem `phong-cach-du-hoc.md`):**
+- Giữ: hook **điểm danh người xem** ("Tốt nghiệp đại học rồi, muốn…?", "Còn ai ở đây phân vân…?"), câu đảo lời đồn ("Nhiều bạn nghĩ… đúng không? Bạn đã nhầm."), liệt kê "Thứ nhất… Thứ hai… Và đặc biệt…", câu trấn an "cứ để trung tâm lo".
+- Bỏ: "chi phí siêu rẻ", hứa thu nhập ("vừa học vừa làm tăng thu nhập", "lương gấp nhiều lần"), "dễ dàng xin visa ở lại", đọc học phí, mọi ưu đãi.
+- Video cũ dài 48–138 giây → kịch bản mới vẫn nhắm **40–60 giây**.
+
 ## 1. Khác kênh Tiếng Hàn ở đâu
 
 | | Tiếng Hàn Thầy Tư | **Du học Thầy Tư** |
@@ -45,7 +50,7 @@ Người xem fanpage Du học chỉ ở lại **khoảng 6 giây** (trung vị).
 
 ---
 
-## 2. Bốn dạng kịch bản
+## 2. Các dạng kịch bản
 
 ### Dạng T — Giới thiệu trường (3/6 kịch bản mẫu: Catholic, Pyeongtaek, Woosong)
 
@@ -92,6 +97,17 @@ Ngày giờ sự kiện (ngày thi thử…) **chỉ viết khi người đặt 
 "Chưa biết tiếng Hàn có đi được không?" · "Seoul hay tỉnh?" · "Khi nào nên bắt đầu chuẩn bị?" · "D4-1 khác D2 thế nào?"
 Khung: **Câu hỏi làm hook → "Câu trả lời là…" (ngắn, thật) → 2–3 ý giải thích → câu đúc kết → CTA kiểm tra hồ sơ.**
 Dữ liệu dùng được: điều kiện tối thiểu của trung tâm (D4 cần TOPIK 2+, D2 cần TOPIK 3+ hoặc IELTS 5.5), lộ trình 5 bước, 4 tôn chỉ, khóa tiếng chuẩn bị du học (brand.md 2.3).
+
+### Dạng V — Chúc mừng visa (từ banner thật, 17/11/2026)
+Khung: **"Chúc mừng [tên]!" làm hook** → đã có visa [loại] trường [X] → 1–2 câu về hành trình (học tiếng ở trung tâm, ôn phỏng vấn, chuẩn bị hồ sơ) → câu đúc kết → CTA "Bạn là người tiếp theo? Nhắn Du học Thầy Tư để kiểm tra hồ sơ".
+- Tên, loại visa, trường **chỉ lấy đúng theo đơn** (học viên Du học đã đồng ý dùng hình ảnh, PM 17/11). Không tự thêm điểm, thời gian, chi tiết riêng tư.
+- Cột hình ảnh: "ảnh giấy báo visa thật, **che ảnh, số hộ chiếu, ngày sinh**".
+- Không nói "đỗ 100%", "chắc chắn có visa".
+
+### Dạng D — Tuyển đối tác (B2B) ⚠️ chỉ làm khi PM đặt đơn
+Người xem: du học sinh đang/đã ở Hàn, giáo viên ngoại ngữ, giáo viên THPT, chủ trung tâm. Xưng **anh chị** (hoặc bạn với du học sinh).
+Khung: hook điểm danh ("Anh chị đang dạy ngoại ngữ…?") → nỗi lo khi hợp tác (cơ chế có rõ không, quyền lợi học sinh, có được hỗ trợ không) → 3 điểm: **cơ chế ký bằng văn bản · trung tâm lo tư vấn chuyên sâu, chọn trường, hồ sơ · đào tạo và hỗ trợ cả khi ở xa** → CTA "đăng ký tìm hiểu cơ chế đối tác".
+Không nêu hoa hồng, thu nhập, con số nào.
 
 ---
 
@@ -141,7 +157,7 @@ Theo bảng phát âm brand.md mục 0.2 (phần Kênh Du học). Tóm tắt: TO
 ## 7. Định dạng xuất
 
 Giống `huong-dan-kich-ban-tieng-han.md` mục 7, khác:
-- MÃ: **DH-YYMMDD-NN** · Kênh: Du học Thầy Tư · Dạng: T | S | C | H
+- MÃ: **DH-YYMMDD-NN** · Kênh: Du học Thầy Tư · Dạng: T | S | C | H | P | V | D
 - Hashtag: `#DuHocThayTu #DuHocHanQuoc` + tên trường / `#TOPIK` / `#VisaD4` tùy chủ đề.
 - Cột "screen": các dòng ngăn bằng " / ", dòng đầu là tiêu đề; con số đứng riêng một dòng để khuôn tô nhãn vàng.
 

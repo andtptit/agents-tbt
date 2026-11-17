@@ -4,6 +4,14 @@
 
 ---
 
+## 17/11/2026 — Tư liệu kênh Du học (5 video, 8 banner)
+**Ai:** PM Du học gửi tư liệu, Claude phân tích.
+- Chuyển lời 5 video bằng Whisper → `tu-lieu/loi-thoai/du-hoc/`. Phân tích hình ảnh, lời thoại → **`phong-cach-du-hoc.md`** (mới).
+- Hướng dẫn kịch bản Du học: thêm bài học từ video cũ (giữ hook điểm danh, câu đảo lời đồn; bỏ "siêu rẻ", hứa thu nhập, đọc học phí, ưu đãi), thêm **dạng V (chúc mừng visa)** và **dạng D (tuyển đối tác B2B, chỉ khi PM đặt)**. Bot nhận 2 dạng mới.
+- brand.md 2.3: ghi các hệ mới thấy trên banner (cao đẳng, thạc sĩ, hệ tiếng Anh, TOEIC/IELTS, kỹ sư) và chương trình B2B ở trạng thái ⚠️ chờ xác nhận; ưu đãi trên tư liệu cũ coi như không còn.
+- Notion: việc "video/banner cũ" → xong; thêm 4 câu hỏi (ưu đãi cũ đã hết chưa, các hệ còn tuyển không, Pyeongtaek lệch số, có làm tiếp video B2B không); thêm ý tưởng lịch "Chúc mừng visa Gachon".
+- Ghi lại cho buổi dạy thiết kế: kênh thật dùng nền xanh nhiều hơn khuôn K4 Du học (nền trắng). Chưa đổi khuôn.
+
 ## 17/11/2026 — PM Du học trả lời "Việc chờ quyết" (qua Notion)
 **Ai:** PM Du học (trả lời trên Notion), An chuyển cho Claude cập nhật.
 - **Video không nói mức giá:** không phí dịch vụ, không 9,5 triệu và từng khoản, không "hoàn 5 triệu". Video chỉ nói chính sách. **An xác nhận 17/11: giữ nghĩa chặt, bỏ mọi con số tiền của công ty trong video.**

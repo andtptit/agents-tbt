@@ -26,7 +26,7 @@ CHANNELS = {
                     "cam kết TOPIK 3+ kèm điều khoản, không nêu số buổi học.\n"
                     "- Nội dung tiếng Hàn (từ, ngữ pháp, ví dụ) phải chính xác; nếu không chắc thì chọn ví dụ đơn giản, phổ biến."},
     "DH": {"name": "Du học Thầy Tư", "guide": "huong-dan-kich-ban-du-hoc.md",
-           "style": None, "formats": "T (giới thiệu trường, series Đúng ngành trúng trường) | S (hậu trường, sự kiện) | C (chi phí minh bạch) | H (hỏi đáp) | P (phá lời đồn)",
+           "style": None, "formats": "T (giới thiệu trường, series Đúng ngành trúng trường) | S (hậu trường, sự kiện) | C (chi phí minh bạch) | H (hỏi đáp) | P (phá lời đồn) | V (chúc mừng visa) | D (tuyển đối tác B2B)",
            "hashtags": '["#DuHocThayTu", "#DuHocHanQuoc"]',
            "rules": "xưng mình – bạn; VIDEO KHÔNG NÓI MỨC GIÁ: không phí dịch vụ, không '9,5 triệu', không kê từng khoản, "
                     "không 'hoàn 5 triệu', chỉ nói chính sách bằng lời + CTA nhận bảng chi phí; số liệu trường (học phí, học bổng) "
