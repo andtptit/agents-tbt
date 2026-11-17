@@ -32,6 +32,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import script_writer  # noqa: E402
 import video_maker  # noqa: E402
 import meta_post  # noqa: E402
+import page_stats  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, "data")
@@ -583,14 +584,23 @@ def build_report():
     lines.append(f"{'🟢' if ok else '🔴'} {status}. Bot đang chạy.")
     if not ok:
         lines.append("→ Cần đăng nhập lại Claude Code trên máy Cowork thì mới viết được kịch bản.")
-    return "\n".join(lines), today
+    # Số liệu fanpage (Meta API, chỉ đọc). Lỗi thì vẫn gửi phần còn lại của báo cáo.
+    alerts = []
+    try:
+        page_lines, alerts = page_stats.build(orders)
+        lines = [lines[0], ""] + page_lines + ["", "🏭 NHÀ MÁY NỘI DUNG"] + lines[1:]
+    except Exception as e:  # noqa: BLE001
+        lines += ["", f"(Không lấy được số liệu fanpage: {str(e)[:100]})"]
+    return "\n".join(lines), today, alerts
 
 
 def send_report():
-    text, today = build_report()
+    text, today, alerts = build_report()
     r = say(CHAT_ID, text, TOPICS.get("bao_cao"))
     if r.get("ok"):
         json.dump({"last_report": today}, open(REPORT_STATE, "w", encoding="utf-8"))
+    for a in alerts:  # lượt xem giảm hơn 30% so với trung bình 7 ngày
+        say(CHAT_ID, a, TOPICS.get("canh_bao"))
     return r
 
 

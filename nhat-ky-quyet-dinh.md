@@ -4,6 +4,14 @@
 
 ---
 
+## 17/11/2026 — Số liệu fanpage vào báo cáo Telegram
+
+- Đã thử Meta API trên 2 page chính: dùng được lượt xem (page_media_view), người xem, lượt vào trang, theo dõi mới/bỏ, lượt xem video, followers; Reels: lượt phát + thời gian xem TB. Meta đã bỏ page_impressions / page_fans / page_fan_adds_unique; page_post_engagements của page Tiếng Hàn luôn = 0 nên không dùng.
+- Báo cáo 8h thêm phần 📈 FANPAGE (hôm qua, so TB 7 ngày, top 3 Reels, video hệ thống đã đăng); giảm >30% → cảnh báo. Gửi thử thành công 17/11.
+- Chưa có: số lead (cần quyền leads_retrieval + hộp thư). Quyền đọc token hết hạn 11/02/2027.
+
+---
+
 ## 17/11/2026 — Tư liệu kênh Du học (5 video, 8 banner)
 **Ai:** PM Du học gửi tư liệu, Claude phân tích.
 - Chuyển lời 5 video bằng Whisper → `tu-lieu/loi-thoai/du-hoc/`. Phân tích hình ảnh, lời thoại → **`phong-cach-du-hoc.md`** (mới).
