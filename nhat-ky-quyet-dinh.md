@@ -6,7 +6,7 @@
 
 ## 17/11/2026 — PM Du học trả lời "Việc chờ quyết" (qua Notion)
 **Ai:** PM Du học (trả lời trên Notion), An chuyển cho Claude cập nhật.
-- **Video không nói mức giá:** không phí dịch vụ, không 9,5 triệu và từng khoản, không "hoàn 5 triệu". Video chỉ nói chính sách. *(Claude hiểu theo nghĩa chặt: bỏ mọi con số tiền của công ty trong video. PM muốn nới thì báo.)*
+- **Video không nói mức giá:** không phí dịch vụ, không 9,5 triệu và từng khoản, không "hoàn 5 triệu". Video chỉ nói chính sách. **An xác nhận 17/11: giữ nghĩa chặt, bỏ mọi con số tiền của công ty trong video.**
 - **Video trường:** PM tự đặt đơn kèm số liệu mới nhất. Agent không tự làm video trường, không tự lấy số ở brand.md 2.3b.
 - **"Có TOPIK 3 – Có ngay VISA":** không nói, chỉ được hiện chữ ở outro.
 - **Học viên Du học:** tất cả đã đồng ý dùng hình ảnh (xin phép trước khi chụp, quay), kể cả video "trước khi bay".
