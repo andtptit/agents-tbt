@@ -4,6 +4,43 @@
 
 ---
 
+## 18/11/2026 — Agent bình luận hội nhóm Facebook (An)
+
+- An muốn có agent vào hội nhóm, xem học viên băn khoăn gì rồi bình luận giới thiệu trung tâm. **Chốt cách làm:** bình luận **nói rõ là người của trung tâm** (không đóng vai học viên), chỉ dùng thông tin ✅ trong brand.md; **agent không tự đăng**: 8h sáng chỉ quét + soạn nháp, gửi Telegram, An trả lời "đăng 1, 3" trong phiên chat thì mới đăng (quy tắc số 1 + quy tắc của Claude: mỗi bình luận công khai phải được duyệt).
+- Tài khoản: **Lô Hữu Cương**, đăng nhập trong khung trình duyệt của app Claude. Đã tham gia 2 nhóm (REVIEW TRUNG TÂM TIẾNG HÀN 105K; Review Lớp Học Tiếng Hàn 28K — nhóm này **cấm tự quảng bá**, không bình luận). Đã đăng 2 bình luận đầu tiên (kênh Tiếng Hàn).
+- Nhận xét: nhóm du học phần lớn là quảng cáo của trung tâm khác, câu hỏi thật thưa; nhóm review trung tâm tiếng Hàn có người hỏi mỗi ngày nhưng nhiều trung tâm cùng vào trả lời, có người phàn nàn "spam cmt" → giới hạn **≤ 5 bình luận/ngày**, mỗi bài 1 bình luận, viết theo đúng câu hỏi.
+- File: skill `.claude/skills/binh-luan-nhom/` (`SKILL.md` quy chuẩn + `nhom.json` nhóm theo dõi/bỏ qua, từ khóa, thông tin được dùng, lời mời); `tools/tg_notify.py` (gửi tin vào chủ đề Telegram mới **💬 Bình luận nhóm**); lịch **"Bình luận nhóm 8h"** trong app Claude (chạy khi app đang mở); nhật ký bài đã bình luận `data/binh-luan-nhom/`.
+- **An tạm dừng lịch 8h** (cùng ngày): giữ agent và file, chưa chạy tự động; An sẽ trao đổi lại nội dung bình luận trước khi bật.
+- Chờ An: **nội dung/giọng bình luận**; **số Zalo** ghi trong bình luận; có cho tham gia các nhóm du học (chưa là thành viên) không; câu "cam kết bằng văn bản" có đúng không (chưa dùng).
+
+## 18/11/2026 — Agent Bản tin du học Hàn hằng ngày (An)
+
+- An yêu cầu: agent cập nhật tin du học Hàn mới nhất, tổng hợp thành Reels ngắn, **dẫn nguồn**, chạy hằng ngày.
+- Làm: `tools/tin_tuc.py` (gom tin: Claude chạy ngầm với WebSearch/WebFetch, chỉ lấy tin 7 ngày gần nhất, phải mở được trang gốc và thấy ngày đăng, ưu tiên nguồn chính thức Hàn + báo lớn Hàn/Việt, bỏ tin của trung tâm du học khác; viết kịch bản 2–3 tin, mỗi tin nói "theo …" + "điều này có nghĩa gì với bạn"), `tools/tin_tuc_video.py` (khuôn BT: hook nền xanh, mỗi tin 1 thẻ trắng trên footage TBT đổi cảnh ~5 s, dòng **Nguồn: tên · ngày**, CTA, outro chính thức; font Gilroy).
+- Bot: có sẵn lịch 6h sáng tự tạo đơn `DH-BT-<yymmdd>` nhưng **An chốt chưa đặt lịch** → mặc định TẮT (bật bằng `BAN_TIN_BAT=1`); lệnh tay `/bantin`; vẫn qua An duyệt kịch bản + video (quy tắc 1). Tin đã đăng không lặp lại.
+- Chạy thử 18/11: tìm được 2 tin (268.000 du học sinh D-2 – Ulsan Maeil; cao đẳng Gyeonggi dạy an toàn lao động – Seoul Shinmun), bỏ 11 link (cũ/không liên quan/trung tâm khác). Agent ⑥ chấm 8.0. Video 47 s.
+- Quy ước: lời đọc không đọc số tiền; tên riêng Hàn khó đọc thì nói chung, tên đầy đủ trên màn hình + caption.
+- **Chờ PM:** có đăng bản tin mỗi ngày không hay 3 buổi/tuần (ngày ít tin thì video mỏng); giờ đăng; nhạc nền đang dùng bản nhạc HeyGen của Keimyung (điều khoản nhạc chờ PM).
+
+## 18/11/2026 — Chỉnh cách dựng 2 skill review trường: font, outro, logo (An)
+
+- **Font:** đổi sang **SVN-Gilroy** (`tu-lieu/font/`, Medium + XBold) cho cả `/review-truong` và `/review-truong-vo`.
+- **Outro:** bỏ thẻ kết tự vẽ, dùng outro chính thức `tu-lieu/chung/Outro THDHTT-Dọc.mp4` (4,25 s, có tiếng; nhạc nền nhỏ dần khi outro chạy). Logo chuyển vào `tu-lieu/chung/`.
+- **Lỗi chữ đè logo** (cảnh "ĐẠI HỌC KEIMYUNG"): logo dời lên y 100–220, cỡ 120 px; quy tắc mới: chữ ở cảnh có logo bắt đầu từ y ≥ 280, soi riêng vùng trên sau snapshot.
+- Code: `tools/truong_build.py` thêm `prepare_assets`, `outro_scene`, `outro_end`; 2 file `mau-build.py` cập nhật. Dựng lại 2 bản Keimyung (có Linh / chỉ giọng).
+- Khuôn K4/K5 và banner **giữ như cũ** (Be Vietnam Pro, thẻ kết cũ) — An chốt 18/11/2026.
+
+## 18/11/2026 — Series review trường: Keimyung + tiết kiệm credit HeyGen (An)
+
+- An chốt: kịch bản phải **đánh dấu từng câu Linh nói (lipsync) hay trám cảnh**, rồi mới gọi HeyGen — HeyGen chỉ dựng phần Linh nói. Công cụ: `kich-ban.json` (mỗi câu `lipsync: true/false`), `truong_media.py vbee|vo` ra thêm `linh.mp3` + `linh_map.json`, `truong_build.linh_segments()` đặt từng đoạn Linh đúng chỗ. Keimyung: HeyGen dựng 19,6 s thay vì 57,6 s (34%, tiết kiệm ~2/3 credit); khớp miệng lệch 23 ms.
+- Keimyung (`video/jobs/DH-KEIMYUNG-LINH/`, 61 s): hook "trường trong phim Vườn sao băng có thật" (báo Hàn xác nhận phim trường Seongseo), đối chiếu guideline chính thức 2027 Spring (`doi-chieu.md`). 3 cảnh YouTube kênh chính thức 계명대학교, 4 clip TBT chưa dùng, nhạc HeyGen mới. Agent ⑥: 8,0/10 (lần đầu 6,0 vì thiếu nguồn số liệu → thêm `--topic` cho script_judge).
+- ⚠️ Báo PM: sheet ghi học bổng hệ tiếng Anh Keimyung IELTS 5.5 = 70%, guideline chính thức = **50%**; lịch D4-1 trong sheet vẫn là kỳ 03/2026.
+- Chưa đăng (chờ An duyệt).
+- **Skill thứ 2 `/review-truong-vo`** (An yêu cầu): review trường **không HeyGen**, chỉ giọng Vbee + trám cảnh. Thử Keimyung cùng giọng/dữ liệu (`video/jobs/DH-KEIMYUNG-VO/`, 61 s): hook = chữ to + khung campus YouTube ngay khung hình 0; cảnh Linh thay bằng footage học viên / tư vấn viên TBT (3 clip mới). Khung dựng thêm `no_avatar=True`.
+- Thời gian ước tính ~35–45 phút/video; lâu nhất là bước YouTube (~10 phút). **An sẽ tự tối ưu bước YouTube**; để sau: kho đối chiếu theo trường + kỳ, chạy song song HeyGen/YouTube/footage.
+
+---
+
 ## 17/11/2026 — Series review trường: thử Đại học Catholic (An)
 
 - Nguồn dữ liệu trường: Google Sheet của bộ phận du học (14 tab: D4-1 TOP1–3, D2-x, LIST MOU, ghi chú) → tải về `noi-bo/truong-hoc/` (không lên Git). Video **không nêu số tiền**, không dùng ghi chú nội bộ (cọc, sổ, VPĐD, "phỏng vấn 100% đậu").

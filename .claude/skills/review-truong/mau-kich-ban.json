@@ -1,0 +1,174 @@
+{
+ "title": "Review trường: Đại học Keimyung – trường trong phim Vườn sao băng",
+ "format": "T (giới thiệu trường, series review trường)",
+ "template": "Review trường (Linh AI + footage)",
+ "duration_s": 60,
+ "axis": "sản phẩm",
+ "course_code": null,
+ "lines": [
+  {
+   "id": "l01",
+   "lipsync": true,
+   "scene": "s1",
+   "text": "Trường đại học trong phim Vườn sao băng có thật đấy!"
+  },
+  {
+   "id": "l02",
+   "lipsync": true,
+   "scene": "s1",
+   "text": "Đó là Đại học Kê-miêng ở Đê-gu, nơi từng quay Vườn sao băng bản Hàn và Quý ngài Ánh dương."
+  },
+  {
+   "id": "l03",
+   "lipsync": false,
+   "scene": "s2",
+   "text": "Trường nổi tiếng với những tòa nhà gạch đỏ cổ kính, đẹp như trong phim."
+  },
+  {
+   "id": "l04",
+   "lipsync": false,
+   "scene": "s2",
+   "text": "Kê-miêng thuộc nhóm trường Tốp một, ngành học đa dạng: kinh doanh, du lịch, truyền thông, kỹ thuật, phần mềm trò chơi và thời trang."
+  },
+  {
+   "id": "l05",
+   "lipsync": false,
+   "scene": "s3",
+   "text": "Với hệ tiếng đê bốn một, bạn cần tốt nghiệp cấp ba, điểm trung bình từ bảy, trống không quá hai năm."
+  },
+  {
+   "id": "l06",
+   "lipsync": false,
+   "scene": "s3",
+   "text": "Một số khu vực có giới hạn, nên hãy kiểm tra hồ sơ trước nhé."
+  },
+  {
+   "id": "l07",
+   "lipsync": false,
+   "scene": "s4",
+   "text": "Lên đại học đê hai, hầu hết các ngành cần Tốp pích ba, hoặc hoàn thành cấp độ ba ở viện tiếng Hàn của trường."
+  },
+  {
+   "id": "l09",
+   "lipsync": false,
+   "scene": "s4b",
+   "text": "Kỳ tháng ba năm hai không hai bảy, đợt hai nhận hồ sơ từ ba mươi tháng mười một đến bốn tháng một."
+  },
+  {
+   "id": "l10",
+   "lipsync": false,
+   "scene": "s5",
+   "text": "Học bổng kỳ đầu: Tốp pích ba giảm năm mươi phần trăm, Tốp pích bốn giảm bảy mươi phần trăm, Tốp pích năm trở lên miễn một trăm phần trăm học phí."
+  },
+  {
+   "id": "l11",
+   "lipsync": true,
+   "scene": "s6",
+   "text": "Học tốt ở các kỳ sau vẫn có học bổng, cao nhất tới một trăm phần trăm đấy."
+  },
+  {
+   "id": "l12",
+   "lipsync": false,
+   "scene": "s7",
+   "text": "Du học Thầy Tư đồng hành cùng bạn từ học tiếng, chọn ngành đến hoàn thiện hồ sơ Kê-miêng."
+  },
+  {
+   "id": "l13",
+   "lipsync": true,
+   "scene": "s8",
+   "text": "Muốn học trong khung cảnh phim Hàn mà học bổng lại tốt? Kê-miêng rất đáng để thử đấy."
+  },
+  {
+   "id": "l14",
+   "lipsync": true,
+   "scene": "s8",
+   "text": "Nhắn tin cho Du học Thầy Tư để được kiểm tra hồ sơ và nhận bảng chi phí chi tiết nhé!"
+  }
+ ],
+ "scenes": [
+  {
+   "name": "s1 Linh – hook",
+   "time": "0–8s",
+   "voice": "Trường đại học trong phim Vườn sao băng có thật đấy! Đó là Đại học Kê-miêng ở Đê-gu, nơi từng quay Vườn sao băng bản Hàn và Quý ngài Ánh dương.",
+   "screen": "TRƯỜNG TRONG PHIM? / VƯỜN SAO BĂNG · QUÝ NGÀI ÁNH DƯƠNG",
+   "visual": "Linh AI (nhãn Hình ảnh AI)"
+  },
+  {
+   "name": "s2 Campus",
+   "time": "8–17s",
+   "voice": "Trường nổi tiếng với những tòa nhà gạch đỏ cổ kính, đẹp như trong phim. Kê-miêng thuộc nhóm trường TOP một, ngành học đa dạng: kinh doanh, du lịch, truyền thông, kỹ thuật, game và thời trang.",
+   "screen": "ĐẠI HỌC KEIMYUNG / DAEGU · NHÓM TOP 1 / ngành",
+   "visual": "3 cảnh YouTube kênh chính thức 계명대학교, ghi nguồn"
+  },
+  {
+   "name": "s3 D4-1",
+   "time": "17–25s",
+   "voice": "Với hệ tiếng đê bốn một, bạn cần tốt nghiệp cấp ba, điểm trung bình từ bảy, trống không quá hai năm. Một số khu vực có giới hạn, nên hãy kiểm tra hồ sơ trước nhé.",
+   "screen": "HỆ TIẾNG D4-1 / THPT · GPA từ 7.0 · trống ≤ 2 năm · một số khu vực có giới hạn (Theo thông tin trường công bố)",
+   "visual": "Footage hồ sơ TBT chưa dùng"
+  },
+  {
+   "name": "s4 D2",
+   "time": "25–38s",
+   "voice": "Lên đại học đê hai, hầu hết các ngành cần Tốp pích ba, hoặc học xong cấp ba ở viện tiếng Hàn của trường. Ngành kinh doanh quốc tế và quan hệ quốc tế học bằng tiếng Anh, cần ai en năm phẩy năm.",
+   "screen": "HỆ ĐẠI HỌC D2 / TOPIK 3 hoặc hoàn thành cấp 3 viện tiếng / Ngành tiếng Anh: IELTS 5.5 / (Theo thông tin trường công bố)",
+   "visual": "Thẻ trên nền xanh"
+  },
+  {
+   "name": "s4b Hạn nộp",
+   "time": "33–38s",
+   "voice": "Kỳ tháng ba năm hai không hai bảy, đợt hai nhận hồ sơ từ ba mươi tháng mười một đến bốn tháng một.",
+   "screen": "KỲ 03/2027 · ĐỢT 2 / 30/11/2026 – 04/01/2027 / (Theo thông tin trường công bố)",
+   "visual": "Thẻ lịch trên nền xanh"
+  },
+  {
+   "name": "s5 Học bổng",
+   "time": "38–45s",
+   "voice": "Học bổng kỳ đầu: Tốp pích ba giảm năm mươi phần trăm, Tốp pích bốn giảm bảy mươi phần trăm, Tốp pích năm trở lên miễn một trăm phần trăm học phí.",
+   "screen": "HỌC BỔNG KỲ ĐẦU · D2 / TOPIK 3 50% · TOPIK 4 70% · TOPIK 5+ 100% (Theo thông tin trường công bố, kỳ 03/2027)",
+   "visual": "Bảng"
+  },
+  {
+   "name": "s6 Linh",
+   "time": "45–49s",
+   "voice": "Học tốt ở các kỳ sau vẫn có học bổng, cao nhất tới một trăm phần trăm đấy.",
+   "screen": "HỌC TỐT / vẫn có học bổng, tới 100% / (Theo thông tin trường công bố)",
+   "visual": "Linh AI"
+  },
+  {
+   "name": "s7 Đồng hành",
+   "time": "49–54s",
+   "voice": "Du học Thầy Tư đồng hành cùng bạn từ học tiếng, chọn ngành đến hoàn thiện hồ sơ Kê-miêng.",
+   "screen": "DU HỌC THẦY TƯ / Đồng hành từ đầu",
+   "visual": "Footage tư vấn + lớp học TBT chưa dùng"
+  },
+  {
+   "name": "s8 Linh – CTA",
+   "time": "54–62s",
+   "voice": "Muốn học trong khung cảnh phim Hàn mà học bổng lại tốt? Kê-miêng rất đáng để thử đấy. Nhắn tin cho Du học Thầy Tư để được kiểm tra hồ sơ và nhận bảng chi phí chi tiết nhé!",
+   "screen": "PHIM HÀN + HỌC BỔNG / NHẮN TIN NGAY · Kiểm tra hồ sơ · Nhận bảng chi phí chi tiết",
+   "visual": "Linh AI"
+  }
+ ],
+ "caption_facebook": "",
+ "hashtags": [
+  "#DuHocThayTu",
+  "#DuHocHanQuoc",
+  "#DaiHocKeimyung",
+  "#ReviewTruong"
+ ],
+ "sources": [
+  "sheet trường (D4-1 TOP1, D2-2)",
+  "Keimyung 2027 Spring Admission Guidelines (kmu.ac.kr)",
+  "báo Hàn về phim trường (dhnews, koreadaily)",
+  "doi-chieu.md"
+ ],
+ "check": [
+  "không số tiền",
+  "không ghi chú nội bộ",
+  "không nêu tên vùng bị hạn chế",
+  "không ngày D4-1 (chưa xác minh)",
+  "HB hệ tiếng Anh lệch sheet → không nêu",
+  "bỏ câu hệ tiếng Anh (brand.md ⚠️ chờ PM)"
+ ]
+}

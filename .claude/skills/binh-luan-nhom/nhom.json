@@ -1,0 +1,36 @@
+{
+  "_ghi_chu": "Danh sách nhóm cho agent bình luận nhóm. Sửa tay được. bo_loc_moi_nhat = bộ lọc 'Bài viết mới nhất' của Facebook (base64, đã mã hóa URL).",
+  "bo_loc_moi_nhat": "eyJyZWNlbnRfcG9zdHM6MCI6IntcIm5hbWVcIjpcInJlY2VudF9wb3N0c1wiLFwiYXJnc1wiOlwiXCJ9In0%3D",
+  "theo_doi": [
+    {"ten": "REVIEW TRUNG TÂM TIẾNG HÀN", "id": "427638090904169", "kenh": "TH", "da_tham_gia": true,
+     "ghi_chu": "105K thành viên, ~22 bài/ngày, không ghi luật cấm. Nhiều trung tâm khác cũng vào trả lời."},
+    {"ten": "DU HỌC HÀN QUỐC - HỎI và ĐÁP", "id": "4257571844300982", "kenh": "DH", "da_tham_gia": false,
+     "ghi_chu": "203K thành viên; bảng tin nhiều quảng cáo, câu hỏi thật thưa."},
+    {"ten": "REVIEW DU HỌC HÀN QUỐC", "id": "285721432601645", "kenh": "DH", "da_tham_gia": false, "ghi_chu": ""},
+    {"ten": "Hỏi Đáp Du Học Hàn Quốc", "id": "791747772512753", "kenh": "DH", "da_tham_gia": false, "ghi_chu": "17K thành viên"}
+  ],
+  "bo_qua": [
+    {"ten": "Review Lớp Học Tiếng Hàn – Trải Nghiệm Thật", "id": "1558257758604824",
+     "ly_do": "Luật nhóm: không quảng cáo, không tự quảng bá (đọc 18/11/2026). Đã tham gia nhưng không bình luận."},
+    {"ten": "Du học Hàn Quốc 2026", "id": "1508085227118934", "ly_do": "Toàn quảng cáo của trung tâm khác, gần như không có người hỏi."}
+  ],
+  "tu_khoa": {
+    "TH": ["xin review trung tâm tiếng Hàn", "trung tâm tiếng Hàn uy tín", "học tiếng Hàn từ số 0 ở đâu", "luyện thi TOPIK ở đâu", "học tiếng Hàn online"],
+    "DH": ["xin review trung tâm du học Hàn", "tư vấn du học Hàn Quốc uy tín", "chi phí du học Hàn Quốc", "du học Hàn Quốc tự túc hay qua trung tâm", "du học Hàn D4-1"]
+  },
+  "thong_tin_duoc_dung": {
+    "TH": ["10 năm giảng dạy, hơn 12.000 học viên", "học trực tiếp tại Thanh Xuân (Hà Nội), học online, livestream",
+           "chuyên luyện thi TOPIK, lộ trình rõ ràng từ số 0/sơ cấp", "giáo trình TOPIK của Thầy Tư",
+           "cam kết đầu ra TOPIK 3+ cho khóa từ số 0 lên TOPIK 3–4 — LUÔN kèm 'áp dụng theo điều khoản khóa học'"],
+    "DH": ["minh bạch từng khoản phí, rõ trước khi ký hợp đồng", "lộ trình riêng theo học lực, ngân sách, mục tiêu",
+           "đồng hành từ chọn trường, phỏng vấn đến khi ổn định ở Hàn", "Thầy Tư là chuyên gia TOPIK, học tiếng thật chứ không học để đối phó",
+           "hệ tiếng D4-1, hệ đại học, hệ thạc sĩ", "trượt code hoặc visa: đăng ký kỳ sau không đóng thêm khoản chi phí hồ sơ (không nêu số tiền)"]
+  },
+  "loi_moi": {
+    "TH": ["Bạn có thể thi thử online miễn phí tại tienghanthaytu.com để biết trình độ",
+           "nhắn fanpage Tiếng Hàn Thầy Tư để nhận lộ trình học miễn phí", "gọi 1900 4403 (phím 1) để được tư vấn"],
+    "DH": ["nhắn fanpage Du học Thầy Tư để nhận bảng chi phí chi tiết", "gọi hotline 0967 593 548 để được tư vấn lộ trình",
+           "xem thêm tại duhocthaytu.com"]
+  },
+  "cho_xac_nhan": ["Số Zalo để ghi trong bình luận (hotline 0967 593 548 có dùng Zalo không?) — chưa xác nhận thì chưa ghi Zalo"]
+}

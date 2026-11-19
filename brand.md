@@ -23,7 +23,7 @@
 
 ### 0.1 Bộ nhận diện chung ✅
 
-**Logo:** biểu tượng **"TT"** gồm chữ T đỏ đội mũ tốt nghiệp xanh và chữ T xanh, một đường cong xanh cắt ngang (gợi đường bay hoặc sự bứt phá), vòng cung đỏ dạng địa cầu bao quanh. Ý nghĩa: học tập, tốt nghiệp, vươn ra thế giới. **Dùng chung cho cả 2 kênh.** ✅
+**Logo:** biểu tượng **"TT"** gồm chữ T đỏ đội mũ tốt nghiệp xanh và chữ T xanh, một đường cong xanh cắt ngang (gợi đường bay hoặc sự bứt phá), vòng cung đỏ dạng địa cầu bao quanh. Ý nghĩa: học tập, tốt nghiệp, vươn ra thế giới. **Dùng chung cho cả 2 kênh.** ✅ File logo và outro nằm trong `tu-lieu/chung/` (chuyển từ thư mục gốc 18/11/2026).
 
 | File | Kích thước | Nền | Dùng khi |
 |---|---|---|---|
@@ -55,6 +55,8 @@
 - Du học Thầy Tư → **nền trắng hoặc ảnh thật, đỏ `#E81E37` làm nhấn**, gợi cờ Hàn (cảm hứng, hành trình)
 
 **Font ✅: Be Vietnam Pro** (Google Fonts, hỗ trợ đầy đủ dấu tiếng Việt) cho mọi chữ trong video và hình ảnh.
+
+> **Cập nhật 18/11/2026 (An):** series review trường dùng **SVN-Gilroy** (`tu-lieu/font/`: Medium cho chữ thường, XBold cho tiêu đề) và kết bằng **outro chính thức** `tu-lieu/chung/Outro THDHTT-Dọc.mp4` (4,25 s). Khuôn K4/K5 và banner **giữ Be Vietnam Pro + thẻ kết cũ** (An chốt 18/11/2026). Logo ở `tu-lieu/chung/`.
 
 | Vai trò | Độ đậm | Ghi chú |
 |---|---|---|

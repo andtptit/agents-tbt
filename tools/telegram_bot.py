@@ -32,6 +32,8 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import script_writer  # noqa: E402
 import script_judge  # noqa: E402
 import video_maker  # noqa: E402
+import tin_tuc  # noqa: E402
+import tin_tuc_video  # noqa: E402
 import meta_post  # noqa: E402
 import page_stats  # noqa: E402
 import report_send  # noqa: E402
@@ -215,6 +217,8 @@ def write_script_job(code):
     start = datetime.now().strftime("%H:%M")
     update_order(code, status="Đang viết kịch bản")
     progress(code, f"⏳ Claude đang {'viết lại' if rewrite else 'viết'} kịch bản… (bắt đầu {start}, thường 1–3 phút)")
+    if o.get("kind") == "ban_tin":
+        return write_news_job(code, o, rewrite)
     try:
         chan = script_writer.channel_of(o.get("channel", "TH"))
         s = script_writer.write_script(o["topic"], chan,
@@ -251,6 +255,52 @@ def write_script_job(code):
         RUNNING.discard(code)
 
 
+def write_news_job(code, o, rewrite):
+    """Đơn bản tin: gom tin (Claude tìm trên mạng, mở trang gốc) → kịch bản → Agent ⑥ chấm → gửi An."""
+    try:
+        day = o.get("news_day") or datetime.now().strftime("%Y-%m-%d")
+        path = os.path.join(tin_tuc.DIR, f"{day}.json")
+        if os.path.exists(path):
+            news = json.load(open(path, encoding="utf-8"))
+        else:
+            progress(code, "🔎 Agent Bản tin đang tìm tin du học Hàn mới (mở từng trang gốc để kiểm), thường 5–10 phút…")
+            news = tin_tuc.gather(day)
+        if not news.get("items"):
+            update_order(code, status="Hủy", error="Không có tin mới đủ tin cậy")
+            progress(code, "📭 Hôm nay không có tin du học Hàn mới đủ tin cậy → không làm bản tin.")
+            return
+        progress(code, f"⏳ Có {len(news['items'])} tin. Claude đang viết kịch bản bản tin…")
+        s = tin_tuc.write_script(news, feedback=o.get("feedback") if rewrite else None,
+                                 previous=o.get("script") if rewrite else None)
+        auto, res = 0, None
+        while True:
+            progress(code, "🧮 Agent đang chấm kịch bản trước khi gửi An…")
+            res = script_judge.evaluate(s, "DH", o["topic"])
+            if res["passed"] or auto >= AUTO_REWRITES:
+                break
+            auto += 1
+            progress(code, f"🧮 Agent chấm {res['score']}/10, chưa đạt. Tự viết lại lần {auto}…")
+            s = tin_tuc.write_script(news, feedback="Agent chấm điểm yêu cầu sửa:\n" + res["fix"], previous=s)
+        text = script_judge.format_result(res, auto) + "\n\n" + tin_tuc.format_news(code, s)
+        r = say(CHAT_ID, text if len(text) <= 4000 else text[:3990] + "…", TOPICS.get("duyet_kich_ban"),
+                markup=script_buttons(code))
+        if not r.get("ok"):
+            raise RuntimeError(f"Gửi Telegram lỗi: {r.get('description')}")
+        version = o.get("script_version", 0) + 1
+        update_order(code, status="Chờ duyệt kịch bản", script=s, script_version=version, news_day=day,
+                     script_msg_id=r["result"]["message_id"], script_at=now(),
+                     judge={"score": res["score"], "passed": res["passed"], "auto_rewrites": auto,
+                            "issues": res["issues"][:8], "at": now()})
+        progress(code, f"✅ Kịch bản bản tin bản {version} đã gửi sang ✍️ Duyệt kịch bản lúc {datetime.now():%H:%M}. "
+                       "An bấm từng link nguồn để kiểm trước khi duyệt.")
+    except Exception as e:  # noqa: BLE001
+        update_order(code, status="Lỗi viết kịch bản", error=str(e)[:300])
+        progress(code, f"⚠️ Chưa làm được bản tin: {str(e)[:200]}\nGõ /lai {code} để chạy lại.")
+        say(CHAT_ID, f"🚨 {code}: lỗi bản tin — {str(e)[:300]}", TOPICS.get("canh_bao"))
+    finally:
+        RUNNING.discard(code)
+
+
 def video_buttons(code):
     return {"inline_keyboard": [[{"text": "✅ Duyệt video", "callback_data": f"vd_ok|{code}"},
                                  {"text": "↩️ Trả về", "callback_data": f"vd_back|{code}"}]]}
@@ -261,7 +311,8 @@ def make_video_job(code):
     start = datetime.now().strftime("%H:%M")
     update_order(code, status="Đang dựng video")
     try:
-        path, total = video_maker.make_video(
+        maker = tin_tuc_video.make_video if o.get("kind") == "ban_tin" else video_maker.make_video
+        path, total = maker(
             code, o["script"], log=lambda msg: progress(code, f"{msg} (bắt đầu {start}, thường 2–4 phút)"))
         s = o["script"]
         caption = (f"🎬 {code} — {s.get('title', '')}\n{o.get('channel', 'Tiếng Hàn Thầy Tư')} · {total:.0f} giây · "
@@ -306,6 +357,8 @@ def publish_job(code, action, who, chat, thread):
         r = meta_post.post_reel(os.path.join(ROOT, o["video"]), desc, state,
                                 when.timestamp() if when else None)
         status = {"PUBLISHED": "Đã đăng", "SCHEDULED": "Đã lên lịch", "DRAFT": "Đã lưu nháp"}[state]
+        if o.get("kind") == "ban_tin":  # tin đã đăng → không đưa lại ở bản tin sau
+            tin_tuc.mark_used([n["url"] for n in s.get("news", []) if n.get("url")])
         update_order(code, status=status, fb_video_id=r["video_id"], fb_link=r.get("link"), published_by=who,
                      published_at=now(), scheduled_for=when.strftime("%Y-%m-%d %H:%M") if when else None)
         extra = f" lúc {when:%H:%M %d/%m}" if when else ""
@@ -481,6 +534,11 @@ def handle_message(m, q):
         send_report()
         if thread_of(m) != TOPICS.get("bao_cao"):
             say(chat, "Đã gửi báo cáo vào chủ đề 📊 Báo cáo.", thread_of(m), m["message_id"])
+    elif cmd == "/bantin":
+        if allowed:
+            code = create_news_order(force=True)
+            say(chat, f"📰 Đã tạo đơn bản tin {code}." if code else "Hôm nay đã có đơn bản tin.", thread_of(m),
+                m["message_id"])
     elif cmd == "/cho":
         pending = [f"• {c}: {v['status']}" for c, v in q.items() if v["status"] != "Đã duyệt"]
         pending += [f"• {c}: {o['status']} — {o['topic']}" for c, o in load_orders().items()
@@ -639,6 +697,30 @@ def maybe_report():
         send_report()
 
 
+# ---------- Bản tin du học hằng ngày ----------
+NEWS_HOUR = 6  # 6h sáng: gom tin → kịch bản → An duyệt trong buổi sáng; đăng mặc định 20:00
+
+
+def create_news_order(force=False):
+    day = datetime.now().strftime("%y%m%d")
+    code = f"DH-BT-{day}"
+    if code in load_orders():
+        return None
+    topic = f"Bản tin du học Hàn {datetime.now():%d/%m}"
+    r = say(CHAT_ID, f"📥 Đơn {code} (Du học Thầy Tư): «{topic}»\n🕒 Agent Bản tin bắt đầu tìm tin…",
+            TOPICS.get("dat_video"))
+    update_order(code, topic=topic, channel=script_writer.CHANNELS["DH"]["name"], kind="ban_tin",
+                 status="Chờ viết kịch bản", by="Lịch hằng ngày" if not force else "Lệnh /bantin", at=now(),
+                 news_day=datetime.now().strftime("%Y-%m-%d"), ack_id=r.get("result", {}).get("message_id"))
+    return code
+
+
+def maybe_news():
+    # Lịch hằng ngày ĐANG TẮT (An 18/11/2026: chưa đặt lịch). Bật bằng BAN_TIN_BAT=1 trong .env; /bantin vẫn chạy tay.
+    if datetime.now().hour >= NEWS_HOUR and ENV.get("BAN_TIN_BAT") == "1":
+        create_news_order()
+
+
 NOTION_LAST = [0.0]
 
 
@@ -678,6 +760,10 @@ def cmd_run():
     while True:
         dispatch_jobs()
         maybe_notion()
+        try:
+            maybe_news()
+        except Exception as e:  # noqa: BLE001
+            print("Lỗi bản tin:", e)
         try:
             maybe_report()
         except Exception as e:  # noqa: BLE001

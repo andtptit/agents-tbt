@@ -1,18 +1,51 @@
 """Khung dựng HyperFrames dùng chung cho series review trường (KOL Linh AI + footage + thẻ thông tin).
 
 Mỗi video có một build.py trong video/jobs/<mã>/ khai báo các cảnh rồi gọi write_project().
-Phong cách theo brand.md 0.1: chữ đỏ viền trắng mỏng, chữ trắng viền xanh đậm, nhãn viên thuốc, Be Vietnam Pro.
-Cảnh có Linh: gốc trong suốt (avatar chạy bên dưới suốt video), có nhãn "Hình ảnh AI".
+Phong cách theo brand.md 0.1: chữ đỏ viền trắng mỏng, chữ trắng viền xanh đậm, nhãn viên thuốc.
+Font (An chốt 18/11/2026): SVN-Gilroy (tu-lieu/font) — Medium cho chữ thường, XBold cho tiêu đề.
+Kết video: outro chính thức tu-lieu/chung/Outro THDHTT-Dọc.mp4 (4,25 s, có tiếng) thay thẻ kết tự vẽ.
+Logo trên cùng: vùng y 100–220; chữ ở cảnh có logo phải bắt đầu từ y ≥ 280 (không đè logo).
+Cảnh có Linh: gốc trong suốt (avatar chạy bên dưới), có nhãn "Hình ảnh AI".
 """
 import json
 import os
+import shutil
+import subprocess
 
-FONTS = "".join(
-    f'@font-face {{ font-family: "BVP"; src: url("assets/fonts/BeVietnamPro-{n}.ttf"); font-weight: {w}; }}\n'
-    for n, w in [("Medium", 500), ("SemiBold", 600), ("Bold", 700), ("ExtraBold", 800), ("Black", 900)])
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+OUTRO_SRC = os.path.join(ROOT, "tu-lieu", "chung", "Outro THDHTT-Dọc.mp4")
+OUTRO_DUR = 4.25
+FONT_FILES = {"Gilroy-Medium.otf": "SVN-Gilroy Medium.otf", "Gilroy-XBold.otf": "SVN-Gilroy XBold.otf"}
+LOGO_FILES = {"tt-tron.png": "Logo TT tròn trắng.png", "tt-ngang.png": "Logo TH va DH-ngang.png",
+              "icon-tt.png": "Icon TT ko nền.png"}
+
+FONTS = ('@font-face { font-family: "TT"; src: url("assets/fonts/Gilroy-Medium.otf"); font-weight: 400 600; }\n'
+         '@font-face { font-family: "TT"; src: url("assets/fonts/Gilroy-XBold.otf"); font-weight: 700 900; }\n')
+
+
+def prepare_assets(job):
+    """Chép font Gilroy, logo và outro (đổi về 1080×1920, tách tiếng) vào assets/ của job."""
+    for sub in ("fonts", "logo", "media"):
+        os.makedirs(os.path.join(job, "assets", sub), exist_ok=True)
+    for dst, src in FONT_FILES.items():
+        shutil.copyfile(os.path.join(ROOT, "tu-lieu", "font", src), os.path.join(job, "assets", "fonts", dst))
+    for dst, src in LOGO_FILES.items():
+        shutil.copyfile(os.path.join(ROOT, "tu-lieu", "chung", src), os.path.join(job, "assets", "logo", dst))
+    media = os.path.join(job, "assets", "media")
+    if not os.path.exists(os.path.join(media, "outro.m4a")):
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", OUTRO_SRC, "-vf", "scale=1080:1920,fps=30", "-an",
+                        "-c:v", "libx264", "-crf", "18", "-pix_fmt", "yuv420p", os.path.join(media, "outro.mp4")],
+                       check=True)
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", OUTRO_SRC, "-vn", "-c:a", "aac", "-b:a", "192k",
+                        os.path.join(media, "outro.m4a")], check=True)
+
+
+def outro_end(vo_end):
+    """Thời điểm kết video: outro chạy ngay sau câu cuối (từ vo_end - 0.2)."""
+    return round(vo_end - 0.2 + OUTRO_DUR, 2)
 
 BASE_CSS = """
-#root { position: absolute; inset: 0; overflow: hidden; font-family: "BVP", sans-serif; }
+#root { position: absolute; inset: 0; overflow: hidden; font-family: "TT", sans-serif; }
 .big { display: block; font-weight: 900; color: #E81E37; -webkit-text-stroke: 10px #fff; paint-order: stroke fill;
        text-shadow: 0 6px 18px rgba(0,0,0,.28); line-height: 1.12; letter-spacing: -0.01em; white-space: nowrap; }
 .wbig { display: block; font-weight: 900; color: #fff; -webkit-text-stroke: 9px #263E8B; paint-order: stroke fill;
@@ -37,7 +70,7 @@ BASE_CSS = """
 .credit { position: absolute; left: 40px; right: 40px; top: 1690px; text-align: center; font-weight: 500; font-size: 28px;
           color: rgba(255,255,255,.9); }
 .full { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; object-fit: cover; }
-.logo { position: absolute; top: 190px; left: 50%; width: 130px; height: 130px; margin-left: -65px; }
+.logo { position: absolute; top: 100px; left: 50%; width: 120px; height: 120px; margin-left: -60px; }
 .note { font-weight: 500; font-size: 30px; color: rgba(255,255,255,.9); white-space: normal; }
 .card { position: absolute; left: 60px; right: 60px; background: #fff; border-radius: 40px; padding: 120px 50px 46px;
         box-shadow: 0 24px 60px rgba(5,15,50,.4); }
@@ -99,19 +132,30 @@ def video(vid, src, start, dur, cls="full"):
             f'data-duration="{dur:.2f}" muted playsinline></video>\n')
 
 
-def endcard_scene(cid="end"):
-    body = """    <div class="blue-bg"></div>
-    <div class="center" style="top:560px">
-      <img id="end-logo" src="assets/logo/tt-tron.png" alt="Logo" style="width:300px;height:300px" />
-      <span id="end-t" class="wbig" style="font-size:60px;margin-top:40px">TIẾNG HÀN VÀ</span>
-      <span id="end-t2" class="wbig" style="font-size:60px">DU HỌC THẦY TƯ</span>
-      <span id="end-h" class="pill red" style="margin-top:40px">HOTLINE: 0967 593 548</span>
-    </div>"""
-    js = pop("#end-logo", 0.05, 0.45) + rise("#end-t", 0.4) + rise("#end-t2", 0.55) + pop("#end-h", 0.9)
-    return scene(cid, body, js)
+def outro_scene(cid="end"):
+    """Outro chính thức (video). Tiếng outro do write_project đặt ở index (assets/media/outro.m4a)."""
+    body = (f'    <video id="end-v" class="clip full" src="assets/media/outro.mp4" data-start="0" '
+            f'data-duration="{OUTRO_DUR}" muted playsinline></video>')
+    return scene(cid, body, "", root_css="background:#1E6FE8")
 
 
-def write_project(job, title, scenes, vo_end, end, linh_scenes=(), music_vol=0.12, music_end_vol=0.45):
+endcard_scene = outro_scene  # tên cũ, build.py cũ vẫn chạy
+
+
+def linh_segments(job, scenes, linh_scenes, scene_lines):
+    """Cảnh Linh → đoạn trong avatar.mp4 (HeyGen chỉ dựng câu lipsync). scene_lines: {cảnh: [id câu]}.
+    Trả [(start, dur, media_start)] để đặt avatar đúng chỗ, khớp miệng."""
+    m = {x["id"]: x for x in json.load(open(os.path.join(job, "linh_map.json"), encoding="utf-8"))}
+    segs = []
+    for cid, st, du, _ in scenes:
+        if cid in linh_scenes:
+            first = m[scene_lines[cid][0]]
+            segs.append((st, du, max(0.0, first["linh_start"] - (first["main_start"] - st))))
+    return segs
+
+
+def write_project(job, title, scenes, vo_end, end, linh_scenes=(), music_vol=0.12, music_end_vol=0.45, avatar_segments=None, no_avatar=False):
+    """no_avatar=True: video chỉ giọng + trám cảnh (không Linh/HeyGen); mọi cảnh phải có nền đặc."""
     """scenes: [(id, start, dur, html)]. Ghi compositions/*.html + index.html."""
     os.makedirs(os.path.join(job, "compositions"), exist_ok=True)
     for cid, _, _, html in scenes:
@@ -125,6 +169,26 @@ def write_project(job, title, scenes, vo_end, end, linh_scenes=(), music_vol=0.1
         f'      <div id="ai-{cid}" class="clip ai" data-start="{st:.2f}" data-duration="{du:.2f}" data-track-index="4">Hình ảnh AI</div>\n'
         for cid, st, du, _ in scenes if cid in linh_scenes)
     tail = round(end - vo_end, 2)
+    outro = [(st, du) for cid, st, du, _ in scenes if cid == "end"] if os.path.exists(
+        os.path.join(job, "assets", "media", "outro.m4a")) else []
+    if outro:  # outro có tiếng riêng → nhạc nền nhỏ dần rồi tắt khi outro chạy
+        music = (f'      <audio id="bgm" class="clip" src="assets/media/bgm.mp3" data-start="0" data-duration="{outro[0][0] + 0.6:.2f}" '
+                 f'data-track-index="2" data-volume="{music_vol}" data-fade-in="0.8" data-fade-out="0.8"></audio>\n'
+                 f'      <audio id="outro-a" class="clip" src="assets/media/outro.m4a" data-start="{outro[0][0]:.2f}" '
+                 f'data-duration="{outro[0][1]:.2f}" data-track-index="5" data-volume="1"></audio>')
+    else:
+        music = (f'      <audio id="bgm" class="clip" src="assets/media/bgm.mp3" data-start="0" data-duration="{vo_end}" data-track-index="2" data-volume="{music_vol}" data-fade-in="0.8"></audio>\n'
+                 f'      <audio id="bgm-end" class="clip" src="assets/media/bgm.mp3" data-start="{vo_end}" data-duration="{tail}" data-media-start="{vo_end}" data-track-index="2" data-volume="{music_end_vol}" data-fade-out="1.2"></audio>')
+    if no_avatar:
+        avatar = ""
+    elif avatar_segments:
+        avatar = "\n".join(
+            f'      <video id="avatar-{i}" class="clip avatar" src="assets/media/avatar.mp4" data-start="{st:.2f}" '
+            f'data-duration="{du:.2f}" data-media-start="{ms:.2f}" data-track-index="0" muted playsinline></video>'
+            for i, (st, du, ms) in enumerate(avatar_segments, 1))
+    else:
+        avatar = (f'      <video id="avatar" class="clip avatar" src="assets/media/avatar.mp4" data-start="0" '
+                  f'data-duration="{vo_end}" data-track-index="0" muted playsinline></video>')
     index = f"""<!doctype html>
 <html lang="vi">
   <head>
@@ -137,17 +201,16 @@ def write_project(job, title, scenes, vo_end, end, linh_scenes=(), music_vol=0.1
       * {{ margin: 0; padding: 0; box-sizing: border-box; }}
       html, body {{ margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #1e6fe8; }}
       #root {{ position: relative; width: 100%; height: 100%; }}
-      #avatar {{ position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; object-fit: cover; z-index: 1; }}
-      .ai {{ position: absolute; top: 270px; left: 60px; z-index: 50; font-family: "BVP", sans-serif; font-weight: 600;
+      .avatar {{ position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; object-fit: cover; z-index: 1; }}
+      .ai {{ position: absolute; top: 270px; left: 60px; z-index: 50; font-family: "TT", sans-serif; font-weight: 600;
              font-size: 30px; color: #fff; background: rgba(0,0,0,.45); padding: 8px 20px 10px; border-radius: 30px; }}
     </style>
   </head>
   <body>
     <div id="root" data-composition-id="main" data-start="0" data-duration="{end}" data-width="1080" data-height="1920">
-      <video id="avatar" class="clip" src="assets/media/avatar.mp4" data-start="0" data-duration="{vo_end}" data-track-index="0" muted playsinline></video>
+{avatar}
       <audio id="vo" class="clip" src="assets/media/vo.mp3" data-start="0" data-duration="{vo_end}" data-track-index="1" data-volume="1"></audio>
-      <audio id="bgm" class="clip" src="assets/media/bgm.mp3" data-start="0" data-duration="{vo_end}" data-track-index="2" data-volume="{music_vol}" data-fade-in="0.8"></audio>
-      <audio id="bgm-end" class="clip" src="assets/media/bgm.mp3" data-start="{vo_end}" data-duration="{tail}" data-media-start="{vo_end}" data-track-index="2" data-volume="{music_end_vol}" data-fade-out="1.2"></audio>
+{music}
 {hosts}{badges}    </div>
     <script>
       window.__timelines = window.__timelines || {{}};

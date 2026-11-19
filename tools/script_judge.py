@@ -9,7 +9,7 @@ Hai lớp:
 
 Chạy thử:
   python tools/script_judge.py DH-261117-01        # chấm kịch bản của một đơn trong data/orders.json
-  python tools/script_judge.py file.json [--dh]     # chấm một file JSON kịch bản
+  python tools/script_judge.py file.json [--dh] [--topic "chủ đề + nguồn dữ liệu"]   # chấm một file JSON kịch bản
 """
 import json
 import os
@@ -195,7 +195,8 @@ if __name__ == "__main__":
     if args[0].endswith(".json"):
         with open(args[0], encoding="utf-8") as f:
             script = json.load(f)
-        chan, topic = ("DH" if "--dh" in args else "TH"), ""
+        chan = "DH" if "--dh" in args else "TH"
+        topic = args[args.index("--topic") + 1] if "--topic" in args else ""
     else:
         with open(os.path.join(ROOT, "data", "orders.json"), encoding="utf-8") as f:
             o = json.load(f)[args[0]]
